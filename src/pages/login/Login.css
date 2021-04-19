@@ -1,0 +1,33 @@
+#login-wrapper {
+    min-width: 30%;
+    max-width: 35%;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.login-header {
+    margin: auto;
+    padding: 10vmin 1rem;
+}
+
+.login-box {
+    min-width: 400%;
+    padding-bottom: 8vmin;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: -150%;
+}
+
+#login-component {
+    display: inline-block;
+    padding-top: 3vmin;
+}
+
+#login-text {
+    font-weight: normal;
+    display: inline-block;
+    padding: 2vmin 0;
+}

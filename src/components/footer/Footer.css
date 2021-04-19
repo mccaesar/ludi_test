@@ -1,0 +1,15 @@
+#footer {
+    margin-top: auto;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #fea346 !important;
+}
+
+#content {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.5vmax;
+}

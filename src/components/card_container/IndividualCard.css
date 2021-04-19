@@ -1,0 +1,10 @@
+#card {
+    position: relative;
+    height: 90%;
+}
+
+#card-button {
+    position: absolute;
+    bottom: 10px;
+    left: 30%;
+}

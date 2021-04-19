@@ -1,0 +1,25 @@
+.data {
+    text-align: center;
+    margin: auto;
+}
+
+#deck {
+    margin-top: 100%;
+    max-width: 60%;
+    padding: 1rem 1rem;
+}
+
+#logo {
+    width: 20%;
+}
+
+.database-header {
+    max-width: 60%;
+    margin: auto;
+    padding: 5vmin 1rem;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+

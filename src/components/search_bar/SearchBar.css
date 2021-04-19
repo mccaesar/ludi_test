@@ -1,0 +1,37 @@
+#home .App-search {
+    margin: auto;
+    padding: 20vmin 1rem 1vmin 1vmin;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#results .App-search {
+    margin: auto;
+    padding: 1vmin 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#home #search_input {
+    padding-top: -5%;
+    position: relative;
+}
+
+#results #search_input {
+    padding-top: -5%;
+    position: relative;
+}
+
+#home #search-button {
+    margin: 2.5%;
+    margin-top: -5%;
+}
+
+#results #search-button {
+    margin: 1.25%;
+    margin-top: -2.25%;
+}

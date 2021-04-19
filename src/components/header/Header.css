@@ -1,0 +1,25 @@
+#login-button {
+    color: primary;
+    width: 5%;
+    height: 3.5%;
+    font-size: 75%;
+}
+
+.header-wrapper {
+    background-color: white;
+    width: 100%;
+}
+
+#header-spacer {
+    width: 85%;
+}
+
+.header-content {
+    max-width: 100%;
+    margin: auto;
+    padding: 2vmin 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
