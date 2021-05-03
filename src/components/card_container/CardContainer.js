@@ -34,7 +34,7 @@ export default class CardContainer extends Component{
         } else if(this.props.resourceIDs != null) {
             getMultipleResourceWithIDS(this.props.resourceIDs, this.setDataState);
         }
-
+        //this.setState({});
     }
 
     setMaxCards(containerType) {
@@ -52,19 +52,29 @@ export default class CardContainer extends Component{
         }
     }
 
-    setDataState = (inData) => {
+    setDataState = (inData, inDone) => {
         //console.log("inData", inData);
+        //console.log("db finished? ", inDone);
         this.setState({
             data: inData
-        });
-        //console.log("data", this.state.data);
-        
+        }, console.log("set state to ", this.state.data));
+
+        //console.log("data title ", inData[0]);
+        //inData.map(resource => (
+        //    console.log("resource title", resource.title)
+        //));  
     }
 
     setFilterState = (filterName) => {
         this.filterResults(filterName)
         this.setState({
             filter: filterName});
+    }
+
+    setSearchState = (newSearchInfo) => {
+        this.setState({
+        searchInfo: newSearchInfo,
+        });
     }
 
     filterResults = (filterName) => {
@@ -99,17 +109,20 @@ export default class CardContainer extends Component{
 
     }
 
+    // shouldComponentUpdate(nextProps, nextState){
 
-
+    // }
     render() {
         // check if need to initiate a new search of database
         if(this.props.searchInfo !== this.state.searchInfo) {
+            console.log("SearchInfo changed, searching database again.");
             search_with_keywords(this.props.searchInfo.searchString, this.setDataState, this.props.searchInfo.searchedFields);
+            this.setSearchState(this.props.searchInfo);
         }
 
         if (this.state.data == null) {
             console.log("data == null");
-            return (<div></div>);
+            return <div></div>;
         }
         //console.log("data at render", this.state.data);
         // let filterBar;
@@ -132,8 +145,11 @@ export default class CardContainer extends Component{
 
                 {/* Current filter is { this.state.filter }  */}
                 <Container>
-                    {console.log("render data length", this.state.data.length)}
                     {console.log("render data", this.state.data)}
+                    {console.log("render data[0]", this.state.data[0])}
+                    {console.log("render Object.values(data)", Object.getOwnPropertyNames(this.state.data))}
+                    {console.log("render data type", typeof this.state.data)}
+                    {console.log("render data length", this.state.data.length)}
 
                     <FilterBar containerType={this.props.containerType} numResults={this.state.data.length} updateContainerState={this.setFilterState} /> 
                     <Row class="show-grid">
@@ -141,8 +157,9 @@ export default class CardContainer extends Component{
                             <Row class="show-grid">
                                 {
                                     
-                                    this.state.data.map((resource) => <IndividualCard item={resource}></IndividualCard>)
-                                   // this.state.data.slice(this.state.firstCardIdx,this.state.maxCards).map((item) => <IndividualCard item={item}></IndividualCard>)
+                                    //{ /*this.state.data.map((resource) => <IndividualCard item={resource}></IndividualCard>) */}
+                                    
+                                    this.state.data.slice(this.state.firstCardIdx,this.state.maxCards).map((item) => <IndividualCard item={item}></IndividualCard>)
                                 }
                                 {console.log("render data2", this.state.data)}
                             </Row>

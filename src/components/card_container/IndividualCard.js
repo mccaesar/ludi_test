@@ -41,6 +41,7 @@ export default class IndividualCard extends Component {
                             id="card-button">
                         learn more
                     </Button>
+                    {console.log("rendering Individual Card: ", this.state.title, this.state.description)}
                     {this.renderRedirect()}
                 </Card.Body>
             </Card>

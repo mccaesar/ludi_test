@@ -6,24 +6,24 @@ import ResourceDataService from "../services/resource.service";
  * search for search_input in each field in target_fields of each row, pass the results to the callback function
  */
 function search_with_keywords(search_input, callback, target_fields = ['Title', 'Tags', 'Categorization', 'Author'], /**search options */) {
-    var search_results = []; // empty the results
-    
+    var done = false;
     for (var i = 0; i < target_fields.length; i++) {
         target_fields[i] = target_fields[i][0].toLowerCase() + target_fields[i].substring(1);
     }
-
+    
     search_input = search_input.toLowerCase();
-
-        ///\W / filters out special characters besides space
-        // replaces all non-word charachters (except space) with ''
+    
+    ///\W / filters out special characters besides space
+    // replaces all non-word charachters (except space) with ''
     var keys = search_input.replace(/(?![ ])[\W]/g,'').split(' ');
     
     // var allResources = getResources();
     // console.log(allResources);
     // console.log(typeof allResources);
-    getResources(function(allResources) {
+    let getSearchResults = (search_results) => getResources(function(allResources) {
         //console.log(allResources);
-
+        
+        //var search_results = []; // empty the results
         allResources.map(resource => {
             //console.log(resource);
             // search for the entire string
@@ -40,7 +40,7 @@ function search_with_keywords(search_input, callback, target_fields = ['Title', 
             // 2. search with the individual words in the search string
             if(!found) {
                 // search for the string
-                for (var i = 0; i < target_fields.length; i++) {
+                for (i = 0; i < target_fields.length; i++) {
                     for (var j = 0; j < keys.length; j++) {
                         var search_input_substr = keys[j];
                         //for small substrings in the search term, adding " " checks that the match is it's own word
@@ -58,8 +58,10 @@ function search_with_keywords(search_input, callback, target_fields = ['Title', 
             if (found) {
                 search_results.push(resource);
             }
-
         })
+        console.log("internal search results", search_results);
+        console.log("internal search results type: ", typeof search_results); 
+        done = true;
     });
     // ResourceDataService.getAll()
     // .then(response => {
@@ -71,23 +73,26 @@ function search_with_keywords(search_input, callback, target_fields = ['Title', 
     // console.log(e);
     // });
 
-    
 
+    var search_results_output = [];
+    getSearchResults(search_results_output);
 
-
-    
-    // call the function that update the cards
-    
     
     console.log("called search_with_keywords") 
-    console.log("search results", search_results);
-    callback(search_results);
+    console.log("search results", search_results_output);
+    console.log("search results type: ", typeof search_results_output); 
+
+    //if(done)
+    {   
+        callback(search_results_output, done);
+    }   
+    
 }
 
 /**
  * generate a list of strings that would be used for autocomplete, pass the results to the callback function
  */
-function get_autoComplete(callback, target_fields = ['Title', 'Categorization']) {
+function get_autoComplete(callback, target_fields = ['Title', 'Author', 'Tags', 'Description']) {
     var auto_complete_strings = new Set([]);
     var path = "1T3kXn2m5L8FmNwC-FAzTQjh81gGuyNSUTt2uyHKSGGY/Networking Resources" // this is the path of the spreadsheet data
     var dataRef = firebase.database().ref(path);
@@ -165,7 +170,6 @@ function getResources(callback) {
     console.log(e);
     });
 }
-
 
 
 export { search_with_keywords, get_autoComplete, getResourceWithID, getMultipleResourceWithIDS, getSavedResourcesWithUID}
