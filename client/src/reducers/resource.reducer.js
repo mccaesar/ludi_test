@@ -31,7 +31,7 @@ export const reducer = (state = initialState, action) => {
       let filteredResources = action.payload.resources;
       let searchValue = action.payload.searchValue;
       filteredResources.filter((resource) =>
-        resource.title.toLowerCase().includes(searchValue.toLowerCase())
+      resource.title.toLowerCase().includes(searchValue.toLowerCase())
       );
 
       return {

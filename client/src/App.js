@@ -14,6 +14,7 @@ import useStyles from './styles';
 const App = () => {
   const [currentId, setCurrentId] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { loading, resources } = state;
 
   const classes = useStyles();
 
@@ -24,8 +25,6 @@ const App = () => {
   const searchResources = (searchValue) => {
     dispatch(searchResources(searchValue));
   };
-
-  const { loading, resources } = state;
 
   return (
     <Container maxWidth="lg">
@@ -44,7 +43,7 @@ const App = () => {
             spacing={3}
           >
             <Grid item xs={12} sm={7}>
-              <ResourceContainer setCurrentId={setCurrentId} />
+              <ResourceContainer resources={resources} setCurrentId={setCurrentId} />
             </Grid>
           </Grid>
         </Container>

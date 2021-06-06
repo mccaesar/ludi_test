@@ -13,22 +13,20 @@ import * as api from '../services';
 //   }
 // };
 
-export const searchResources =
-  ([searchValue]) =>
-  async (dispatch) => {
-    try {
-      const { resources } = await api.fetchResources();
-      let action = {};
-      if (searchValue == undefined) {
-        action = { type: FETCH_RESOURCES, payload: resources };
-      } else {
-        action = {
-          type: SEARCH_RESOURCES,
-          payload: { resources, searchValue },
-        };
-      }
-      dispatch(action);
-    } catch (err) {
-      throw err;
+export const searchResources = (searchValue) => async (dispatch) => {
+  try {
+    const { resources } = await api.fetchResources();
+    let action = {};
+    if (searchValue === undefined) {
+      action = { type: FETCH_RESOURCES, payload: { resources } };
+    } else {
+      action = {
+        type: SEARCH_RESOURCES,
+        payload: { resources, searchValue },
+      };
     }
-  };
+    dispatch(action);
+  } catch (err) {
+    throw err;
+  }
+};
