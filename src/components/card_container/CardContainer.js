@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import './CardContainer.css';
 import IndividualCard from './IndividualCard';
 import {search_with_keywords, getMultipleResourceWithIDS} from 'firebase_components/firebase_db'
+import ResourceDataService from "services/resource.service";
 
 export default class CardContainer extends Component{
     constructor(props) {
@@ -30,7 +31,7 @@ export default class CardContainer extends Component{
 
     componentDidMount() {
         if (this.props.searchInfo != null) {
-            search_with_keywords(this.props.searchInfo.searchString, this.setDataState, this.props.searchInfo.searchedFields);
+            this.setDataState(this.local_search_with_keywords(this.props.searchInfo.searchString, this.setDataState, this.props.searchInfo.searchedFields));
         } else if(this.props.resourceIDs != null) {
             getMultipleResourceWithIDS(this.props.resourceIDs, this.setDataState);
         }
@@ -52,6 +53,97 @@ export default class CardContainer extends Component{
         }
     }
 
+    getResources(callback) {
+        ResourceDataService.getAll()
+        .then(response => {
+        // console.log(response.data);
+            callback(response.data); 
+        })
+        .catch(e => {
+        console.log(e);
+        });
+    }
+
+    local_search_with_keywords(search_input, callback, target_fields = ['Title', 'Tags', 'Categorization', 'Author'], /**search options */) {
+        var done = false;
+        for (var i = 0; i < target_fields.length; i++) {
+            target_fields[i] = target_fields[i][0].toLowerCase() + target_fields[i].substring(1);
+        }
+        
+        search_input = search_input.toLowerCase();
+        
+        ///\W / filters out special characters besides space
+        // replaces all non-word charachters (except space) with ''
+        var keys = search_input.replace(/(?![ ])[\W]/g,'').split(' ');
+      
+        // var allResources = getResources();
+        // console.log(allResources);
+        // console.log(typeof allResources);
+        let getSearchResults = (search_results) => this.getResources(function(allResources) {
+            //console.log(allResources);
+            
+            //var search_results = []; // empty the results
+            allResources.map(resource => {
+                //console.log(resource);
+                // search for the entire string
+                var found = false;
+                for (var i = 0; i < target_fields.length; i++) {
+                    //console.log(resource[target_fields[i]]);
+                    if (resource[target_fields[i]].toLowerCase().includes(search_input)) {
+                        found = true;
+                        break;
+                    }
+                }
+                // if current row has a match, found = true now
+                
+                // 2. search with the individual words in the search string
+                if(!found) {
+                    // search for the string
+                    for (i = 0; i < target_fields.length; i++) {
+                        for (var j = 0; j < keys.length; j++) {
+                            var search_input_substr = keys[j];
+                            //for small substrings in the search term, adding " " checks that the match is it's own word
+                            if (search_input_substr.length < 3) {
+                                search_input_substr = search_input_substr + " ";
+                            }
+                            if (resource[target_fields[i]].toLowerCase().includes(search_input_substr)) {
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+
+                }
+                if (found) {
+                    search_results.push(resource);
+                }
+            })
+            // console.log("internal search results", search_results);
+            // console.log("internal search results type: ", typeof search_results); 
+            done = true;
+        });
+        // ResourceDataService.getAll()
+        // .then(response => {
+        //     console.log(response.data);
+        //     allResources = response.data
+        //     console.log(allResources);
+        // })
+        // .catch(e => {
+        // console.log(e);
+        // });
+
+
+        var search_results_output = [];
+        getSearchResults(search_results_output);
+
+        
+        // console.log("called search_with_keywords") 
+        // console.log("search results", search_results_output);
+        // console.log("search results type: ", typeof search_results_output); 
+
+        return (search_results_output);         
+    }
+
     setDataState = (inData, inDone) => {
         //console.log("inData", inData);
         //console.log("db finished? ", inDone);
@@ -64,6 +156,8 @@ export default class CardContainer extends Component{
         //    console.log("resource title", resource.title)
         //));  
     }
+    
+  
 
     setFilterState = (filterName) => {
         this.filterResults(filterName)
