@@ -1,10 +1,9 @@
-import React, { useState, useReducer, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
 
-import { getResources } from './actions/resource.action';
-import { initialState, reducer } from './reducers/resource.reducer';
+import { searchResources } from './actions/resource.action';
 
 import ResourceContainer from './components/ResourceContainer/ResourceContainer';
 import SearchBar from './components/SearchBar/SearchBar';
@@ -13,8 +12,9 @@ import useStyles from './styles';
 
 const App = () => {
   const [currentId, setCurrentId] = useState(0);
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { loading, resources } = state;
+
+  const dispatch = useDispatch();
+  const { resources } = useSelector((state) => state.resourceList.resources);
 
   const classes = useStyles();
 
@@ -22,7 +22,7 @@ const App = () => {
     dispatch(searchResources());
   }, [dispatch]);
 
-  const searchResources = (searchValue) => {
+  const searchUpdate = (searchValue) => {
     dispatch(searchResources(searchValue));
   };
 
@@ -35,7 +35,7 @@ const App = () => {
       </AppBar>
       <Grow in>
         <Container>
-          <SearchBar search={searchResources} />
+          <SearchBar search={searchUpdate} />
           <Grid
             container
             justify="space-between"
@@ -43,7 +43,10 @@ const App = () => {
             spacing={3}
           >
             <Grid item xs={12} sm={7}>
-              <ResourceContainer resources={resources} setCurrentId={setCurrentId} />
+              <ResourceContainer
+                resources={resources}
+                setCurrentId={setCurrentId}
+              />
             </Grid>
           </Grid>
         </Container>

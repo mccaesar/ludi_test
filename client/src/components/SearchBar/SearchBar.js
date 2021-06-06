@@ -6,15 +6,20 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const SearchBar = ({ search }) => {
   const [searchValue, setSearchValue] = useState('');
-  const { resources } = useSelector((state) => state.resources);
+  const { resources } = useSelector((state) => state.resourceList.resources);
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
   };
 
+  const resetInputField = () => {
+    setSearchValue('');
+  };
+
   const callSearchFunction = (e) => {
     e.preventDefault();
     search(searchValue);
+    resetInputField();
   };
 
   return (
@@ -23,7 +28,7 @@ const SearchBar = ({ search }) => {
       id="search-bar"
       fullWidth
       disableClearable
-      options={resources.map((resource) => resource.title)}
+      // options={resources.map((resource) => resource.title)}
       renderInput={(params) => (
         <TextField
         {...params}

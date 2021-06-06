@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
-import resources from './resource.reducer';
+import resourceListReducer from './resource.reducer';
 
-export default combineReducers({ resources });
+const reducer = combineReducers({ resourceList: resourceListReducer });
+
+export default reducer;

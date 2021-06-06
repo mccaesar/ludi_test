@@ -7,8 +7,8 @@ import ResourceCard from './ResourceCard/ResourceCard';
 import useStyles from './styles';
 
 const ResourceContainer = ({ setCurrentId }) => {
-  const resources = useSelector((state) => state.resources.resources);
-  const loading = useSelector((state) => state.loading);
+  const resources = useSelector((state) => state.resourceList.resources ?? []);
+  const loading = useSelector((state) => state.resourceList.loading ?? false);
   const classes = useStyles();
 
   return (
