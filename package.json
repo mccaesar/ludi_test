@@ -2,41 +2,8 @@
   "name": "ludi_test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@react-firebase/auth": "^0.2.10",
-    "axios": "^0.21.1",
-    "body-parser": "^1.19.0",
-    "bootstrap": "^4.6.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "firebase": "^8.4.1",
-    "mongoose": "^5.12.4",
-    "react": "^17.0.2",
-    "react-art": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-firebase": "^2.2.8",
-    "react-firebaseui": "^4.1.0",
-    "react-helmet": "^6.1.0",
-    "react-native": "^0.64.0",
-    "react-native-web": "^0.15.7",
-    "react-router-dom": "^5.2.0",
-    "react-router-native": "^5.2.0",
-    "react-scripts": "^4.0.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
-  },
+  "author": "",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -48,5 +15,21 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.3.0"
   }
 }
