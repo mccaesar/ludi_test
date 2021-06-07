@@ -1,4 +1,5 @@
 import Fuse from 'fuse.js';
+
 import {
   FETCH_RESOURCES_REQUEST,
   FETCH_RESOURCES_SUCCESS,
@@ -8,7 +9,7 @@ import {
   SEARCH_RESOURCES_FAILURE,
 } from '../constants/actionTypes';
 
-export const initialState = {
+const initialState = {
   loading: true,
   resources: [],
   errorMessage: null,
@@ -41,14 +42,20 @@ export const reducer = (state = initialState, action) => {
         errorMessage: null,
       };
     case SEARCH_RESOURCES_SUCCESS:
-      let { resources, searchValue } = action.payload;
-      let filteredResources = resources.filter((resource) =>
-        resource.title.toLowerCase().includes(searchValue.toLowerCase())
-      )
+      const { resources, searchValue } = action.payload;
+
+      const options = {
+        includeScore: true,
+        keys: ['title']
+      };
+
+      const fuse = new Fuse(resources, options);
+      const searchResults = fuse.search(searchValue).map(({ item }) => item);
+
       return {
         ...state,
         loading: false,
-        resources: filteredResources,
+        resources: searchResults,
       };
     case SEARCH_RESOURCES_FAILURE:
       return {
