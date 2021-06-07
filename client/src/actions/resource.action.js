@@ -31,7 +31,7 @@ export const getResources = () => async (dispatch) => {
 
 export const searchResources = (searchValue) => async (dispatch) => {
   try {
-    if (searchValue === undefined || searchValue === null) {
+    if (searchValue === undefined || searchValue === null || searchValue === '') {
       dispatch(getResources());
       return;
     }

@@ -14,7 +14,7 @@ const App = () => {
   const [currentId, setCurrentId] = useState(0);
   const dispatch = useDispatch();
   const classes = useStyles();
-  
+
   useEffect(() => {
     dispatch(getResources());
   }, [currentId, dispatch]);
@@ -33,18 +33,9 @@ const App = () => {
       <Grow in>
         <Container>
           <SearchBar search={handleSearch} />
-          <Grid
-            container
-            justify="space-between"
-            alignItems="stretch"
-            spacing={3}
-          >
-            <Grid item xs={12} sm={7}>
-              <ResourceContainer
-                setCurrentId={setCurrentId}
-              />
-            </Grid>
-          </Grid>
+          <ResourceContainer
+            setCurrentId={setCurrentId}
+          />
         </Container>
       </Grow>
     </Container>

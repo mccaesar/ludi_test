@@ -7,7 +7,7 @@ import ResourceCard from './ResourceCard/ResourceCard';
 import useStyles from './styles';
 
 const ResourceContainer = ({ setCurrentId }) => {
-  const { loading, resources } = useSelector((state) => state.resourceList);
+  const {loading, resources} = useSelector((state) => state.resourceList);
   const classes = useStyles();
 
   return (
@@ -21,8 +21,9 @@ const ResourceContainer = ({ setCurrentId }) => {
           alignItems="stretch"
           spacing={3}
         >
+          {console.log("Resources: ", resources)}
           {resources.map((resource) => (
-            <Grid key={resource._id} item xs={12} sm={6} md={6}>
+            <Grid key={resource._id} item xs={12} sm={6} md={3}>
               <ResourceCard resource={resource} setCurrentId={setCurrentId} />
             </Grid>
           ))}
