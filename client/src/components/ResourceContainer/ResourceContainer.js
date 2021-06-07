@@ -7,8 +7,7 @@ import ResourceCard from './ResourceCard/ResourceCard';
 import useStyles from './styles';
 
 const ResourceContainer = ({ setCurrentId }) => {
-  const resources = useSelector((state) => state.resourceList.resources ?? []);
-  const loading = useSelector((state) => state.resourceList.loading ?? false);
+  const { loading, resources } = useSelector((state) => state.resourceList);
   const classes = useStyles();
 
   return (
@@ -17,12 +16,11 @@ const ResourceContainer = ({ setCurrentId }) => {
         <CircularProgress />
       ) : (
         <Grid
-        className={classes.container}
-        container
-        alignItems="stretch"
-        spacing={3}
+          className={classes.container}
+          container
+          alignItems="stretch"
+          spacing={3}
         >
-          {console.log("Resources: ", loading)}
           {resources.map((resource) => (
             <Grid key={resource._id} item xs={12} sm={6} md={6}>
               <ResourceCard resource={resource} setCurrentId={setCurrentId} />

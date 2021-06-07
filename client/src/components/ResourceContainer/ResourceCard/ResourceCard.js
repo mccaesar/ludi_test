@@ -37,7 +37,7 @@ const ResourceCard = ({ resource, setCurrentId }) => {
         <Button
           style={{ color: 'white' }}
           size="small"
-          onClick={() => setCurrentId(resource._id)}
+          // onClick={() => setCurrentId(resource._id)}
         >
           <MoreHorizIcon fontSize="default" />
         </Button>

@@ -1,32 +1,55 @@
-import { FETCH_RESOURCES, SEARCH_RESOURCES } from '../constants/actionTypes';
+import {
+  FETCH_RESOURCES_REQUEST,
+  FETCH_RESOURCES_SUCCESS,
+  FETCH_RESOURCES_FAILURE,
+  SEARCH_RESOURCES_REQUEST,
+  SEARCH_RESOURCES_SUCCESS,
+  SEARCH_RESOURCES_FAILURE,
+} from '../constants/actionTypes';
 
 import * as api from '../services';
 
 // Action creators - Redux thunk
-// export const getResources = () => async (dispatch) => {
-//   try {
-//     const { resources } = await api.fetchResources();
-//     const action = { type: FETCH_RESOURCES, payload: resources };
-//     dispatch(action);
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+export const getResources = () => async (dispatch) => {
+  try {
+    dispatch({ type: FETCH_RESOURCES_REQUEST });
+
+    const { data: resources } = await api.fetchResources();
+
+    const action = { type: FETCH_RESOURCES_SUCCESS, payload: resources };
+    dispatch(action);
+  } catch (error) {
+    dispatch({
+      type: FETCH_RESOURCES_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const searchResources = (searchValue) => async (dispatch) => {
   try {
-    const { resources } = await api.fetchResources();
-    let action = {};
-    if (searchValue === undefined) {
-      action = { type: FETCH_RESOURCES, payload: { resources } };
-    } else {
-      action = {
-        type: SEARCH_RESOURCES,
-        payload: { resources, searchValue },
-      };
+    if (searchValue === undefined || searchValue === null) {
+      dispatch(getResources());
+      return;
     }
+
+    dispatch({ type: SEARCH_RESOURCES_REQUEST });
+    const { data: resources } = await api.fetchResources();
+    const action = {
+      type: SEARCH_RESOURCES_SUCCESS,
+      payload: { resources, searchValue },
+    };
     dispatch(action);
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    dispatch({
+      type: SEARCH_RESOURCES_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };

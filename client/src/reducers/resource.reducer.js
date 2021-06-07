@@ -1,3 +1,4 @@
+import Fuse from 'fuse.js';
 import {
   FETCH_RESOURCES_REQUEST,
   FETCH_RESOURCES_SUCCESS,
@@ -40,10 +41,14 @@ export const reducer = (state = initialState, action) => {
         errorMessage: null,
       };
     case SEARCH_RESOURCES_SUCCESS:
+      let { resources, searchValue } = action.payload;
+      let filteredResources = resources.filter((resource) =>
+        resource.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
       return {
         ...state,
         loading: false,
-        resources: action.payload,
+        resources: filteredResources,
       };
     case SEARCH_RESOURCES_FAILURE:
       return {

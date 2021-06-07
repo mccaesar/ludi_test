@@ -6,20 +6,22 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const SearchBar = ({ search }) => {
   const [searchValue, setSearchValue] = useState('');
-  const { resources } = useSelector((state) => state.resourceList.resources);
+  const { resources } = useSelector((state) => state.resourceList);
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const resetInputField = () => {
+  const clear = () => {
     setSearchValue('');
   };
 
-  const callSearchFunction = (e) => {
-    e.preventDefault();
-    search(searchValue);
-    resetInputField();
+  const handleSubmit = async (e) => {
+    if (e.code === 'Enter') {
+      e.preventDefault();
+      search(searchValue);
+      clear();
+    }
   };
 
   return (
@@ -28,22 +30,18 @@ const SearchBar = ({ search }) => {
       id="search-bar"
       fullWidth
       disableClearable
-      // options={resources.map((resource) => resource.title)}
+      options={resources.map((resource) => resource.title)}
       renderInput={(params) => (
         <TextField
-        {...params}
-        label="Search for learning resources"
-        margin="normal"
-        variant="outlined"
-        onChange={handleInputChange}
-        InputProps={{ ...params.InputProps, type: 'search' }}
+          {...params}
+          label="Search for learning resources"
+          margin="normal"
+          variant="outlined"
+          onChange={handleInputChange}
+          InputProps={{ ...params.InputProps, type: 'search' }}
         />
       )}
-      onKeyDown={(e) => {
-        if (e.code === 'Enter') {
-          callSearchFunction();
-        }
-      }}
+      onKeyDown={handleSubmit}
     />
   );
 };
