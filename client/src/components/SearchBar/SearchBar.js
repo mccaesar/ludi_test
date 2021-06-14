@@ -69,7 +69,7 @@ const SearchBar = ({ search }) => {
           ChipProps
           multiple
           style={{ width: 500 }}
-          options={resources.map((resource) => resource.title)}
+          options={resources.map((resource) => resource.tags)}
           renderInput={(params) => (
             <TextField
               {...params}
