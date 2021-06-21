@@ -8,6 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
+            "runtimeExecutable": "/opt/google/chrome-unstable/google-chrome-unstable",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}",
             "skipFiles": [

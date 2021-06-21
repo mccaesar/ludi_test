@@ -1,20 +1,16 @@
 import mongoose from 'mongoose';
 
 const resourceSchema = mongoose.Schema({
+  resourceId: Number,
   title: String,
   description: String,
   longDescription: String,
-  website: String,
-  downloadorSignUp: String,
+  url: String,
   author: String,
-  categorization: String,
+  category: String,
   tags: String,
-  cost: String,
-  openSource: String,
+  isOpenSource: Boolean,
   dateAdded: String,
-  potentialUseCases: String,
-  strength: String,
-  cons: String,
 });
 
 // resourceSchema.method('toJSON', () => {
