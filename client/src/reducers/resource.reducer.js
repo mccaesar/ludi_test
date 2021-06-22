@@ -4,63 +4,45 @@ import {
   FETCH_RESOURCES_REQUEST,
   FETCH_RESOURCES_SUCCESS,
   FETCH_RESOURCES_FAILURE,
-  SEARCH_RESOURCES_REQUEST,
-  SEARCH_RESOURCES_SUCCESS,
-  SEARCH_RESOURCES_FAILURE,
 } from '../constants/actionTypes';
 
 const initialState = {
-  loading: true,
+  isLoading: false,
   resources: [],
+  favorites: [],
   errorMessage: null,
 };
 
-export const reducer = (state = initialState, action) => {
+const filterResources = ({ resources, searchTerm }) => {
+  if (searchTerm) {
+    const options = {
+      includeScore: true,
+      keys: ['title', 'category', 'tags', 'author', 'description'],
+    };
+    const fuse = new Fuse(resources, options);
+    return fuse.search(searchTerm).map(({ item }) => item);
+  }
+  return resources;
+};
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_RESOURCES_REQUEST:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
         errorMessage: null,
       };
     case FETCH_RESOURCES_SUCCESS:
       return {
         ...state,
-        loading: false,
-        resources: action.payload,
+        isLoading: false,
+        resources: filterResources(action.payload),
       };
     case FETCH_RESOURCES_FAILURE:
       return {
         ...state,
-        loading: false,
-        errorMessage: action.error,
-      };
-    case SEARCH_RESOURCES_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        errorMessage: null,
-      };
-    case SEARCH_RESOURCES_SUCCESS:
-      const { resources, searchValue } = action.payload;
-
-      const options = {
-        includeScore: true,
-        keys: ['title']
-      };
-
-      const fuse = new Fuse(resources, options);
-      const searchResults = fuse.search(searchValue).map(({ item }) => item);
-
-      return {
-        ...state,
-        loading: false,
-        resources: searchResults,
-      };
-    case SEARCH_RESOURCES_FAILURE:
-      return {
-        ...state,
-        loading: false,
+        isLoading: false,
         errorMessage: action.error,
       };
     default:
