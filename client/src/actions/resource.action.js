@@ -9,7 +9,7 @@ import * as api from '../services';
 export const fetchResources = (searchTerm) => async (dispatch) => {
   try {
     dispatch({ type: FETCH_RESOURCES_REQUEST });
-    
+
     const { data: resources } = await api.getResources();
     const action = {
       type: FETCH_RESOURCES_SUCCESS,
@@ -26,6 +26,3 @@ export const fetchResources = (searchTerm) => async (dispatch) => {
     });
   }
 };
-
-
-
