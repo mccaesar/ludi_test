@@ -14,7 +14,8 @@ export const ResourceCard = ({ resource }) => {
     <Box
       w="full"
       h="full"
-      maxW="sm"
+      maxW="xl"
+      minW="sm"
       mx="auto"
       position="relative"
       px={4}
@@ -28,9 +29,9 @@ export const ResourceCard = ({ resource }) => {
           fontSize="sm"
           color={useColorModeValue('gray.800', 'gray.400')}
         >
-          Online Resources
+          {category}
         </chakra.span>
-        <chakra.span
+        {/* <chakra.span
           bg={useColorModeValue('brand.200', 'brand.300')}
           color={useColorModeValue('brand.800', 'brand.900')}
           px={3}
@@ -40,7 +41,19 @@ export const ResourceCard = ({ resource }) => {
           fontSize="xs"
         >
           {category}
-        </chakra.span>
+        </chakra.span> */}
+        {/* <Flex alignItems="center" justifyContent="center" mt={6}>
+          <IconButton
+            aria-label="Save story"
+            icon={true ? <AiOutlineHeart /> : <AiFillHeart />}
+            variant="ghost"
+            isRound
+            size="sm"
+            // position="absolute"
+            // bottom={0}
+            // onClick={handleFavoriteClick}
+          />
+        </Flex> */}
       </Flex>
 
       <Box>
@@ -60,19 +73,6 @@ export const ResourceCard = ({ resource }) => {
           {description}
         </chakra.p>
       </Box>
-
-      <Flex alignItems="center" justifyContent="center" mt={6}>
-        <IconButton
-          aria-label="Save story"
-          icon={true ? <AiOutlineHeart /> : <AiFillHeart />}
-          variant="ghost"
-          isRound
-          size="sm"
-          position="absolute"
-          bottom={0}
-          // onClick={handleFavoriteClick}
-        />
-      </Flex>
     </Box>
   );
 };

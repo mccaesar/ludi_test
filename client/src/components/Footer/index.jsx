@@ -1,74 +1,20 @@
 import {
   Box,
-  chakra,
   Container,
   Link,
   SimpleGrid,
   Stack,
   Text,
-  VisuallyHidden,
   Input,
   IconButton,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { ReactNode } from 'react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { BiMailSend } from 'react-icons/bi';
-import { FOOTER_LOGO } from '../../constants/svgPaths';
 
-const Logo = (props: any) => {
-  return (
-    <chakra.svg
-      aria-hidden
-      viewBox="0 0 181.201 64.721"
-      fill="none"
-      h="64.721"
-      flexShrink={0}
-    >
-      <path d={FOOTER_LOGO} fill={useColorModeValue('gray.800', 'white')} />
-    </chakra.svg>
-  );
-};
-
-const SocialButton = ({
-  children,
-  label,
-  href,
-}: {
-  children: ReactNode;
-  label: string;
-  href: string;
-}) => {
-  return (
-    <chakra.button
-      bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
-      rounded={'full'}
-      w={8}
-      h={8}
-      cursor={'pointer'}
-      as={'a'}
-      href={href}
-      display={'inline-flex'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      transition={'background 0.3s ease'}
-      _hover={{
-        bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
-      }}
-    >
-      <VisuallyHidden>{label}</VisuallyHidden>
-      {children}
-    </chakra.button>
-  );
-};
-
-const ListHeader = ({ children }: { children: ReactNode }) => {
-  return (
-    <Text fontWeight={'500'} fontSize={'lg'} mb={2}>
-      {children}
-    </Text>
-  );
-};
+import { Logo } from './Logo';
+import { ListHeader } from './ListHeader';
+import { SocialButton } from './SocialButton';
 
 export const Footer = () => {
   return (
@@ -79,7 +25,7 @@ export const Footer = () => {
       position="fixed"
       bottom="0"
     >
-      <Container as={Stack} maxW={'6xl'} py={10}>
+      <Container as={Stack} maxW={'7xl'} py={10}>
         <SimpleGrid
           templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 2fr' }}
           spacing={8}
@@ -104,20 +50,16 @@ export const Footer = () => {
             </Stack>
           </Stack>
           <Stack align={'flex-start'}>
-            <ListHeader>Company</ListHeader>
-            <Link href={'#'}>About us</Link>
-            <Link href={'#'}>Blog</Link>
-            <Link href={'#'}>Contact us</Link>
-            <Link href={'#'}>Pricing</Link>
-            <Link href={'#'}>Testimonials</Link>
+            <ListHeader>Project Ludi</ListHeader>
+            <Link href={'#'}>About Us</Link>
+            <Link href={'#'}>What We Offer</Link>
+            <Link href={'#'}>Contact Us</Link>
           </Stack>
           <Stack align={'flex-start'}>
-            <ListHeader>Support</ListHeader>
-            <Link href={'#'}>Help Center</Link>
-            <Link href={'#'}>Terms of Service</Link>
-            <Link href={'#'}>Legal</Link>
+            <ListHeader>More</ListHeader>
+            <Link href={'#'}>Support Us</Link>
             <Link href={'#'}>Privacy Policy</Link>
-            <Link href={'#'}>Satus</Link>
+            <Link href={'#'}>Terms of Service</Link>
           </Stack>
           <Stack align={'flex-start'}>
             <ListHeader>Stay up to date</ListHeader>
