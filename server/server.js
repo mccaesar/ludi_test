@@ -1,9 +1,14 @@
-/* eslint-disable import/extensions */
+import dotenv from 'dotenv';
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
+
 import cors from 'cors';
 import express from 'express';
-import db from './models/index.js';
+import passport from 'passport';
 
-import resourceRoutes from './routes/resource.route.js';
+import db from './models/index.js';
+import routes from './routes/index.js';
 
 const { json, urlencoded } = express;
 const { mongoose, url } = db;
@@ -13,7 +18,6 @@ const app = express();
 const corsOptions = {
   origin: 'http://localhost:3000',
 };
-
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
@@ -22,7 +26,9 @@ app.use(json({ limit: '30mb', extended: true }));
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(urlencoded({ limit: '30mb', extended: true }));
 
-app.use('/resources', resourceRoutes);
+app.use(passport.initialize());
+
+app.use('/', routes);
 
 mongoose
   .connect(url, {

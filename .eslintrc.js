@@ -14,5 +14,8 @@ module.exports = {
   plugins: ['react', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
+    'no-unused-vars': 'warn',
+    'react/jsx-filename-extension': [0],
+    'react/prop-types': 'off',
   },
 };

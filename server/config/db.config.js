@@ -1,2 +1,3 @@
-const url = 'mongodb://localhost:27017/ludi_db';
+const url =
+  'mongodb+srv://ludi_user:ludi_password@ludicluster.rtcvv.mongodb.net/ludi_db?retryWrites=true&w=majority';
 export default url;
