@@ -5,23 +5,27 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
   Modal,
   ModalContent,
   ModalOverlay,
   ModalCloseButton,
+  Icon,
   useColorModeValue as mode,
 } from '@chakra-ui/react';
+import {
+  AutoComplete,
+  AutoCompleteInput,
+  AutoCompleteItem,
+  AutoCompleteList,
+} from '@choc-ui/chakra-autocomplete';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
-// import {
-//   AutoComplete,
-//   AutoCompleteInput,
-//   AutoCompleteItem,
-//   AutoCompleteList,
-// } from '@choc-ui/chakra-autocomplete';
-
-export const SearchModal = ({ search, isOpen, onClose }) => {
+export const SearchModal = ({ search, disclosure }) => {
   const initialRef = useRef();
+  const { isOpen, onClose } = disclosure;
   let [searchTerm, setSearchTerm] = useState('');
+  const options = ['apple', 'appoint', 'zap', 'cap', 'japan'];
 
   const handleSubmit = (e) => {
     if (e.code === 'Enter') {
@@ -32,11 +36,7 @@ export const SearchModal = ({ search, isOpen, onClose }) => {
   };
 
   return (
-    <Modal
-      initialFocusRef={initialRef}
-      isOpen={isOpen}
-      onClose={onClose}
-    >
+    <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent maxW={{ base: 'xl', md: '4xl' }}>
         <Box
@@ -47,20 +47,32 @@ export const SearchModal = ({ search, isOpen, onClose }) => {
           borderColor={mode('gray.200', 'transparent')}
           shadow={{ md: 'lg' }}
         >
-          <InputGroup>
-            <InputLeftElement
-              pointerEvents="none"
-              children={<AiOutlineSearch />}
-            />
-            <Input
-              variant="filled"
-              value={searchTerm}
-              ref={initialRef}
-              placeholder="Search Resources..."
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={handleSubmit}
-            />
-          </InputGroup>
+          <AutoComplete rollNavigation>
+            {({ isOpen }) => (
+              <>
+                <InputGroup>
+                  <AutoCompleteInput variant="filled" placeholder="Search..." />
+                  <InputRightElement
+                    children={
+                      <Icon as={isOpen ? ChevronRightIcon : ChevronDownIcon} />
+                    }
+                  />
+                </InputGroup>
+                <AutoCompleteList>
+                  {options.map((option, oid) => (
+                    <AutoCompleteItem
+                      key={`option-${oid}`}
+                      value={option}
+                      textTransform="capitalize"
+                      align="center"
+                    >
+                      {option}
+                    </AutoCompleteItem>
+                  ))}
+                </AutoCompleteList>
+              </>
+            )}
+          </AutoComplete>
         </Box>
       </ModalContent>
     </Modal>

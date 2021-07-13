@@ -15,22 +15,15 @@ import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
 import { ResourceContainer } from '../../components/ResourceContainer';
 import { fetchResources } from '../../actions/resource.action';
+import { SearchBar } from '../../components/SearchBar';
 
-export const HomePage = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchResources());
-  }, [dispatch]);
-
-  const handleSearch = async (searchTerm) => {
-    dispatch(fetchResources(searchTerm));
-  };
+export const HomePage = ({match}) => {
 
   return (
     <>
       <NavBar />
-      <ResourceContainer />
+      <SearchBar url={match.url}/>
+      {/* <ResourceContainer /> */}
       <Footer />
     </>
   );

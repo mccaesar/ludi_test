@@ -15,8 +15,9 @@ import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { DividerWithText } from './DividerWithText';
 import { RegistrationForm } from './RegistrationForm';
 
-export const RegistrationModal = ({ isOpen, onClose }) => {
+export const RegistrationModal = ({ disclosure }) => {
   const initialRef = useRef();
+  const { isOpen, onClose } = disclosure;
   return (
     <Modal
       initialFocusRef={initialRef}

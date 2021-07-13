@@ -1,12 +1,9 @@
-/* eslint-disable import/extensions */
 import express from 'express';
 import mongoose from 'mongoose';
-
 import db from '../models/index.js';
 
-const Resource = db.resources;
-
 const router = express.Router();
+const { Resource } = db;
 
 export const getResources = async (req, res) => {
   try {
@@ -15,6 +12,19 @@ export const getResources = async (req, res) => {
   } catch (err) {
     res.status(404).send({
       message: err.message || 'Some error occurred while retrieving resources.',
+    });
+  }
+};
+
+export const getResourceByRID = async (req, res) => {
+  try {
+    const resource = await Resource.findOne({ resourceId: req.params.resourceId });
+    res.status(200).send(resource);
+  } catch (err) {
+    res.status(404).send({
+      message:
+        err.message ||
+        `Some error occurred while retrieving resource with id: ${resourceId}.`,
     });
   }
 };

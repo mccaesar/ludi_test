@@ -1,28 +1,30 @@
-import { useRef } from 'react';
 import {
   Box,
   Button,
   Heading,
   Stack,
   Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalCloseButton,
+  SimpleGrid,
   useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
+import { Footer } from '../../components/Footer';
+import { NavBar } from '../../components/NavBar';
 import { DividerWithText } from './DividerWithText';
 import { LoginForm } from './LoginForm';
 
-export const LoginModal = ({ disclosure }) => {
-  const initialRef = useRef();
-  const { isOpen, onClose } = disclosure;
+export const LoginPage = () => {
   return (
-    <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent maxW="xl">
-        <ModalCloseButton />
+    <>
+      <NavBar />
+      <Box
+        w="full"
+        maxW="xl"
+        justifyContent="center"
+        mx="auto"
+        py={{ base: '10', md: '20' }}
+        px={{ base: '4', md: '10' }}
+      >
         <Box
           bg={{ md: mode('white', 'gray.700') }}
           rounded={{ md: '2xl' }}
@@ -31,6 +33,12 @@ export const LoginModal = ({ disclosure }) => {
           borderColor={mode('gray.200', 'transparent')}
           shadow={{ md: 'lg' }}
         >
+          {/* <Logo
+                h="6"
+                mb={{ base: '16', md: '10' }}
+                iconColor="blue.600"
+                mx={{ base: 'auto', md: 'unset' }}
+              /> */}
           <Box mb="8" textAlign={{ base: 'center', md: 'start' }}>
             <Heading size="lg" mb="2" fontWeight="extrabold">
               Welcome back to Ludi
@@ -40,7 +48,7 @@ export const LoginModal = ({ disclosure }) => {
               color={mode('gray.600', 'gray.400')}
               fontWeight="medium"
             >
-              Enter your info to get started
+              Enter your info to log in
             </Text>
           </Box>
           <Stack spacing="4">
@@ -48,38 +56,38 @@ export const LoginModal = ({ disclosure }) => {
               variant="outline"
               leftIcon={<Box as={FaGoogle} color="red.500" />}
             >
-              Sign in with Google
+              Log in with Google
             </Button>
             <Button
               variant="outline"
               leftIcon={
                 <Box
                   as={FaGithub}
-                  color={mode('facebook.500', 'facebook.300')}
+                  // color={mode('github.500', 'github.300')}
                 />
               }
             >
-              Sign in with Github
+              Log in with Github
             </Button>
           </Stack>
 
           <DividerWithText>or</DividerWithText>
-
-          <LoginForm initialRef={initialRef} />
-
-          <Text mt="8" align="center" fontWeight="medium">
-            Don't have an account?{' '}
-            <Box
-              as="a"
-              href="#"
-              color={mode('blue.600', 'blue.200')}
-              display={{ base: 'block', md: 'inline-block' }}
-            >
-              Sign up for free
-            </Box>
-          </Text>
+          <LoginForm />
         </Box>
-      </ModalContent>
-    </Modal>
+
+        <Text mt="8" align="center" fontWeight="medium">
+          Don't have an account?{' '}
+          <Box
+            as="a"
+            href="/register"
+            color={mode('blue.600', 'blue.200')}
+            display={{ base: 'block', md: 'inline-block' }}
+          >
+            Sign up for free
+          </Box>
+        </Text>
+      </Box>
+      <Footer />
+    </>
   );
 };

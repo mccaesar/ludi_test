@@ -1,11 +1,13 @@
-/* eslint-disable import/extensions */
 import mongoose from 'mongoose';
 import url from '../config/db.config.js';
 import Resource from './resource.model.js';
+import User from './user.model.js';
 
-const db = {};
-db.mongoose = mongoose;
-db.url = url;
-db.resources = Resource;
+const db = {
+  mongoose,
+  url,
+  Resource,
+  User,
+};
 
 export default db;

@@ -1,32 +1,26 @@
-import React from 'react';
-
 import {
   chakra,
-  Box,
   Flex,
   HStack,
-  VStack,
   Button,
-  IconButton,
-  CloseButton,
   VisuallyHidden,
   useDisclosure,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch } from 'react-icons/ai';
 import { BsSun, BsMoon } from 'react-icons/bs';
 
 import { Logo } from './Logo';
+import { MobileNav } from './MobileNav';
 import { LoginModal } from '../LoginModal';
 import { RegistrationModal } from '../RegistrationModal';
 import { SearchModal } from '../SearchModal';
+import { UserMenu } from './UserMenu';
 
 export const NavBar = () => {
   const bg = useColorModeValue('white', 'gray.800');
   const mobileNav = useDisclosure();
   const searchModal = useDisclosure();
-  const loginModal = useDisclosure();
-  const registrationModal = useDisclosure();
 
   return (
     <>
@@ -65,7 +59,9 @@ export const NavBar = () => {
               w="2xs"
               mx={{ base: '2', md: '4' }}
               justifyContent="flex-start"
-              onClick={searchModal.onOpen}
+              // onClick={searchModal.onOpen}
+              as="a"
+              href="/search?field=title&sort=relevance"
             >
               Search Resources
             </Button>
@@ -76,87 +72,26 @@ export const NavBar = () => {
               color="brand.500"
               display={{ base: 'none', md: 'inline-flex' }}
             >
-              <Button variant="ghost" size="sm" onClick={loginModal.onOpen}>
+              <Button variant="ghost" size="sm" as="a" href="/login">
                 Sign In
               </Button>
-              <Button
-                colorScheme="brand"
-                size="sm"
-                onClick={registrationModal.onOpen}
-              >
+              <Button colorScheme="brand" size="sm" as="a" href="/register">
                 Join for free
               </Button>
             </HStack>
+            <UserMenu />
           </HStack>
 
-          <Box display={{ base: 'inline-flex', md: 'none' }}>
-            <IconButton
-              icon={<AiOutlineSearch />}
-              display={{ base: 'inline-flex', md: 'none' }}
-              mx={{ base: '4', md: '6' }}
-              colorScheme="brand"
-              isRound="true"
-              onClick={searchModal.onOpen}
-            />
-            <IconButton
-              display={{ base: 'flex', md: 'none' }}
-              aria-label="Open menu"
-              fontSize="20px"
-              color={useColorModeValue('gray.800', 'inherit')}
-              variant="ghost"
-              icon={<AiOutlineMenu />}
-              onClick={mobileNav.onOpen}
-            />
-            <VStack
-              pos="absolute"
-              top={0}
-              left={0}
-              right={0}
-              display={mobileNav.isOpen ? 'flex' : 'none'}
-              flexDirection="column"
-              p={2}
-              pb={4}
-              m={2}
-              bg={bg}
-              spacing={3}
-              rounded="sm"
-              shadow="sm"
-            >
-              <CloseButton
-                aria-label="Close menu"
-                justifySelf="self-start"
-                onClick={mobileNav.onClose}
-              />
-              <Button
-                w="full"
-                variant="ghost"
-                onClick={(e) => {
-                  mobileNav.onClose(e);
-                  loginModal.onOpen(e);
-                }}
-              >
-                Sign In
-              </Button>
-              <Button
-                w="full"
-                colorScheme="brand"
-                onClick={(e) => {
-                  mobileNav.onClose(e);
-                  registrationModal.onOpen(e);
-                }}
-              >
-                Sign Up
-              </Button>
-            </VStack>
-          </Box>
+          <MobileNav
+            disclosures={{
+              mobileNav,
+              searchModal,
+            }}
+            bg={bg}
+          />
         </Flex>
       </chakra.header>
-      <SearchModal isOpen={searchModal.isOpen} onClose={searchModal.onClose} />
-      <LoginModal isOpen={loginModal.isOpen} onClose={loginModal.onClose} />
-      <RegistrationModal
-        isOpen={registrationModal.isOpen}
-        onClose={registrationModal.onClose}
-      />
+      <SearchModal disclosure={searchModal} />
     </>
   );
 };

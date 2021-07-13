@@ -1,28 +1,30 @@
-import { useRef } from 'react';
 import {
   Box,
   Button,
   Heading,
   Stack,
   Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalCloseButton,
+  SimpleGrid,
   useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
+import { NavBar } from '../../components/NavBar';
+import { Footer } from '../../components/Footer';
 import { DividerWithText } from './DividerWithText';
-import { LoginForm } from './LoginForm';
+import { RegistrationForm } from './RegistrationForm';
 
-export const LoginModal = ({ disclosure }) => {
-  const initialRef = useRef();
-  const { isOpen, onClose } = disclosure;
+export const RegistrationPage = () => {
   return (
-    <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent maxW="xl">
-        <ModalCloseButton />
+    <>
+      <NavBar />
+      <Box
+        w="full"
+        maxW="xl"
+        justifyConten="center"
+        mx="auto"
+        py={{ base: '10', md: '20' }}
+        px={{ base: '4', md: '10' }}
+      >
         <Box
           bg={{ md: mode('white', 'gray.700') }}
           rounded={{ md: '2xl' }}
@@ -31,9 +33,15 @@ export const LoginModal = ({ disclosure }) => {
           borderColor={mode('gray.200', 'transparent')}
           shadow={{ md: 'lg' }}
         >
+          {/* <Logo
+                h="6"
+                mb={{ base: '16', md: '10' }}
+                iconColor="blue.600"
+                mx={{ base: 'auto', md: 'unset' }}
+              /> */}
           <Box mb="8" textAlign={{ base: 'center', md: 'start' }}>
             <Heading size="lg" mb="2" fontWeight="extrabold">
-              Welcome back to Ludi
+              Welcome to Ludi
             </Heading>
             <Text
               fontSize="lg"
@@ -48,38 +56,38 @@ export const LoginModal = ({ disclosure }) => {
               variant="outline"
               leftIcon={<Box as={FaGoogle} color="red.500" />}
             >
-              Sign in with Google
+              Sign up with Google
             </Button>
             <Button
               variant="outline"
               leftIcon={
                 <Box
                   as={FaGithub}
-                  color={mode('facebook.500', 'facebook.300')}
+                  // color={mode('github.500', 'github.300')}
                 />
               }
             >
-              Sign in with Github
+              Sign up with Github
             </Button>
           </Stack>
 
           <DividerWithText>or</DividerWithText>
-
-          <LoginForm initialRef={initialRef} />
-
-          <Text mt="8" align="center" fontWeight="medium">
-            Don't have an account?{' '}
-            <Box
-              as="a"
-              href="#"
-              color={mode('blue.600', 'blue.200')}
-              display={{ base: 'block', md: 'inline-block' }}
-            >
-              Sign up for free
-            </Box>
-          </Text>
+          <RegistrationForm />
         </Box>
-      </ModalContent>
-    </Modal>
+
+        <Text mt="8" align="center" fontWeight="medium">
+          Already have an account?{' '}
+          <Box
+            as="a"
+            href="/login"
+            color={mode('blue.600', 'blue.200')}
+            display={{ base: 'block', md: 'inline-block' }}
+          >
+            Log in to Ludi
+          </Box>
+        </Text>
+      </Box>
+      <Footer />
+    </>
   );
 };
