@@ -27,8 +27,7 @@ export const ResourcePage = ({ match }) => {
   const resource = resources[match.params.id];
   let title, author, description, longDescription, url, tags;
   if (resource) {
-    ({ title, author, description, longDescription, url } = resource);
-    tags = resource.tags.split(', ');
+    ({ title, author, description, longDescription, url, tags } = resource);
   }
 
   return resource ? (
