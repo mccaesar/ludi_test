@@ -25,10 +25,12 @@ export const SearchBar = () => {
   const handleSearch = (e) => {
     if (e.code === 'Enter') {
       e.preventDefault();
-      query.set('q', searchTerm);
-      query.set('field', 'title');
-      query.set('sort', 'relevance');
-      history.push(`/search?${query}`);
+      if (searchTerm) {
+        query.set('q', searchTerm);
+        history.push(`/search?${query}`);
+      } else {
+        history.push(`/search`);
+      }
     }
   };
 

@@ -9,7 +9,6 @@ import { NavBar } from '../../components/NavBar';
 import { ResourceContainer } from '../../components/ResourceContainer';
 import { FilterBar } from '../../components/FilterBar';
 import { SearchBar } from '../../components/SearchBar';
-import { useEffectOnce } from '../../hooks/useEffectOnce';
 
 export const FilterPage = () => {
   const dispatch = useDispatch();
