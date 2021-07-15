@@ -67,37 +67,35 @@ const filterResources = ({
       threshold: 0,
     };
     const fuse = new Fuse(filteredResources, options);
-    return fuse.search(searchTerm).map(({ item }) => item);
+    filteredResources = fuse.search(searchTerm).map(({ item }) => item);
   }
 
   if (sortOption) {
-    if (!searchTerm || !sortOption === 'relevance') {
-      switch (sortOption) {
-        case 'popularity':
-          break;
-        case 'az':
-          filteredResources.sort((a, b) =>
-            a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
-          );
-          break;
-        case 'za':
-          filteredResources.sort((a, b) =>
-            a.title.toLowerCase() < b.title.toLowerCase() ? 1 : -1
-          );
-          break;
-        case 'old':
-          filteredResources.sort((a, b) =>
-            a.dateAdded.substring(0, 10) > b.dateAdded.substring(0, 10) ? 1 : -1
-          );
-          break;
-        case 'new':
-          filteredResources.sort((a, b) =>
-            a.dateAdded.substring(0, 10) < b.dateAdded.substring(0, 10) ? 1 : -1
-          );
-          break;
-        default:
-          break;
-      }
+    switch (sortOption) {
+      case 'popularity':
+        break;
+      case 'az':
+        filteredResources.sort((a, b) =>
+          a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
+        );
+        break;
+      case 'za':
+        filteredResources.sort((a, b) =>
+          a.title.toLowerCase() < b.title.toLowerCase() ? 1 : -1
+        );
+        break;
+      case 'old':
+        filteredResources.sort((a, b) =>
+          a.dateAdded.substring(0, 10) > b.dateAdded.substring(0, 10) ? 1 : -1
+        );
+        break;
+      case 'new':
+        filteredResources.sort((a, b) =>
+          a.dateAdded.substring(0, 10) < b.dateAdded.substring(0, 10) ? 1 : -1
+        );
+        break;
+      default:
+        break;
     }
     console.log(filteredResources);
   }
