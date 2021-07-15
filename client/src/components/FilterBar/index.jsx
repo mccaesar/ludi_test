@@ -29,6 +29,14 @@ export const FilterBar = () => {
     setSelectedSearchFields(query.getAll('field'));
     setSelectedTags(query.getAll('tag'));
     setSelectedSort(query.get('sort'));
+
+    /** PLEASE REFACTOR THIS LATER! */
+    if (selectedSearchFields.length === 0) {
+      setSelectedSearchFields(['title']);
+    }
+    if (!selectedSort) {
+      setSelectedSort('relevance');
+    }
   });
 
   useEffect(() => {

@@ -61,7 +61,7 @@ export const NavBar = () => {
               justifyContent="flex-start"
               // onClick={searchModal.onOpen}
               as="a"
-              href="/search?field=title&sort=relevance"
+              href="/search"
             >
               Search Resources
             </Button>
