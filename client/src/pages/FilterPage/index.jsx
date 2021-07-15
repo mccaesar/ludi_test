@@ -15,11 +15,15 @@ export const FilterPage = () => {
   const dispatch = useDispatch();
   const url = useLocation();
   const query = new URLSearchParams(url.search);
+
   const searchTerm = query.get('q');
+  const searchFields = query.getAll('field');
+  const filterTags = query.getAll('tag');
+  const sortOption = query.get('sort');
 
   useEffect(() => {
-    dispatch(fetchResources(searchTerm));
-  },  [dispatch, searchTerm]);
+    dispatch(fetchResources(searchTerm, searchFields, filterTags, sortOption));
+  }, [dispatch, searchFields, searchTerm, sortOption, filterTags]);
 
   return (
     <>

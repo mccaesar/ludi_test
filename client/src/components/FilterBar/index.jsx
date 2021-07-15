@@ -58,6 +58,8 @@ export const FilterBar = () => {
 
   const [NONE, SEARCH_FIELD, CATEGORY] = [0, 1, 2];
   const tagOptions = [
+    { value: 'Homework', label: 'Homework' },
+    { value: 'Network Emulator', label: 'Network Emulator' },
     { value: 'AI/ML', label: 'AI/ML' },
     { value: 'audio', label: 'audio' },
     { value: 'BGP', label: 'BGP' },
@@ -135,7 +137,7 @@ export const FilterBar = () => {
             <Select
               isMulti
               name="tagMultiSelect"
-              placeholder="Select some colors..."
+              placeholder="Select some tags..."
               closeMenuOnSelect={false}
               size="sm"
               options={tagOptions}
@@ -168,7 +170,7 @@ export const FilterBar = () => {
           _focus={{}}
           onClick={() => handleCollapse(CATEGORY)}
         >
-          Category
+          Tags
         </Button>
         <Spacer />
         <Box w="3xs">

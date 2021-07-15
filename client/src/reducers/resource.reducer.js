@@ -4,6 +4,9 @@ import {
   FETCH_RESOURCES_REQUEST,
   FETCH_RESOURCES_SUCCESS,
   FETCH_RESOURCES_FAILURE,
+  FILTER_RESOURCES_REQUEST,
+  FILTER_RESOURCES_SUCCESS,
+  FILTER_RESOURCES_FAILURE,
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -13,16 +16,60 @@ const initialState = {
   errorMessage: null,
 };
 
-const filterResources = ({ resources, searchTerm }) => {
+const filterResources = ({
+  resources,
+  searchTerm,
+  searchFields,
+  filterTags,
+  sortOption,
+}) => {
+  resources.map(
+    (resource) =>
+      (resource.tags = resource.tags.split(',').map((tag) => tag.trim()))
+  );
+
+  let filteredResources = [...resources];
+  if (filterTags && filterTags.length > 0) {
+    const filteredByCategory = resources.filter(function (resource) {
+      return this.indexOf(resource.category) >= 0;
+    }, filterTags);
+
+    // if (filteredByCategory.length > 0) {
+    //   filteredResources = filteredByCategory;
+    // }
+
+    const filteredByTags = filteredResources.filter(function (resource) {
+      return (
+        resource.tags.filter(function (tag) {
+          return this.indexOf(tag) >= 0;
+        }, filterTags).length > 0 // resource has all tags that are searched
+      );
+    });
+
+    filteredResources = filteredByCategory.concat(
+      filteredByTags.filter(
+        (resource) => filteredByCategory.indexOf(resource) < 0
+      )
+    );
+  }
+
   if (searchTerm) {
+    if (searchFields.includes('category')) {
+      searchFields.push({
+        name: 'tags',
+        weight: 0.7,
+      });
+    }
     const options = {
       includeScore: true,
-      keys: ['title', 'category', 'tags', 'author', 'description'],
+      keys: searchFields,
+      threshold: 0.5
     };
-    const fuse = new Fuse(resources, options);
+    const fuse = new Fuse(filteredResources, options);
     return fuse.search(searchTerm).map(({ item }) => item);
   }
-  return resources;
+
+  return filteredResources;
 };
 
 const reducer = (state = initialState, action) => {
@@ -40,6 +87,24 @@ const reducer = (state = initialState, action) => {
         resources: filterResources(action.payload),
       };
     case FETCH_RESOURCES_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: action.error,
+      };
+    case FILTER_RESOURCES_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: null,
+      };
+    case FILTER_RESOURCES_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        resources: filterResources(action.payload),
+      };
+    case FILTER_RESOURCES_FAILURE:
       return {
         ...state,
         isLoading: false,
