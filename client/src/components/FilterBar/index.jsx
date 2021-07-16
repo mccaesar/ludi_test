@@ -25,18 +25,23 @@ export const FilterBar = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedSort, setSelectedSort] = useState('');
 
+
   useEffectOnce(() => {
-    setSelectedSearchFields(query.getAll('field'));
+    setSelectedSearchFields(query.getAll('field'), () => {
+      if (selectedSearchFields.length === 0) {
+        setSelectedSearchFields(['title']);
+      }
+    })
     setSelectedTags(query.getAll('tag'));
     setSelectedSort(query.get('sort'));
 
     /** PLEASE REFACTOR THIS LATER! */
-    if (selectedSearchFields.length === 0) {
-      setSelectedSearchFields(['title']);
-    }
-    if (!selectedSort) {
-      setSelectedSort('relevance');
-    }
+    // if (selectedSearchFields.length === 0) {
+    //   setSelectedSearchFields(['title']);
+    // }
+    // if (!selectedSort) {
+    //   setSelectedSort('relevance');
+    // }
   });
 
   useEffect(() => {
