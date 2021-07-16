@@ -97,7 +97,6 @@ const filterResources = ({
       default:
         break;
     }
-    console.log(filteredResources);
   }
 
   return filteredResources;

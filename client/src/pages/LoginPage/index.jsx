@@ -41,7 +41,7 @@ export const LoginPage = () => {
               /> */}
           <Box mb="8" textAlign={{ base: 'center', md: 'start' }}>
             <Heading size="lg" mb="2" fontWeight="extrabold">
-              Welcome back to Ludi
+              Welcome back
             </Heading>
             <Text
               fontSize="lg"

@@ -17,14 +17,16 @@ const userSchema = mongoose.Schema(
     email: {
       type: String,
       required: true,
-      min: 6,
+      min: 8,
       max: 255,
     },
-    password: {
+    hash: {
       type: String,
       required: true,
-      min: 6,
-      max: 1023,
+    },
+    salt: {
+      type: String,
+      required: true,
     },
     dateJoined: {
       type: Date,

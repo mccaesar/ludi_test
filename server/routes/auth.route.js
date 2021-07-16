@@ -1,11 +1,12 @@
-// import express from 'express';
-// import {
-//   registerUser,
-//   logInUser,
-//   logOutUser,
-// } from '../controllers/auth.controller.js';
+import express from 'express';
+import passport from 'passport'
+import {
+  registerUser,
+  logInUser,
+  logOutUser,
+} from '../controllers/auth.controller.js';
 
-// const router = express.Router();
+const router = express.Router();
 
 // export const authRedir = (req, res, next) => {
 //   if (req.isAuthenticated()) {
@@ -21,10 +22,16 @@
 //   next();
 // };
 
-// router.get('/protected', (req, res, next) => {});
+router.get(
+  '/protected',
+  passport.authenticate('jwt', { session: false }),
+  (req, res, next) => {
+    res.status(200).json({ success: true, msg: 'You are authorized' });
+  }
+);
 
-// router.post('/register', registerUser);
-// router.post('/login', logInUser);
-// router.delete('/logout', logOutUser);
+router.post('/register', registerUser);
+router.post('/login', logInUser);
+router.delete('/logout', logOutUser);
 
-// export default router;
+export default router;
