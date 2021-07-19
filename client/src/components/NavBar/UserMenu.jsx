@@ -10,10 +10,12 @@ import {
   MenuItem,
   MenuList,
   useColorModeValue,
+  Button,
 } from '@chakra-ui/react';
 import { FiChevronDown } from 'react-icons/fi';
+import { logoutUser } from '../../services';
 
-export const UserMenu = () => (
+export const UserMenu = ({fullname}) => (
   <Menu closeOnBlur closeOnSelect>
     <MenuButton
       px={2}
@@ -29,9 +31,9 @@ export const UserMenu = () => (
           spacing="1px"
           ml="2"
         >
-          <Text fontSize="sm">Vien Vuong</Text>
+          <Text fontSize="sm">{fullname}</Text>
           <Text fontSize="xs" color="gray.600">
-            Admin
+            User
           </Text>
         </VStack>
       </HStack>
@@ -40,10 +42,10 @@ export const UserMenu = () => (
       bg={useColorModeValue('white', 'gray.900')}
       borderColor={useColorModeValue('gray.200', 'gray.700')}
     >
-      <MenuItem>Profile</MenuItem>
+      <MenuItem as="a" href="/profile">Profile</MenuItem>
       <MenuItem>Settings</MenuItem>
       <MenuDivider />
-      <MenuItem>Sign out</MenuItem>
+      <MenuItem onClick={() => logoutUser()}>Sign out</MenuItem>
     </MenuList>
   </Menu>
 );

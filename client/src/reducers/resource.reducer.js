@@ -4,15 +4,15 @@ import {
   FETCH_RESOURCES_REQUEST,
   FETCH_RESOURCES_SUCCESS,
   FETCH_RESOURCES_FAILURE,
-  FILTER_RESOURCES_REQUEST,
-  FILTER_RESOURCES_SUCCESS,
-  FILTER_RESOURCES_FAILURE,
+  FETCH_SAVED_RESOURCES_REQUEST,
+  FETCH_SAVED_RESOURCES_SUCCESS,
+  FETCH_SAVED_RESOURCES_FAILURE,
 } from '../constants/actionTypes';
 
 const initialState = {
   isLoading: false,
   resources: [],
-  favorites: [],
+  savedResources: [],
   errorMessage: null,
 };
 
@@ -102,6 +102,13 @@ const filterResources = ({
   return filteredResources;
 };
 
+const filterSavedResources = ({ resources, savedResourceIds }) => {
+  const savedResources = resources.filter(
+    (resource) => savedResourceIds.indexOf(resource.resourceId.toString()) >= 0
+  );
+  return savedResources;
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_RESOURCES_REQUEST:
@@ -122,19 +129,19 @@ const reducer = (state = initialState, action) => {
         isLoading: false,
         errorMessage: action.error,
       };
-    case FILTER_RESOURCES_REQUEST:
+    case FETCH_SAVED_RESOURCES_REQUEST:
       return {
         ...state,
         isLoading: true,
         errorMessage: null,
       };
-    case FILTER_RESOURCES_SUCCESS:
+    case FETCH_SAVED_RESOURCES_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        resources: filterResources(action.payload),
+        savedResources: filterSavedResources(action.payload),
       };
-    case FILTER_RESOURCES_FAILURE:
+    case FETCH_SAVED_RESOURCES_FAILURE:
       return {
         ...state,
         isLoading: false,

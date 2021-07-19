@@ -1,6 +1,7 @@
 import express from 'express';
-import passport from 'passport'
+import passport from 'passport';
 import {
+  userAuthorized,
   registerUser,
   logInUser,
   logOutUser,
@@ -8,28 +9,7 @@ import {
 
 const router = express.Router();
 
-// export const authRedir = (req, res, next) => {
-//   if (req.isAuthenticated()) {
-//     return next();
-//   }
-//   res.redirect('/login');
-// };
-
-// export const notAuthRedir = (req, res, next) => {
-//   if (req.isAuthenticated()) {
-//     return res.redirect('/');
-//   }
-//   next();
-// };
-
-router.get(
-  '/protected',
-  passport.authenticate('jwt', { session: false }),
-  (req, res, next) => {
-    res.status(200).json({ success: true, msg: 'You are authorized' });
-  }
-);
-
+router.get('/protected', userAuthorized);
 router.post('/register', registerUser);
 router.post('/login', logInUser);
 router.delete('/logout', logOutUser);

@@ -34,20 +34,12 @@ export const FilterBar = () => {
     })
     setSelectedTags(query.getAll('tag'));
     setSelectedSort(query.get('sort'));
-
-    /** PLEASE REFACTOR THIS LATER! */
-    // if (selectedSearchFields.length === 0) {
-    //   setSelectedSearchFields(['title']);
-    // }
-    // if (!selectedSort) {
-    //   setSelectedSort('relevance');
-    // }
   });
 
   useEffect(() => {
     if (selectedSort) {
       query.set('sort', selectedSort.value);
-      history.push(`/search?${query}`);
+      history.replace(`/search?${query}`);
     }
   }, [selectedSort]);
 
@@ -57,7 +49,7 @@ export const FilterBar = () => {
       selectedSearchFields.map((searchField) =>
         query.append('field', searchField)
       );
-      history.push(`/search?${query}`);
+      history.replace(`/search?${query}`);
     }
   }, [selectedSearchFields]);
 
@@ -65,7 +57,7 @@ export const FilterBar = () => {
     if (selectedTags) {
       query.delete('tag');
       selectedTags.map((selectedTag) => query.append('tag', selectedTag.value));
-      history.push(`/search?${query}`);
+      history.replace(`/search?${query}`);
     }
   }, [selectedTags]);
 

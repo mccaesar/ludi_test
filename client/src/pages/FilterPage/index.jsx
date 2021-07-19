@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, useColorModeValue } from '@chakra-ui/react';
 
 import { fetchResources } from '../../actions/resource.action';
@@ -13,25 +13,24 @@ import { SearchBar } from '../../components/SearchBar';
 export const FilterPage = () => {
   const dispatch = useDispatch();
   const url = useLocation();
-  const query = new URLSearchParams(url.search);
-
-  const searchTerm = query.get('q');
-  const searchFields = query.getAll('field');
-  const filterTags = query.getAll('tag');
-  const sortOption = query.get('sort');
 
   useEffect(() => {
+    const query = new URLSearchParams(url.search);
+    const searchTerm = query.get('q');
+    const searchFields = query.getAll('field');
+    const filterTags = query.getAll('tag');
+    const sortOption = query.get('sort');
     dispatch(fetchResources(searchTerm, searchFields, filterTags, sortOption));
-  }, [dispatch, searchFields, searchTerm, sortOption, filterTags]);
+  }, [dispatch, url]);
+
+  const { resources } = useSelector((state) => state.resources);
 
   return (
     <>
       <NavBar />
       <SearchBar />
       <FilterBar />
-      <Box bg={useColorModeValue('white', 'gray.800')} flex="1" p="6">
-        <ResourceContainer />
-      </Box>
+      <ResourceContainer resources={resources} />
       <Footer />
     </>
   );

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   chakra,
   Flex,
@@ -16,11 +17,21 @@ import { LoginModal } from '../LoginModal';
 import { RegistrationModal } from '../RegistrationModal';
 import { SearchModal } from '../SearchModal';
 import { UserMenu } from './UserMenu';
+import { getUser, isLoggedIn } from '../../services';
+import { useEffectOnce } from '../../hooks/useEffectOnce';
 
 export const NavBar = () => {
   const bg = useColorModeValue('white', 'gray.800');
   const mobileNav = useDisclosure();
   const searchModal = useDisclosure();
+
+  const [userFullName, setUserFullName] = useState('');
+
+  useEffectOnce(() => {
+    getUser().then((user) => {
+      setUserFullName(user.firstName + ' ' + user.lastName);
+    });
+  });
 
   return (
     <>
@@ -65,21 +76,23 @@ export const NavBar = () => {
             >
               Search Resources
             </Button>
-
-            <HStack
-              spacing={2}
-              mr={1}
-              color="brand.500"
-              display={{ base: 'none', md: 'inline-flex' }}
-            >
-              <Button variant="ghost" size="sm" as="a" href="/login">
-                Sign In
-              </Button>
-              <Button colorScheme="brand" size="sm" as="a" href="/register">
-                Join for free
-              </Button>
-            </HStack>
-            <UserMenu />
+            {isLoggedIn() ? (
+              <UserMenu fullname={userFullName} />
+            ) : (
+              <HStack
+                spacing={2}
+                mr={1}
+                color="brand.500"
+                display={{ base: 'none', md: 'inline-flex' }}
+              >
+                <Button variant="ghost" size="sm" as="a" href="/login">
+                  Sign In
+                </Button>
+                <Button colorScheme="brand" size="sm" as="a" href="/register">
+                  Join for free
+                </Button>
+              </HStack>
+            )}
           </HStack>
 
           <MobileNav

@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useHistory } from 'react-router-dom';
 import {
   Button,
   FormControl,
@@ -9,9 +10,11 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { LoginSchema } from '../../validators/auth.validator';
-import { postLogin } from '../../services';
+import { loginUser } from '../../services';
 
 export const LoginForm = () => {
+  const history = useHistory();
+
   const initialValues = {
     email: '',
     password: '',
@@ -34,7 +37,8 @@ export const LoginForm = () => {
           email: values.email,
           password: values.password,
         };
-        postLogin(data);
+        loginUser(data);
+        history.push('/');
         resolve();
       }, 1000);
     });

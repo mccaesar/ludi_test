@@ -9,7 +9,7 @@ import {
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
 export const ResourceCard = ({ resource }) => {
-  const { _id: id, resourceId, title, category, description, url } = resource;
+  const { resourceId, title, category, description } = resource;
 
   return (
     <LinkBox

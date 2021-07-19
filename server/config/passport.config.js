@@ -15,26 +15,20 @@ const options = {
   algorithms: ['RS256'],
 };
 
-const strategy = new JwtStrategy(options, (payload, done) => {
-  User.findOne({ _id: payload.sub })
-    .then((user) => {
-      if (user) {
-        return done(null, user);
-      } else {
-        return done(null, false, { message: 'Invalid Email or Password.' });
-      }
-    })
-    .catch((err) => done(err, null));
-});
-
 const initializePassport = (passport) => {
-  passport.use(strategy);
-  //   passport.serializeUser((user, done) => {
-  //     done(null, user._id);
-  //   });
-  //   passport.deserializeUser((id, done) => {
-  //     done(null, getUserById(id));
-  //   });
+  passport.use(
+    new JwtStrategy(options, (payload, done) => {
+      User.findOne({ _id: payload.sub })
+        .then((user) => {
+          if (user) {
+            return done(null, user);
+          } else {
+            return done(null, false, { message: 'Invalid Email or Password.' });
+          }
+        })
+        .catch((err) => done(err, null));
+    })
+  );
 };
 
 export default initializePassport;

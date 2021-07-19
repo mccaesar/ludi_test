@@ -14,17 +14,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchResources } from '../../actions/resource.action';
 import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
+import { getResourceByRID, saveResource, unsaveResource } from '../../services';
+import { useParams } from 'react-router-dom';
+import { useEffectOnce } from '../../hooks/useEffectOnce';
 
-export const ResourcePage = ({ match }) => {
+export const ResourcePage = () => {
   const [isSaved, setSaved] = useState(false);
-  const { resources } = useSelector((state) => state.resources);
+  const [resource, setResource] = useState(null);
+  const { resourceId } = useParams();
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchResources());
-  }, [dispatch]);
+  useEffectOnce(() => {
+    getResourceByRID(resourceId).then((data) => {
+      data.resource.tags = data.resource.tags.split(',').map((tag) => tag.trim());
+      setSaved(data.isSaved);
+      setResource(data.resource);
+    });
+  });
 
-  const resource = resources[match.params.id];
+  const handleSave = () => {
+    if (!isSaved) saveResource(resourceId);
+    else unsaveResource(resourceId);
+    setSaved(!isSaved);
+  };
+
   let title, author, description, longDescription, url, tags;
   if (resource) {
     ({ title, author, description, longDescription, url, tags } = resource);
@@ -61,21 +73,28 @@ export const ResourcePage = ({ match }) => {
               {author}
             </Text>
             <HStack spacing={4} mt={8}>
-              <Button href={url} color="gray.300" bg="gray.600" variant="solid">
+              <Button
+                as="a"
+                href={url}
+                target="_blank"
+                color="gray.300"
+                bg="gray.600"
+                variant="solid"
+              >
                 Website
               </Button>
-              <Button color="gray.300" bg="gray.600" variant="solid">
+              {/* <Button color="gray.300" bg="gray.600" variant="solid">
                 Github
               </Button>
               <Button color="gray.300" bg="gray.600" variant="solid">
                 Download
-              </Button>
+              </Button> */}
             </HStack>
           </Box>
           <IconButton
             variant="ghost"
             icon={!isSaved ? <FaRegBookmark /> : <FaBookmark />}
-            onClick={() => setSaved(!isSaved)}
+            onClick={handleSave}
             color="white"
             size="md"
             _hover={{
@@ -84,6 +103,7 @@ export const ResourcePage = ({ match }) => {
           />
         </Stack>
         <HStack mt={8} bg="gray.700" p={6} rounded="md">
+          {console.log(tags)}
           {tags.map((tag) => (
             <Tag color="gray.300" bg="gray.600">
               {tag}

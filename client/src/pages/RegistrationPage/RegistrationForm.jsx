@@ -9,7 +9,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { RegistrationSchema } from '../../validators/auth.validator';
-import { postRegister } from '../../services';
+import { registerUser } from '../../services';
 
 export const RegistrationForm = () => {
   const initialValues = {
@@ -39,7 +39,7 @@ export const RegistrationForm = () => {
           email: values.email,
           password: values.password,
         };
-        postRegister(data);
+        registerUser(data);
         resolve();
       }, 1000);
     });
