@@ -1,5 +1,11 @@
 import express from 'express';
-import { getResources, getResourceByRID, getSavedResourceIds, saveResource, unsaveResource } from '../controllers/resource.controller.js';
+import {
+  getResources,
+  getResourceByRID,
+  getSavedResourceIds,
+  saveResource,
+  unsaveResource,
+} from '../controllers/resource.controller.js';
 
 const router = express.Router();
 

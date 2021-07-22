@@ -1,5 +1,5 @@
 module.exports = {
-    rules: {
-      'import/extension': 'off',
-    },
-  };
+  rules: {
+    'import/extension': 'off',
+  },
+};

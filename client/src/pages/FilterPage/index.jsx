@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, useColorModeValue } from '@chakra-ui/react';
 
 import { fetchResources } from '../../actions/resource.action';
 import { Footer } from '../../components/Footer';

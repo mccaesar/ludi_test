@@ -1,3 +1,5 @@
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -9,9 +11,12 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { RegistrationSchema } from '../../validators/auth.validator';
-import { registerUser } from '../../services';
+import { registerUser } from '../../actions/auth.action';
 
 export const RegistrationForm = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const initialValues = {
     firstName: '',
     lastName: '',
@@ -39,9 +44,10 @@ export const RegistrationForm = () => {
           email: values.email,
           password: values.password,
         };
-        registerUser(data);
+        dispatch(registerUser(data));
+        history.push('/login');
         resolve();
-      }, 1000);
+      }, 500);
     });
   };
 

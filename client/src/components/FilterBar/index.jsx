@@ -10,10 +10,18 @@ import {
   CheckboxGroup,
   HStack,
   Spacer,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
+  AccordionPanel,
+  useColorModeValue,
 } from '@chakra-ui/react';
+
 import Select from '../Select';
 import { useEffect } from 'react';
 import { useEffectOnce } from '../../hooks/useEffectOnce';
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
 export const FilterBar = () => {
   const history = useHistory();
@@ -25,13 +33,12 @@ export const FilterBar = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedSort, setSelectedSort] = useState('');
 
-
   useEffectOnce(() => {
     setSelectedSearchFields(query.getAll('field'), () => {
       if (selectedSearchFields.length === 0) {
         setSelectedSearchFields(['title']);
       }
-    })
+    });
     setSelectedTags(query.getAll('tag'));
     setSelectedSort(query.get('sort'));
   });
@@ -144,7 +151,7 @@ export const FilterBar = () => {
               name="tagMultiSelect"
               placeholder="Select some tags..."
               closeMenuOnSelect={false}
-              size="sm"
+              size="md"
               options={tagOptions}
               defaultValue={selectedTags}
               onChange={setSelectedTags}
@@ -165,6 +172,13 @@ export const FilterBar = () => {
           _active={{}}
           _focus={{}}
           onClick={() => handleCollapse(SEARCH_FIELD)}
+          rightIcon={
+            currentFilter === SEARCH_FIELD ? (
+              <ChevronUpIcon />
+            ) : (
+              <ChevronDownIcon />
+            )
+          }
         >
           Search Field
         </Button>
@@ -174,6 +188,9 @@ export const FilterBar = () => {
           _active={{}}
           _focus={{}}
           onClick={() => handleCollapse(CATEGORY)}
+          rightIcon={
+            currentFilter === CATEGORY ? <ChevronUpIcon /> : <ChevronDownIcon />
+          }
         >
           Tags
         </Button>
@@ -182,17 +199,18 @@ export const FilterBar = () => {
           <Select
             name="sortSelect"
             placeholder="Sort by..."
-            closeMenuOnSelect={false}
+            closeMenuOnSelect={true}
             size="sm"
-            options={sortOptions}
+            color={useColorModeValue('black', 'white')}
             defaultValue={selectedSort}
             onChange={setSelectedSort}
+            options={sortOptions}
           />
         </Box>
       </Flex>
-      <Flex mx={12}>
+      <Flex mx={12} pb={8}>
         <Collapse in={currentFilter} animateOpacity>
-          {renderCollapse()}
+          <Box pt={4}>{renderCollapse()}</Box>
         </Collapse>
       </Flex>
     </Box>

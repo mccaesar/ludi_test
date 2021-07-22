@@ -60,8 +60,7 @@ export const getSavedResourceIds = async (req, res) => {
   } catch (err) {
     res.status(404).send({
       message:
-        err.message ||
-        `Some error occurred while retrieving saved resources.`,
+        err.message || `Some error occurred while retrieving saved resources.`,
     });
   }
 };

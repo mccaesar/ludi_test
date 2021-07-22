@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import {
   chakra,
   Flex,
@@ -9,29 +10,33 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { BsSun, BsMoon } from 'react-icons/bs';
+// import { BsSun, BsMoon } from 'react-icons/bs';
+
+import { fetchLoginStatus } from '../../actions/auth.action';
+import { fetchUser } from '../../actions/user.action';
 
 import { Logo } from './Logo';
 import { MobileNav } from './MobileNav';
-import { LoginModal } from '../LoginModal';
-import { RegistrationModal } from '../RegistrationModal';
-import { SearchModal } from '../SearchModal';
+// import { SearchModal } from '../SearchModal';
 import { UserMenu } from './UserMenu';
-import { getUser, isLoggedIn } from '../../services';
-import { useEffectOnce } from '../../hooks/useEffectOnce';
 
 export const NavBar = () => {
+  const dispatch = useDispatch();
+
   const bg = useColorModeValue('white', 'gray.800');
   const mobileNav = useDisclosure();
   const searchModal = useDisclosure();
+  
+  const { user } = useSelector((state) => state.users);
+  const { isLoggedIn } = useSelector((state) => state.auth);
 
-  const [userFullName, setUserFullName] = useState('');
-
-  useEffectOnce(() => {
-    getUser().then((user) => {
-      setUserFullName(user.firstName + ' ' + user.lastName);
+  useEffect(() => {
+    batch(() => {
+      dispatch(fetchLoginStatus());
+      dispatch(fetchUser());
     });
-  });
+  }, [dispatch, isLoggedIn]);
+
 
   return (
     <>
@@ -76,8 +81,8 @@ export const NavBar = () => {
             >
               Search Resources
             </Button>
-            {isLoggedIn() ? (
-              <UserMenu fullname={userFullName} />
+            {isLoggedIn && user ? (
+              <UserMenu fullname={user.firstName + ' ' + user.lastName} />
             ) : (
               <HStack
                 spacing={2}
@@ -89,7 +94,7 @@ export const NavBar = () => {
                   Sign In
                 </Button>
                 <Button colorScheme="brand" size="sm" as="a" href="/register">
-                  Join for free
+                  Sign Up
                 </Button>
               </HStack>
             )}
@@ -104,7 +109,7 @@ export const NavBar = () => {
           />
         </Flex>
       </chakra.header>
-      <SearchModal disclosure={searchModal} />
+      {/* <SearchModal disclosure={searchModal} /> */}
     </>
   );
 };

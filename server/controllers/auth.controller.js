@@ -65,21 +65,17 @@ export const registerUser = async (req, res, next) => {
   try {
     await user.save();
     const jwt = utils.issueJWT(user);
-    res
-      .status(201)
-      .json({
-        success: true,
-        user: user,
-        token: jwt.token,
-        expiresIn: jwt.expires,
-      });
+    res.status(201).json({
+      success: true,
+      user: user,
+      token: jwt.token,
+      expiresIn: jwt.expires,
+    });
   } catch (err) {
-    res
-      .status(404)
-      .json({
-        success: false,
-        message: err.message || 'Some error occurred while registering user.',
-      });
+    res.status(404).json({
+      success: false,
+      message: err.message || 'Some error occurred while registering user.',
+    });
   }
 };
 
@@ -112,14 +108,12 @@ export const logInUser = async (req, res, next) => {
 
     if (validPassword) {
       const tokenObj = utils.issueJWT(user);
-      res
-        .status(200)
-        .json({
-          success: true,
-          user: user,
-          token: tokenObj.token,
-          expiresIn: tokenObj.expires,
-        });
+      res.status(200).json({
+        success: true,
+        user: user,
+        token: tokenObj.token,
+        expiresIn: tokenObj.expires,
+      });
     } else {
       return res.status(401).json({
         success: false,

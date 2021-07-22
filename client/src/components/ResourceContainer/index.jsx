@@ -1,5 +1,4 @@
 import { Box, SimpleGrid, useColorModeValue as mode } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 import { ResourceCard } from './ResourceCard';
 
 export const ResourceContainer = ({ resources }) => {

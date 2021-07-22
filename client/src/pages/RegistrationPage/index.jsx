@@ -4,7 +4,6 @@ import {
   Heading,
   Stack,
   Text,
-  SimpleGrid,
   useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';

@@ -1,7 +1,6 @@
 import {
   chakra,
   Box,
-  Flex,
   LinkBox,
   LinkOverlay,
   useColorModeValue,

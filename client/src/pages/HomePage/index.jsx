@@ -1,19 +1,9 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import {
   Center,
   Text,
   SimpleGrid,
   Box,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button,
 } from '@chakra-ui/react';
 import { Logo } from './Logo';
 import { CannedSearch } from './CannedSearch';
@@ -23,7 +13,7 @@ import { Footer } from '../../components/Footer';
 import { SearchBar } from '../../components/SearchBar';
 
 export const HomePage = ({ match }) => {
-  const history = useHistory();
+  // const history = useHistory();
 
   const cannedSearch1 = 'Find newest added resources in the Python category';
   const cannedParams1 = new URLSearchParams();

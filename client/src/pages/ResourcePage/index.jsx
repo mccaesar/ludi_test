@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useEffectOnce } from '../../hooks/useEffectOnce';
 import {
   Box,
   Text,
@@ -10,13 +12,10 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchResources } from '../../actions/resource.action';
+
+import { resourceApi } from '../../services';
 import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
-import { getResourceByRID, saveResource, unsaveResource } from '../../services';
-import { useParams } from 'react-router-dom';
-import { useEffectOnce } from '../../hooks/useEffectOnce';
 
 export const ResourcePage = () => {
   const [isSaved, setSaved] = useState(false);
@@ -24,16 +23,21 @@ export const ResourcePage = () => {
   const { resourceId } = useParams();
 
   useEffectOnce(() => {
-    getResourceByRID(resourceId).then((data) => {
-      data.resource.tags = data.resource.tags.split(',').map((tag) => tag.trim());
+    resourceApi.getResourceByRID(resourceId).then((data) => {
+      data.resource.tags = data.resource.tags
+        .split(',')
+        .map((tag) => tag.trim());
       setSaved(data.isSaved);
       setResource(data.resource);
     });
   });
 
   const handleSave = () => {
-    if (!isSaved) saveResource(resourceId);
-    else unsaveResource(resourceId);
+    if (!isSaved) {
+      resourceApi.saveResource(resourceId);
+    } else {
+      resourceApi.unsaveResource(resourceId);
+    }
     setSaved(!isSaved);
   };
 

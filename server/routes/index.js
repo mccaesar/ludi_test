@@ -1,5 +1,5 @@
 import express from 'express';
-import resourceRoutes from './resource.route.js'
+import resourceRoutes from './resource.route.js';
 import authRoutes from './auth.route.js';
 import userRoutes from './user.route.js';
 

@@ -1,6 +1,7 @@
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useHistory } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
   FormControl,
@@ -10,10 +11,11 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { LoginSchema } from '../../validators/auth.validator';
-import { loginUser } from '../../services';
+import { loginUser } from '../../actions/auth.action';
 
 export const LoginForm = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const initialValues = {
     email: '',
@@ -37,10 +39,10 @@ export const LoginForm = () => {
           email: values.email,
           password: values.password,
         };
-        loginUser(data);
+        dispatch(loginUser(data));
         history.push('/');
         resolve();
-      }, 1000);
+      }, 500);
     });
   };
 

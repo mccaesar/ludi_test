@@ -6,7 +6,6 @@ import {
   LinkOverlay,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
 export const ResourceCard = ({ resource }) => {
   const { resourceId, title, category, description } = resource;

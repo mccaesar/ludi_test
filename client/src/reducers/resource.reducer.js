@@ -1,14 +1,5 @@
 import Fuse from 'fuse.js';
 
-import {
-  FETCH_RESOURCES_REQUEST,
-  FETCH_RESOURCES_SUCCESS,
-  FETCH_RESOURCES_FAILURE,
-  FETCH_SAVED_RESOURCES_REQUEST,
-  FETCH_SAVED_RESOURCES_SUCCESS,
-  FETCH_SAVED_RESOURCES_FAILURE,
-} from '../constants/actionTypes';
-
 const initialState = {
   isLoading: false,
   resources: [],
@@ -111,37 +102,37 @@ const filterSavedResources = ({ resources, savedResourceIds }) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_RESOURCES_REQUEST:
+    case 'FETCH_RESOURCES_REQUEST':
       return {
         ...state,
         isLoading: true,
         errorMessage: null,
       };
-    case FETCH_RESOURCES_SUCCESS:
+    case 'FETCH_RESOURCES_SUCCESS':
       return {
         ...state,
         isLoading: false,
         resources: filterResources(action.payload),
       };
-    case FETCH_RESOURCES_FAILURE:
+    case 'FETCH_RESOURCES_FAILURE':
       return {
         ...state,
         isLoading: false,
         errorMessage: action.error,
       };
-    case FETCH_SAVED_RESOURCES_REQUEST:
+    case 'FETCH_SAVED_RESOURCES_REQUEST':
       return {
         ...state,
         isLoading: true,
         errorMessage: null,
       };
-    case FETCH_SAVED_RESOURCES_SUCCESS:
+    case 'FETCH_SAVED_RESOURCES_SUCCESS':
       return {
         ...state,
         isLoading: false,
         savedResources: filterSavedResources(action.payload),
       };
-    case FETCH_SAVED_RESOURCES_FAILURE:
+    case 'FETCH_SAVED_RESOURCES_FAILURE':
       return {
         ...state,
         isLoading: false,
