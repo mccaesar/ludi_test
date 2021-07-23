@@ -14,9 +14,14 @@ export const customTheme = extendTheme({
       800: '#181c37',
       900: '#080819',
     },
+    ludi: {
+      100: '#fea346',
+      200: '#fd8201',
+      300: '#ca6401',
+    },
   },
   config: {
-    initialColorMode: 'dark',
+    initialColorMode: 'light',
     useSystemColorMode: false,
   },
 

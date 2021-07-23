@@ -20,18 +20,18 @@ export const ResourceCard = ({ resource }) => {
       position="relative"
       px={4}
       py={3}
-      bg={useColorModeValue('white', 'gray.700')}
+      bg={useColorModeValue('gray.200', 'gray.700')}
       shadow="md"
       rounded="md"
       _hover={{
-        background: 'gray.600',
+        background: useColorModeValue('gray.300', 'gray.600'),
       }}
     >
       <LinkOverlay href={`/resource/${resourceId}`}>
         <Flex justifyContent="space-between" alignItems="center">
           <chakra.span
             fontSize="sm"
-            color={useColorModeValue('gray.800', 'gray.400')}
+            color={useColorModeValue('gray.700', 'gray.400')}
           >
             {category}
           </chakra.span>
@@ -65,14 +65,14 @@ export const ResourceCard = ({ resource }) => {
             fontSize="lg"
             fontWeight="bold"
             mt={2}
-            color={useColorModeValue('gray.800', 'white')}
+            color={useColorModeValue('black', 'white')}
           >
             {title}
           </chakra.h1>
           <chakra.p
             fontSize="sm"
             mt={2}
-            color={useColorModeValue('gray.600', 'gray.300')}
+            color={useColorModeValue('gray.800', 'gray.300')}
           >
             {description}
           </chakra.p>

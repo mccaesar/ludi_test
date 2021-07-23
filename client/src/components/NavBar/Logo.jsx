@@ -10,7 +10,7 @@ export const Logo = () => {
       h="30"
       flexShrink={0}
     >
-      <path d={NAVBAR_LOGO} fill={useColorModeValue('gray.800', 'white')} />
+      <path d={NAVBAR_LOGO} fill={useColorModeValue('#ca6401', 'white')} />
     </chakra.svg>
   );
 };

@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
+import { ColorModeScript } from "@chakra-ui/react"
+
 import store from './store.js';
 import App from './App';
+import { customTheme } from './theme';
 
 ReactDOM.render(
   <Provider store={store}>
+    <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
     <App />
   </Provider>,
   document.getElementById('root')

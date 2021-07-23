@@ -9,6 +9,7 @@ import {
   FormErrorMessage,
   Input,
   Stack,
+  useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { LoginSchema } from '../../validators/auth.validator';
 import { loginUser } from '../../actions/auth.action';
@@ -55,6 +56,7 @@ export const LoginForm = () => {
         >
           <FormLabel mb={1}>Email</FormLabel>
           <Input
+            borderColor={mode('gray.400', 'gray.600')}
             id="email"
             type="email"
             autoComplete="email"
@@ -68,7 +70,7 @@ export const LoginForm = () => {
           errortext={errors?.password?.message}
         >
           <FormLabel mb={1}>Password</FormLabel>
-          <Input id="password" type="password" {...register('password')} />
+          <Input borderColor={mode('gray.400', 'gray.600')} id="password" type="password" {...register('password')} />
           <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
         </FormControl>
 

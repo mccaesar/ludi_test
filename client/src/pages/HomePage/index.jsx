@@ -67,9 +67,9 @@ export const HomePage = ({ match }) => {
           columns={{ base: 1, lg: 2 }}
           spacing="8"
         >
-          <CannedSearch searchParams={cannedParams1} text={cannedSearch1} />
-          <CannedSearch searchParams={cannedParams2} text={cannedSearch2} />
           <CannedSearch searchParams={cannedParams3} text={cannedSearch3} />
+          <CannedSearch searchParams={cannedParams2} text={cannedSearch2} />
+          <CannedSearch searchParams={cannedParams1} text={cannedSearch1} />
 
         </SimpleGrid>
       </Center>

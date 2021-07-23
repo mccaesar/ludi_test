@@ -10,6 +10,7 @@ import {
   Tag,
   Grid,
   HStack,
+  useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 
@@ -48,9 +49,10 @@ export const ResourcePage = () => {
 
   return resource ? (
     <>
-      <NavBar />
+      <NavBar/>
+      <Box p={2}></Box>
       <Stack
-        bg="gray.800"
+        bg={mode('white', 'gray.800')}
         overflow="hidden"
         p={6}
         rounded="md"
@@ -65,15 +67,15 @@ export const ResourcePage = () => {
           justifyContent="space-between"
           alignItems="stretch"
           display="flex"
-          bg="gray.700"
+          bg={mode('gray.200', 'gray.700')}
           p={6}
           rounded="md"
         >
           <Box w="full">
-            <Text fontSize="4xl" color="white">
+            <Text fontSize="4xl" color={mode('black', 'white')}>
               {title}
             </Text>
-            <Text fontSize="2xl" color="gray.300">
+            <Text fontSize="2xl" color={mode('gray.600', 'gray.300')}>
               {author}
             </Text>
             <HStack spacing={4} mt={8}>
@@ -81,8 +83,8 @@ export const ResourcePage = () => {
                 as="a"
                 href={url}
                 target="_blank"
-                color="gray.300"
-                bg="gray.600"
+                color={mode('black', 'gray.300')}
+                bg={mode('gray.400', 'gray.600')}
                 variant="solid"
               >
                 Website
@@ -99,43 +101,45 @@ export const ResourcePage = () => {
             variant="ghost"
             icon={!isSaved ? <FaRegBookmark /> : <FaBookmark />}
             onClick={handleSave}
-            color="white"
-            size="md"
+            color={mode('black', 'white')}
+            size="lg"
             _hover={{
               background: 'none',
             }}
           />
         </Stack>
-        <HStack mt={8} bg="gray.700" p={6} rounded="md">
+        <HStack mt={8} bg={mode('gray.200', 'gray.700')} p={6} rounded="md">
           {console.log(tags)}
           {tags.map((tag) => (
-            <Tag color="gray.300" bg="gray.600">
+            <Tag 
+            color={mode('black', 'gray.300')}
+            bg={mode('gray.400', 'gray.600')}>
               {tag}
             </Tag>
           ))}
         </HStack>
-        <Box mt={8} bg="gray.700" p={6} rounded="md">
-          <Text color="white" fontSize="3xl" pb={4}>
+        <Box mt={8} bg={mode('gray.200', 'gray.700')} p={6} rounded="md">
+          <Text color={mode('black', 'white')} fontSize="3xl" pb={4}>
             Description
           </Text>
-          <Text color="white" pb={2}>
+          <Text color={mode('black', 'white')} pb={2}>
             {description}
           </Text>
-          <Text color="white">{longDescription}</Text>
+          <Text color={mode('black', 'white')}>{longDescription}</Text>
         </Box>
         <Grid
           templateColumns="repeat(2, 1fr)"
           gap={6}
           mt={8}
-          bg="gray.700"
+          bg={mode('gray.200', 'gray.700')}
           p={6}
           rounded="md"
         >
           <Box>
-            <Text color="gray.400">Strengths</Text>
+            <Text color={mode('gray.600', 'gray.400')}>Strengths</Text>
           </Box>
           <Box>
-            <Text color="gray.400">Use Cases</Text>
+            <Text color={mode('gray.600', 'gray.400')}>Use Cases</Text>
           </Box>
         </Grid>
       </Stack>

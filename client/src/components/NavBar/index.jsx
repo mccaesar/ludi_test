@@ -23,7 +23,7 @@ import { UserMenu } from './UserMenu';
 export const NavBar = () => {
   const dispatch = useDispatch();
 
-  const bg = useColorModeValue('white', 'gray.800');
+  const bg = useColorModeValue('gray.50', 'gray.900');
   const mobileNav = useDisclosure();
   const searchModal = useDisclosure();
   
@@ -70,8 +70,8 @@ export const NavBar = () => {
               display={{ base: 'none', md: 'inline-flex' }}
               leftIcon={<AiOutlineSearch />}
               fontWeight="medium"
-              bg="gray.700"
-              color="gray.500"
+              bg={useColorModeValue('gray.200', 'gray.700')}
+              color={useColorModeValue('gray.400', 'gray.500')}
               w="2xs"
               mx={{ base: '2', md: '4' }}
               justifyContent="flex-start"

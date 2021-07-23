@@ -8,6 +8,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { useEffectOnce } from '../../hooks/useEffectOnce';
 
@@ -48,6 +49,7 @@ export const SearchBar = () => {
       <InputGroup>
         <InputLeftElement pointerEvents="none" children={<AiOutlineSearch />} />
         <Input
+          bg={useColorModeValue('gray.100', 'gray.800')}
           placeholder="Search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

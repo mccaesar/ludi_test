@@ -9,6 +9,7 @@ import {
   FormErrorMessage,
   Input,
   Stack,
+  useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { RegistrationSchema } from '../../validators/auth.validator';
 import { registerUser } from '../../actions/auth.action';
@@ -59,7 +60,7 @@ export const RegistrationForm = () => {
           errortext={errors?.firstName?.message}
         >
           <FormLabel mb={1}>First Name</FormLabel>
-          <Input id="firstName" type="text" {...register('firstName')} />
+          <Input borderColor={mode('gray.400', 'gray.600')} variant="filled" id="firstName" type="text" {...register('firstName')} />
           <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
         </FormControl>
 
@@ -68,7 +69,7 @@ export const RegistrationForm = () => {
           errortext={errors?.lastName?.message}
         >
           <FormLabel mb={1}>Last Name</FormLabel>
-          <Input id="lastName" type="text" {...register('lastName')} />
+          <Input borderColor={mode('gray.400', 'gray.600')} id="lastName" type="text" {...register('lastName')} />
           <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
         </FormControl>
 
@@ -78,6 +79,7 @@ export const RegistrationForm = () => {
         >
           <FormLabel mb={1}>Email</FormLabel>
           <Input
+            borderColor={mode('gray.400', 'gray.600')} 
             id="email"
             type="email"
             autoComplete="email"
@@ -91,7 +93,7 @@ export const RegistrationForm = () => {
           errortext={errors?.password?.message}
         >
           <FormLabel mb={1}>Password</FormLabel>
-          <Input id="password" type="password" {...register('password')} />
+          <Input borderColor={mode('gray.400', 'gray.600')} id="password" type="password" {...register('password')} />
           <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
         </FormControl>
 
@@ -101,6 +103,7 @@ export const RegistrationForm = () => {
         >
           <FormLabel mb={1}>Confirm your password</FormLabel>
           <Input
+            borderColor={mode('gray.400', 'gray.600')} 
             id="passwordConfirmation"
             type="password"
             {...register('passwordConfirmation')}

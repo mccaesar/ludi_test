@@ -7,8 +7,11 @@ import {
   Stack,
   Text,
   Input,
+  Button,
   IconButton,
+  Switch,
   useColorModeValue,
+  useColorMode
 } from '@chakra-ui/react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { BiMailSend } from 'react-icons/bi';
@@ -17,11 +20,13 @@ import { Logo } from './Logo';
 import { ListHeader } from './ListHeader';
 import { SocialButton } from './SocialButton';
 
+
 export const Footer = () => {
+  const { colorMode, toggleColorMode } = useColorMode()
   return (
     <Flex h="full" direction="column" position="relative" flexGrow>
       <Box
-        bg={useColorModeValue('gray.50', 'gray.900')}
+        bg={useColorModeValue('gray.100', 'gray.900')}
         color={useColorModeValue('gray.700', 'gray.200')}
         w="full"
         position="fixed"
@@ -35,7 +40,7 @@ export const Footer = () => {
           >
             <Stack spacing={6}>
               <Box>
-                <Logo color={useColorModeValue('gray.700', 'white')} />
+                <Logo color={useColorModeValue('black', 'white')} />
               </Box>
               <Text fontSize={'sm'}>
                 © 2021 Project Ludi. All rights reserved
@@ -72,20 +77,23 @@ export const Footer = () => {
                   bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
                   border={0}
                   _focus={{
-                    bg: 'whiteAlpha.300',
+                    bg: useColorModeValue('blackAlpha.300', 'whiteAlpha.300')
                   }}
+     
                 />
                 <IconButton
                   bg={useColorModeValue('gray.400', 'gray.800')}
                   color={useColorModeValue('gray.800', 'white.800')}
                   isRound={false}
                   _hover={{
-                    bg: 'whiteAlpha.300',
+                    bg: useColorModeValue('blackAlpha.300', 'whiteAlpha.300'),
                   }}
                   aria-label="Subscribe"
                   icon={<BiMailSend />}
                 />
               </Stack>
+              <Switch onChange={toggleColorMode} colorScheme="gray" size="lg" defaultChecked/>
+                  {/* Toggle {colorMode === "light" ? "Dark" : "Light"} */}
             </Stack>
           </SimpleGrid>
         </Container>

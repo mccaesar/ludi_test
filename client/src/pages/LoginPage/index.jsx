@@ -25,11 +25,11 @@ export const LoginPage = () => {
         px={{ base: '4', md: '10' }}
       >
         <Box
-          bg={{ md: mode('white', 'gray.700') }}
+          bg={{ md: mode('gray.200', 'gray.700') }}
           rounded={{ md: '2xl' }}
           p={{ base: '4', md: '12' }}
           borderWidth={{ md: '1px' }}
-          borderColor={mode('gray.200', 'transparent')}
+          borderColor={mode('transparent', 'transparent')}
           shadow={{ md: 'lg' }}
         >
           {/* <Logo
@@ -44,7 +44,7 @@ export const LoginPage = () => {
             </Heading>
             <Text
               fontSize="lg"
-              color={mode('gray.600', 'gray.400')}
+              color={mode('gray.500', 'gray.400')}
               fontWeight="medium"
             >
               Enter your info to log in
@@ -52,12 +52,14 @@ export const LoginPage = () => {
           </Box>
           <Stack spacing="4">
             <Button
+              borderColor={mode('gray.400', 'gray.600')}
               variant="outline"
               leftIcon={<Box as={FaGoogle} color="red.500" />}
             >
               Log in with Google
             </Button>
             <Button
+              borderColor={mode('gray.400', 'gray.600')}
               variant="outline"
               leftIcon={
                 <Box

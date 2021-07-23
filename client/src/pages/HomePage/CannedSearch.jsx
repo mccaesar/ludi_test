@@ -1,6 +1,7 @@
 import {
   chakra,
   Box,
+  Center,
   LinkBox,
   LinkOverlay,
   useColorModeValue,
@@ -18,26 +19,25 @@ export const CannedSearch = ({ searchParams, text }) => {
       position="relative"
       px={4}
       py={3}
-      bg={useColorModeValue('white', 'gray.700')}
+      bg={useColorModeValue('gray.200', 'gray.700')}
       shadow="md"
       rounded="md"
       _hover={{
-        background: 'gray.600',
+        background: useColorModeValue('gray.300', 'gray.600'),
       }}
     >
       {/*may need history.push(`/search?${searchParams}`); */}
       <LinkOverlay href={`/search?${searchParams}`}>{/*old: `/resource/${resourceId}` */}
-        <Box>
+        <Center>
           <chakra.h1
             fontSize="lg"
             fontWeight="bold"
-            //mt={2}
-            color={useColorModeValue('gray.800', 'gray.200')}
+            color={useColorModeValue('gray.700', 'gray.400')}
             align="center"
           >
             {text}
           </chakra.h1>
-        </Box>
+        </Center>
       </LinkOverlay>
     </LinkBox>
   );

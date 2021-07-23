@@ -17,25 +17,33 @@ export const ProfilePage = () => {
     dispatch(fetchSavedResources());
   }, [dispatch]);
 
-  const { user } = useSelector((state) => state.usersz);
+  const { user } = useSelector((state) => state.users);
   const { savedResources } = useSelector((state) => state.resources);
 
+  
   return (
     <>
-      <NavBar />
-      <Box p={10} justifyContent="center">
-        <Text fontSize="lg">
-          {' '}
-          Name: {user.firstName + ' ' + user.lastName}{' '}
-        </Text>
-        <Text fontSize="lg"> Email: {user.email} </Text>
-      </Box>
+    { user ? 
+      <>
+        <NavBar />
+        <Box p={10} justifyContent="center">
+          <Text fontSize="lg">
+            {' '}
+            Name: {user.firstName + ' ' + user.lastName}{' '}
+          </Text>
+          <Text fontSize="lg"> Email: {user.email} </Text>
+        </Box>
 
-      <Center py={5}>
-        <Text fontSize="2xl"> Saved Resources:</Text>
-      </Center>
-      <ResourceContainer resources={savedResources} />
-      <Footer />
+        <Center py={5}>
+          <Text fontSize="2xl"> Saved Resources:</Text>
+        </Center>
+        <ResourceContainer resources={savedResources} />
+        <Footer />
+      </>
+      :
+      null
+    }
+
     </>
   );
 };

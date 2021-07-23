@@ -9,7 +9,7 @@ export const ResourceContainer = ({ resources }) => {
       {resources && resources.length > 0 ? (
         <Box
           as="section"
-          bg={mode('gray.50', 'gray.800')}
+          bg={mode('white', 'gray.800')}
           px={{ base: '6', md: '8' }}
           // py={{ base: '10', sm: '24' }}
           maxW={{ base: 'xl', md: '7xl' }}

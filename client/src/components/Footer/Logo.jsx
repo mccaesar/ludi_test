@@ -10,7 +10,7 @@ export const Logo = () => {
       h="64.721"
       flexShrink={0}
     >
-      <path d={FOOTER_LOGO} fill={useColorModeValue('gray.800', 'white')} />
+      <path d={FOOTER_LOGO} fill={useColorModeValue('#ca6401', 'white')} />
     </chakra.svg>
   );
 };

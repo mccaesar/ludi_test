@@ -2,7 +2,7 @@ import { Divider, HStack, Text, useColorModeValue as mode } from '@chakra-ui/rea
 
 export const DividerWithText = (props) => (
   <HStack my="8" {...props}>
-    <Divider />
+    <Divider borderColor={mode('gray.600', 'gray.200')} />
     <Text
       px="3"
       textTransform="uppercase"
@@ -12,6 +12,6 @@ export const DividerWithText = (props) => (
     >
       {props.children}
     </Text>
-    <Divider />
+    <Divider borderColor={mode('gray.600', 'gray.200')} />
   </HStack>
 )
