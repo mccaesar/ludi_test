@@ -22,6 +22,7 @@ export const getSavedResourceIds = async () => {
 export const saveResource = async (resourceId) => {
   const userId = localStorage.getItem('user_id');
   const data = { userId: userId };
+  console.log(data);
   return await axios.patch(
     `${url}/resource/${resourceId}/save`,
     qs.stringify(data)

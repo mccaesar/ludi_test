@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useEffectOnce } from '../../hooks/useEffectOnce';
+import { useEffect } from 'react';
 import {
   Box,
   Text,
@@ -15,13 +17,24 @@ import {
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 
 import { resourceApi } from '../../services';
+import { fetchLoginStatus } from '../../actions/auth.action';
+
 import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
 
 export const ResourcePage = () => {
+  const dispatch = useDispatch();
   const [isSaved, setSaved] = useState(false);
   const [resource, setResource] = useState(null);
   const { resourceId } = useParams();
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    batch(() => {
+      dispatch(fetchLoginStatus());
+    });
+  }, [dispatch, isLoggedIn]);
 
   useEffectOnce(() => {
     resourceApi.getResourceByRID(resourceId).then((data) => {
@@ -34,12 +47,16 @@ export const ResourcePage = () => {
   });
 
   const handleSave = () => {
-    if (!isSaved) {
-      resourceApi.saveResource(resourceId);
+    if(isLoggedIn) {
+      if (!isSaved) {
+        resourceApi.saveResource(resourceId);
+      } else {
+        resourceApi.unsaveResource(resourceId);
+      }
+      setSaved(!isSaved);
     } else {
-      resourceApi.unsaveResource(resourceId);
+      alert('Log in to save resources')
     }
-    setSaved(!isSaved);
   };
 
   let title, author, description, longDescription, url, tags;

@@ -41,7 +41,13 @@ export const ProfilePage = () => {
         <Footer />
       </>
       :
-      null
+      <>
+        <NavBar />
+        <Center py={10}>
+          <Text fontSize="2xl"> Log in to view saved resources </Text>
+        </Center>
+        <Footer />
+      </>
     }
 
     </>
