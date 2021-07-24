@@ -13,7 +13,7 @@ import { Logo } from './Logo';
 
 
 export const Footer = () => {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { toggleColorMode } = useColorMode()
   return (
     <Box
       w="full"

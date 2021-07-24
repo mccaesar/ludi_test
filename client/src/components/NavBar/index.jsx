@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import {
   chakra,

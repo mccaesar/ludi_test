@@ -11,20 +11,16 @@ import {
   CheckboxGroup,
   HStack,
   Spacer,
-  Text,
-  useColorModeValue,
   Alert,
   AlertIcon,
   AlertTitle,
-  AlertDescription,
-  CloseButton
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 import Select from '../Select';
 import { useEffect } from 'react';
 import { useEffectOnce } from '../../hooks/useEffectOnce';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
-import { fetchResources } from '../../actions/resource.action';
 
 export const FilterBar = () => {
   const history = useHistory();

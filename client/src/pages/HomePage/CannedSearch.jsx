@@ -1,6 +1,5 @@
 import {
   chakra,
-  Box,
   Center,
   LinkBox,
   LinkOverlay,
