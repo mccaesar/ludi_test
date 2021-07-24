@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import {
   chakra,
@@ -26,17 +26,17 @@ export const NavBar = () => {
   const bg = useColorModeValue('gray.50', 'gray.900');
   const mobileNav = useDisclosure();
   const searchModal = useDisclosure();
-  
+
   const { user } = useSelector((state) => state.users);
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    console.log('here')
     batch(() => {
       dispatch(fetchLoginStatus());
       dispatch(fetchUser());
     });
   }, [dispatch, isLoggedIn]);
-
 
   return (
     <>

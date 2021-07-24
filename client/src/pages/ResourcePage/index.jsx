@@ -36,7 +36,7 @@ export const ResourcePage = () => {
     });
   }, [dispatch, isLoggedIn]);
 
-  useEffectOnce(() => {
+  useEffect(() => {
     resourceApi.getResourceByRID(resourceId).then((data) => {
       data.resource.tags = data.resource.tags
         .split(',')
@@ -44,7 +44,7 @@ export const ResourcePage = () => {
       setSaved(data.isSaved);
       setResource(data.resource);
     });
-  });
+  }, [isLoggedIn, resourceId]);
 
   const handleSave = () => {
     if(isLoggedIn) {

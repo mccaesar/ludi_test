@@ -24,6 +24,10 @@ const resourceSchema = mongoose.Schema(
       type: Date,
       required: true,
     },
+    saveCount: {
+      type: Number,
+      required: true,
+    },
   },
   { collection: 'resources' }
 );

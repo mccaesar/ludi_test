@@ -64,6 +64,7 @@ const filterResources = ({
   if (sortOption) {
     switch (sortOption) {
       case 'popularity':
+        filteredResources.sort((a, b) => (a.saveCount < b.saveCount ? 1 : -1));
         break;
       case 'az':
         filteredResources.sort((a, b) =>

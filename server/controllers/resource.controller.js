@@ -69,11 +69,11 @@ export const saveResource = async (req, res) => {
   const { resourceId } = req.params;
   const { userId } = req.body;
 
-  const user = User.findOne({ _id: userId });
+  const user = await User.findOne({ _id: userId });
   if (!user) {
     return res.status(401).send(`No user with id: ${userId}`);
   }
-  const resource = Resource.findOne({ resourceId: resourceId });
+  const resource = await Resource.findOne({ resourceId: resourceId });
   if (!resource) {
     return res.status(401).send(`No resource with id: ${resourceId}`);
   }
@@ -90,30 +90,45 @@ export const saveResource = async (req, res) => {
     },
     { upsert: true }
   );
-  // res.status(200).json(savedResource);
-  res.status(200).send(userId);
+
+  if (savedResource) {
+    await Resource.updateOne(
+      { resourceId: resourceId },
+      { $inc: { saveCount: 1 } }
+    );
+  }
+
+  res.status(200).json(savedResource);
 };
 
 export const unsaveResource = async (req, res) => {
   const { resourceId } = req.params;
   const { userId } = req.body;
 
-  const user = User.findOne({ _id: userId });
+  const user = await User.findOne({ _id: userId });
   if (!user) {
     return res.status(401).send(`No user with id: ${userId}`);
   }
-  const resource = Resource.findOne({ resourceId: resourceId });
+  const resource = await Resource.findOne({ resourceId: resourceId });
   if (!resource) {
     return res.status(401).send(`No resource with id: ${resourceId}`);
   }
 
-  const savedResource = await SavedResource.updateOne(
+  const unsavedResource = await SavedResource.updateOne(
     { userId: userId },
     {
       $pull: { resourceIds: { $in: [resourceId] } },
     }
   );
-  res.status(200).json(savedResource);
+
+  if (unsavedResource) {
+    await Resource.updateOne(
+      { resourceId: resourceId },
+      { $inc: { saveCount: -1 } }
+    );
+  }
+
+  res.status(200).json(unsavedResource);
 };
 
 export default router;

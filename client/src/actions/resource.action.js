@@ -53,3 +53,29 @@ export const fetchSavedResources = () => async (dispatch) => {
     });
   }
 };
+
+// export const saveResource = (resourceId) => async (dispatch) => {
+//   try {
+//     dispatch({ type: 'SAVE_RESOURCE_REQUEST' });
+
+//     const { data: resources } = await resourceApi.getResources();
+//     const { resourceIds: savedResourceIds } =
+//       await resourceApi.getSavedResourceIds();
+//     const action = {
+//       type: 'SAVE_RESOURCE_SUCCESS',
+//       payload: {
+//         resources,
+//         savedResourceIds,
+//       },
+//     };
+//     dispatch(action);
+//   } catch (error) {
+//     dispatch({
+//       type: 'SAVE_RESOURCE_FAILURE',
+//       error:
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message,
+//     });
+//   }
+// }

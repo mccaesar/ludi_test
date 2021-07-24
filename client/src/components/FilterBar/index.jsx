@@ -10,11 +10,6 @@ import {
   CheckboxGroup,
   HStack,
   Spacer,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
   useColorModeValue,
 } from '@chakra-ui/react';
 
@@ -31,42 +26,7 @@ export const FilterBar = () => {
   const [currentFilter, setCurrentFilter] = useState(0);
   const [selectedSearchFields, setSelectedSearchFields] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
-  const [selectedSort, setSelectedSort] = useState('');
-
-  useEffectOnce(() => {
-    setSelectedSearchFields(query.getAll('field'), () => {
-      if (selectedSearchFields.length === 0) {
-        setSelectedSearchFields(['title']);
-      }
-    });
-    setSelectedTags(query.getAll('tag'));
-    setSelectedSort(query.get('sort'));
-  });
-
-  useEffect(() => {
-    if (selectedSort) {
-      query.set('sort', selectedSort.value);
-      history.replace(`/search?${query}`);
-    }
-  }, [selectedSort]);
-
-  useEffect(() => {
-    if (selectedSearchFields) {
-      query.delete('field');
-      selectedSearchFields.map((searchField) =>
-        query.append('field', searchField)
-      );
-      history.replace(`/search?${query}`);
-    }
-  }, [selectedSearchFields]);
-
-  useEffect(() => {
-    if (selectedTags) {
-      query.delete('tag');
-      selectedTags.map((selectedTag) => query.append('tag', selectedTag.value));
-      history.replace(`/search?${query}`);
-    }
-  }, [selectedTags]);
+  const [selectedSort, setSelectedSort] = useState({});
 
   const [NONE, SEARCH_FIELD, CATEGORY] = [0, 1, 2];
   const tagOptions = [
@@ -120,6 +80,52 @@ export const FilterBar = () => {
     { value: 'old', label: 'Oldest' },
   ];
 
+  useEffectOnce(() => {
+    const initialSearchFields = query.getAll('field');
+    if (initialSearchFields && initialSearchFields.length) {
+      setSelectedSearchFields(initialSearchFields);
+    } else {
+      setSelectedSearchFields(['title']);
+    }
+
+    const initialTags = query.getAll('tag');
+    setSelectedTags(
+      tagOptions.filter((tag) => initialTags.indexOf(tag.value) >= 0)
+    );
+
+    const initialSortOption = query.get('sort');
+    setSelectedSort(
+      sortOptions.filter((option) => {
+        return option.value === initialSortOption;
+      })[0]
+    );
+  });
+
+  useEffect(() => {
+    if (selectedSort && selectedSort.value) {
+      query.set('sort', selectedSort.value);
+      history.replace(`/search?${query}`);
+    }
+  }, [selectedSort]);
+
+  useEffect(() => {
+    if (selectedSearchFields && selectedSearchFields.length) {
+      query.delete('field');
+      selectedSearchFields.map((searchField) =>
+        query.append('field', searchField)
+      );
+      history.replace(`/search?${query}`);
+    }
+  }, [selectedSearchFields]);
+
+  useEffect(() => {
+    if (selectedTags && selectedTags.length) {
+      query.delete('tag');
+      selectedTags.map((selectedTag) => query.append('tag', selectedTag.value));
+      history.replace(`/search?${query}`);
+    }
+  }, [selectedTags]);
+
   const handleCollapse = (targetFilter) => {
     if (currentFilter !== targetFilter) {
       setCurrentFilter(targetFilter);
@@ -153,7 +159,7 @@ export const FilterBar = () => {
               closeMenuOnSelect={false}
               size="md"
               options={tagOptions}
-              defaultValue={selectedTags}
+              value={selectedTags}
               onChange={setSelectedTags}
             />
           </Box>
@@ -164,7 +170,12 @@ export const FilterBar = () => {
   };
 
   return (
-    <Box justifyContent="center" mx="auto" maxW={{ base: 'xl', md: '6xl' }}>
+    <Box
+      justifyContent="center"
+      mx="auto"
+      pt={6}
+      maxW={{ base: 'xl', md: '6xl' }}
+    >
       <Flex justifyContent="space-between">
         <Button
           variant="ghost"
@@ -202,7 +213,7 @@ export const FilterBar = () => {
             closeMenuOnSelect={true}
             size="sm"
             color={useColorModeValue('black', 'white')}
-            defaultValue={selectedSort}
+            value={selectedSort}
             onChange={setSelectedSort}
             options={sortOptions}
           />
