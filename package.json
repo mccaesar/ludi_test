@@ -19,7 +19,8 @@
     "extends": "react-app"
   },
   "scripts": {
-    "format": "prettier --write '**/*.js'"
+    "format": "prettier --write '**/*.js'",
+    "install": "cd client && npm install && cd ../server && npm install"
   },
   "devDependencies": {
     "eslint": "^7.27.0",
