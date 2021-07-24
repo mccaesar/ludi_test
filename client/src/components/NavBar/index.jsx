@@ -31,7 +31,6 @@ export const NavBar = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    console.log('here')
     batch(() => {
       dispatch(fetchLoginStatus());
       dispatch(fetchUser());

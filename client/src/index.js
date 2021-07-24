@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
-import { ColorModeScript } from "@chakra-ui/react"
+import { ColorModeScript } from '@chakra-ui/react';
 
 import store from './store.js';
 import App from './App';

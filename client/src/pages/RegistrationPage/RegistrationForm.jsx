@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,6 +17,7 @@ import { registerUser } from '../../actions/auth.action';
 export const RegistrationForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const {errorMessage} = useSelector((state) => state.auth);
 
   const initialValues = {
     firstName: '',
@@ -46,7 +47,11 @@ export const RegistrationForm = () => {
           password: values.password,
         };
         dispatch(registerUser(data));
-        history.push('/login');
+        if (errorMessage) {
+          alert(errorMessage);
+        } else {
+          history.push('/login');
+        }
         resolve();
       }, 500);
     });
@@ -79,7 +84,7 @@ export const RegistrationForm = () => {
         >
           <FormLabel mb={1}>Email</FormLabel>
           <Input
-            borderColor={mode('gray.400', 'gray.600')} 
+            borderColor={mode('gray.400', 'gray.600')}
             id="email"
             type="email"
             autoComplete="email"
@@ -103,7 +108,7 @@ export const RegistrationForm = () => {
         >
           <FormLabel mb={1}>Confirm your password</FormLabel>
           <Input
-            borderColor={mode('gray.400', 'gray.600')} 
+            borderColor={mode('gray.400', 'gray.600')}
             id="passwordConfirmation"
             type="password"
             {...register('passwordConfirmation')}

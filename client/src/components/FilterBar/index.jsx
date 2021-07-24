@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   Box,
@@ -10,13 +11,20 @@ import {
   CheckboxGroup,
   HStack,
   Spacer,
+  Text,
   useColorModeValue,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  CloseButton
 } from '@chakra-ui/react';
 
 import Select from '../Select';
 import { useEffect } from 'react';
 import { useEffectOnce } from '../../hooks/useEffectOnce';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import { fetchResources } from '../../actions/resource.action';
 
 export const FilterBar = () => {
   const history = useHistory();
@@ -80,6 +88,8 @@ export const FilterBar = () => {
     { value: 'old', label: 'Oldest' },
   ];
 
+  const { resources } = useSelector((state) => state.resources);
+
   useEffectOnce(() => {
     const initialSearchFields = query.getAll('field');
     if (initialSearchFields && initialSearchFields.length) {
@@ -89,9 +99,15 @@ export const FilterBar = () => {
     }
 
     const initialTags = query.getAll('tag');
-    setSelectedTags(
-      tagOptions.filter((tag) => initialTags.indexOf(tag.value) >= 0)
-    );
+    if(initialTags && initialTags.length)
+    {
+      setSelectedTags(
+        tagOptions.filter((tag) => initialTags.indexOf(tag.value) >= 0)
+      );
+      setCurrentFilter(CATEGORY)
+    } else {
+      setCurrentFilter(SEARCH_FIELD)
+    }
 
     const initialSortOption = query.get('sort');
     setSelectedSort(
@@ -109,7 +125,7 @@ export const FilterBar = () => {
   }, [selectedSort]);
 
   useEffect(() => {
-    if (selectedSearchFields && selectedSearchFields.length) {
+    if (selectedSearchFields) {
       query.delete('field');
       selectedSearchFields.map((searchField) =>
         query.append('field', searchField)
@@ -119,7 +135,7 @@ export const FilterBar = () => {
   }, [selectedSearchFields]);
 
   useEffect(() => {
-    if (selectedTags && selectedTags.length) {
+    if (selectedTags) {
       query.delete('tag');
       selectedTags.map((selectedTag) => query.append('tag', selectedTag.value));
       history.replace(`/search?${query}`);
@@ -133,6 +149,20 @@ export const FilterBar = () => {
       setCurrentFilter(NONE);
     }
   };
+
+  const noResultWarning = (bg) => {
+    if (selectedSearchFields && !selectedSearchFields.length && resources && !resources.length) {
+      return (
+        <Alert status="warning" bg={bg}>
+          <AlertIcon />
+          <AlertTitle mr={2}>No search fields selected!</AlertTitle>
+          {/* <AlertDescription>Your Chakra experience may be degraded.</AlertDescription> */}
+          {/* <CloseButton position="absolute" right="8px" top="8px" /> */}
+        </Alert>
+      );
+    }
+    return null;
+  }
 
   const renderCollapse = () => {
     switch (currentFilter) {
@@ -224,6 +254,7 @@ export const FilterBar = () => {
           <Box pt={4}>{renderCollapse()}</Box>
         </Collapse>
       </Flex>
+      {noResultWarning(useColorModeValue('#feebc8', 'yellow.800'))}
     </Box>
   );
 };

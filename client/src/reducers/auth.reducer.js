@@ -22,6 +22,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+        isLoggedIn: false,
         errorMessage: action.error,
       };
     case 'LOGIN_REQUEST':
@@ -42,41 +43,42 @@ const reducer = (state = initialState, action) => {
         isLoading: false,
         errorMessage: action.error,
       };
-      case 'REGISTRATION_REQUEST':
-        return {
-          ...state,
-          isLoading: true,
-          errorMessage: null,
-        };
-      case 'REGISTRATION_SUCCESS':
-        return {
-          ...state,
-          isLoading: false,
-        };
-      case 'REGISTRATION_FAILURE':
-        return {
-          ...state,
-          isLoading: false,
-          errorMessage: action.error,
-        };
-        case 'LOGOUT_REQUEST':
-        return {
-          ...state,
-          isLoading: true,
-          errorMessage: null,
-        };
-      case 'LOGOUT_SUCCESS':
-        return {
-          ...state,
-          isLoading: false,
-          isLoggedIn: false,
-        };
-      case 'LOGOUT_FAILURE':
-        return {
-          ...state,
-          isLoading: false,
-          errorMessage: action.error,
-        };
+    case 'REGISTRATION_REQUEST':
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: null,
+      };
+    case 'REGISTRATION_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case 'REGISTRATION_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: action.error,
+      };
+    case 'LOGOUT_REQUEST':
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: null,
+      };
+    case 'LOGOUT_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isLoggedIn: false,
+      };
+    case 'LOGOUT_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        isLoggedIn: false,
+        errorMessage: action.error,
+      };
     default:
       return state;
   }

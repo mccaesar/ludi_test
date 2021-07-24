@@ -1,25 +1,25 @@
 import { authApi } from '../services';
 
 export const fetchLoginStatus = () => async (dispatch) => {
-    try {
-      dispatch({ type: 'LOGIN_STATUS_REQUEST' });
-  
-      const isLoggedIn = authApi.getLoginStatus();
-      const action = {
-        type: 'LOGIN_STATUS_SUCCESS',
-        payload: isLoggedIn,
-      };
-      dispatch(action);
-    } catch (error) {
-      dispatch({
-        type: 'LOGIN_STATUS_FAILURE',
-        error:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  };
+  try {
+    dispatch({ type: 'LOGIN_STATUS_REQUEST' });
+
+    const isLoggedIn = authApi.getLoginStatus();
+    const action = {
+      type: 'LOGIN_STATUS_SUCCESS',
+      payload: isLoggedIn,
+    };
+    dispatch(action);
+  } catch (error) {
+    dispatch({
+      type: 'LOGIN_STATUS_FAILURE',
+      error:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const loginUser = (data) => async (dispatch) => {
   try {

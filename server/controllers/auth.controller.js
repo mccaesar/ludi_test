@@ -31,7 +31,8 @@ export const registerUser = async (req, res, next) => {
   // Validate user can be created from data
   const { isValid, errors: validationErrors } = validateRegistration(req.body);
   if (!isValid) {
-    return res.status(404).send({
+    return res.status(404).json({
+      success: false,
       message: validationErrors
         ? validationErrors[0].message
         : 'Some error occurred while validating user information for registration.',
@@ -41,7 +42,8 @@ export const registerUser = async (req, res, next) => {
   // Check if email is already in the database
   const emailExists = await User.findOne({ email: req.body.email });
   if (emailExists) {
-    return res.status(404).send({
+    return res.status(404).json({
+      success: false,
       message: 'This email is already in use. Please use another one.',
     });
   }

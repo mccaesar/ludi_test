@@ -12,6 +12,11 @@ import {
   Tag,
   Grid,
   HStack,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogContent,
+  AlertDialogOverlay,
   useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
@@ -27,7 +32,8 @@ export const ResourcePage = () => {
   const [isSaved, setSaved] = useState(false);
   const [resource, setResource] = useState(null);
   const { resourceId } = useParams();
-
+  const [alertIsOpen, setAlertIsOpen] = useState(false);
+  
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -55,7 +61,7 @@ export const ResourcePage = () => {
       }
       setSaved(!isSaved);
     } else {
-      alert('Log in to save resources')
+      setAlertIsOpen(true);
     }
   };
 
@@ -64,13 +70,44 @@ export const ResourcePage = () => {
     ({ title, author, description, longDescription, url, tags } = resource);
   }
 
+  let tagSearch = new URLSearchParams();
+  tagSearch.set('sort', 'relevance');
+  tagSearch.set('field', '');
+  
+  const notLoggedInAlert = () => {
+    const onClose = () => setAlertIsOpen(false)
+
+    return (
+      <>
+        <AlertDialog
+          isOpen={alertIsOpen}
+          onClose={onClose}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogBody pt={8}>
+                You must be logged in to save resources.
+            </AlertDialogBody>
+              <AlertDialogFooter>
+                <Button onClick={onClose}>
+                  Ok
+              </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+      </>
+    )
+  }
+
   return resource ? (
     <>
       <NavBar/>
-      <Box p={2}></Box>
+      { notLoggedInAlert() }
       <Stack
         bg={mode('white', 'gray.800')}
         overflow="hidden"
+        mt={4}
         p={6}
         rounded="md"
         maxW={{ base: '2xl', md: '6xl' }}
@@ -127,13 +164,17 @@ export const ResourcePage = () => {
         </Stack>
         <HStack mt={8} bg={mode('gray.200', 'gray.700')} p={6} rounded="md">
           {console.log(tags)}
-          {tags.map((tag) => (
-            <Tag 
+          {tags.map((tag) => {
+            tagSearch.set('tag', tag)
+            console.log(`/search?${tagSearch}`) 
+            return <Tag 
+            as="a"
+            href={`/search?${tagSearch}`}
             color={mode('black', 'gray.300')}
             bg={mode('gray.400', 'gray.600')}>
               {tag}
             </Tag>
-          ))}
+          })}
         </HStack>
         <Box mt={8} bg={mode('gray.200', 'gray.700')} p={6} rounded="md">
           <Text color={mode('black', 'white')} fontSize="3xl" pb={4}>

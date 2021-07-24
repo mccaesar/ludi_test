@@ -8,6 +8,8 @@ import { LoginPage } from './pages/LoginPage';
 import { RegistrationPage } from './pages/RegistrationPage';
 import { FilterPage } from './pages/FilterPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { UploadPage } from './pages/UploadPage';
+import { AboutPage } from './pages/AboutPage';
 
 const App = () => (
   <ChakraProvider theme={customTheme}>
@@ -19,6 +21,8 @@ const App = () => (
         <Route path="/login" exact component={LoginPage} />
         <Route path="/profile" exact component={ProfilePage} />
         <Route path="/search" component={FilterPage} />
+        <Route path="/upload" component={UploadPage} />
+        <Route path="/about" component={AboutPage} />
         <Route path="/" component={() => <h1>404</h1>} />
       </Switch>
     </Router>
