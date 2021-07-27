@@ -10,7 +10,7 @@
     }
   },
   "lint-staged": {
-    "**/*.js": [
+    "*.{js,jsx}": [
       "eslint --fix",
       "git add"
     ]
@@ -19,7 +19,7 @@
     "extends": "react-app"
   },
   "scripts": {
-    "format": "prettier --write '**/*.js'"
+    "format": "prettier '**' --write --ignore-unknown"
   },
   "devDependencies": {
     "eslint": "^7.27.0",

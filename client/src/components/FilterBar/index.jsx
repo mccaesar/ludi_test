@@ -95,14 +95,13 @@ export const FilterBar = () => {
     }
 
     const initialTags = query.getAll('tag');
-    if(initialTags && initialTags.length)
-    {
+    if (initialTags && initialTags.length) {
       setSelectedTags(
         tagOptions.filter((tag) => initialTags.indexOf(tag.value) >= 0)
       );
-      setCurrentFilter(CATEGORY)
+      setCurrentFilter(CATEGORY);
     } else {
-      setCurrentFilter(SEARCH_FIELD)
+      setCurrentFilter(SEARCH_FIELD);
     }
 
     const initialSortOption = query.get('sort');
@@ -147,7 +146,12 @@ export const FilterBar = () => {
   };
 
   const noResultWarning = (bg) => {
-    if (selectedSearchFields && !selectedSearchFields.length && resources && !resources.length) {
+    if (
+      selectedSearchFields &&
+      !selectedSearchFields.length &&
+      resources &&
+      !resources.length
+    ) {
       return (
         <Alert status="warning" bg={bg}>
           <AlertIcon />
@@ -158,7 +162,7 @@ export const FilterBar = () => {
       );
     }
     return null;
-  }
+  };
 
   const renderCollapse = () => {
     switch (currentFilter) {

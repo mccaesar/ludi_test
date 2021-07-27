@@ -28,7 +28,7 @@ app.use(urlencoded({ limit: '30mb', extended: true }));
 
 app.use(passport.initialize());
 
-app.use('/', routes);
+app.use('/api', routes);
 
 mongoose
   .connect(url, {

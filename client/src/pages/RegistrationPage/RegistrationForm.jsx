@@ -17,7 +17,7 @@ import { registerUser } from '../../actions/auth.action';
 export const RegistrationForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const {errorMessage} = useSelector((state) => state.auth);
+  const { errorMessage } = useSelector((state) => state.auth);
 
   const initialValues = {
     firstName: '',
@@ -65,7 +65,13 @@ export const RegistrationForm = () => {
           errortext={errors?.firstName?.message}
         >
           <FormLabel mb={1}>First Name</FormLabel>
-          <Input borderColor={mode('gray.400', 'gray.600')} variant="filled" id="firstName" type="text" {...register('firstName')} />
+          <Input
+            borderColor={mode('gray.400', 'gray.600')}
+            variant="filled"
+            id="firstName"
+            type="text"
+            {...register('firstName')}
+          />
           <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
         </FormControl>
 
@@ -74,7 +80,12 @@ export const RegistrationForm = () => {
           errortext={errors?.lastName?.message}
         >
           <FormLabel mb={1}>Last Name</FormLabel>
-          <Input borderColor={mode('gray.400', 'gray.600')} id="lastName" type="text" {...register('lastName')} />
+          <Input
+            borderColor={mode('gray.400', 'gray.600')}
+            id="lastName"
+            type="text"
+            {...register('lastName')}
+          />
           <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
         </FormControl>
 
@@ -98,7 +109,12 @@ export const RegistrationForm = () => {
           errortext={errors?.password?.message}
         >
           <FormLabel mb={1}>Password</FormLabel>
-          <Input borderColor={mode('gray.400', 'gray.600')} id="password" type="password" {...register('password')} />
+          <Input
+            borderColor={mode('gray.400', 'gray.600')}
+            id="password"
+            type="password"
+            {...register('password')}
+          />
           <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
         </FormControl>
 

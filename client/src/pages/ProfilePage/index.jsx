@@ -20,36 +20,34 @@ export const ProfilePage = () => {
   const { user } = useSelector((state) => state.users);
   const { savedResources } = useSelector((state) => state.resources);
 
-  
   return (
     <>
-    { user ? 
-      <>
-        <NavBar />
-        <Box p={10} justifyContent="center">
-          <Text fontSize="lg">
-            {' '}
-            Name: {user.firstName + ' ' + user.lastName}{' '}
-          </Text>
-          <Text fontSize="lg"> Email: {user.email} </Text>
-        </Box>
+      {user ? (
+        <>
+          <NavBar />
+          <Box p={10} justifyContent="center">
+            <Text fontSize="lg">
+              {' '}
+              Name: {user.firstName + ' ' + user.lastName}{' '}
+            </Text>
+            <Text fontSize="lg"> Email: {user.email} </Text>
+          </Box>
 
-        <Center py={5}>
-          <Text fontSize="2xl"> Saved Resources:</Text>
-        </Center>
-        <ResourceContainer resources={savedResources} />
-        <Footer />
-      </>
-      :
-      <>
-        <NavBar />
-        <Center py={10}>
-          <Text fontSize="2xl"> Log in to view saved resources </Text>
-        </Center>
-        <Footer />
-      </>
-    }
-
+          <Center py={5}>
+            <Text fontSize="2xl"> Saved Resources:</Text>
+          </Center>
+          <ResourceContainer resources={savedResources} />
+          <Footer />
+        </>
+      ) : (
+        <>
+          <NavBar />
+          <Center py={10}>
+            <Text fontSize="2xl"> Log in to view saved resources </Text>
+          </Center>
+          <Footer />
+        </>
+      )}
     </>
   );
 };

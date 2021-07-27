@@ -7,12 +7,11 @@ import {
 } from '@chakra-ui/react';
 
 export const CannedSearch = ({ searchParams, text }) => {
-
   return (
     <LinkBox
       w="full"
       h="full"
-     // maxW="xl"
+      // maxW="xl"
       minW="sm"
       mx="auto"
       position="relative"
@@ -26,7 +25,8 @@ export const CannedSearch = ({ searchParams, text }) => {
       }}
     >
       {/*may need history.push(`/search?${searchParams}`); */}
-      <LinkOverlay href={`/search?${searchParams}`}>{/*old: `/resource/${resourceId}` */}
+      <LinkOverlay href={`/search?${searchParams}`}>
+        {/*old: `/resource/${resourceId}` */}
         <Center>
           <chakra.h1
             fontSize="lg"

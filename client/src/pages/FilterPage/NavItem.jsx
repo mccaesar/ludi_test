@@ -1,9 +1,9 @@
-import { Box, HStack } from '@chakra-ui/react'
-import * as React from 'react'
-import { BsCaretRightFill } from 'react-icons/bs'
+import { Box, HStack } from '@chakra-ui/react';
+import * as React from 'react';
+import { BsCaretRightFill } from 'react-icons/bs';
 
 export const NavItem = (props) => {
-  const { active, subtle, icon, children, label, endElement } = props
+  const { active, subtle, icon, children, label, endElement } = props;
   return (
     <HStack
       w="full"
@@ -20,11 +20,15 @@ export const NavItem = (props) => {
       <Box fontSize="lg" color={active ? 'currentcolor' : 'gray.400'}>
         {icon}
       </Box>
-      <Box flex="1" fontWeight="inherit" color={subtle ? 'gray.400' : undefined}>
+      <Box
+        flex="1"
+        fontWeight="inherit"
+        color={subtle ? 'gray.400' : undefined}
+      >
         {label}
       </Box>
       {endElement && !children && <Box>{endElement}</Box>}
       {children && <Box fontSize="xs" flexShrink={0} as={BsCaretRightFill} />}
     </HStack>
-  )
-}
+  );
+};

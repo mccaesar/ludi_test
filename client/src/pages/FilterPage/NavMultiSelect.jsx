@@ -2,7 +2,7 @@ import { Flex, Box } from '@chakra-ui/react';
 import { useState } from 'react';
 import { BsCaretRightFill } from 'react-icons/bs';
 // import Select from 'react-select';
-import Select from '../../components/Select'
+import Select from '../../components/Select';
 import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();

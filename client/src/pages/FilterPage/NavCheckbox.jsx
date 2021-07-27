@@ -1,8 +1,8 @@
-import { Box, HStack, Checkbox } from '@chakra-ui/react'
-import { BsCaretRightFill } from 'react-icons/bs'
+import { Box, HStack, Checkbox } from '@chakra-ui/react';
+import { BsCaretRightFill } from 'react-icons/bs';
 
 export const NavCheckbox = (props) => {
-  const { active, subtle, children, label, endElement } = props
+  const { active, subtle, children, label, endElement } = props;
   return (
     <HStack
       w="full"
@@ -16,11 +16,15 @@ export const NavCheckbox = (props) => {
       _hover={{ bg: 'gray.700' }}
       _active={{ bg: 'gray.600' }}
     >
-      <Checkbox flex="1" fontWeight="inherit" color={subtle ? 'gray.400' : undefined}>
+      <Checkbox
+        flex="1"
+        fontWeight="inherit"
+        color={subtle ? 'gray.400' : undefined}
+      >
         {label}
       </Checkbox>
       {endElement && !children && <Box>{endElement}</Box>}
       {children && <Box fontSize="xs" flexShrink={0} as={BsCaretRightFill} />}
     </HStack>
-  )
-}
+  );
+};

@@ -19,11 +19,7 @@ export const RegistrationModal = ({ disclosure }) => {
   const initialRef = useRef();
   const { isOpen, onClose } = disclosure;
   return (
-    <Modal
-      initialFocusRef={initialRef}
-      isOpen={isOpen}
-      onClose={onClose}
-    >
+    <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent maxW="xl">
         <ModalCloseButton />

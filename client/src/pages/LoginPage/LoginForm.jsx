@@ -70,7 +70,12 @@ export const LoginForm = () => {
           errortext={errors?.password?.message}
         >
           <FormLabel mb={1}>Password</FormLabel>
-          <Input borderColor={mode('gray.400', 'gray.600')} id="password" type="password" {...register('password')} />
+          <Input
+            borderColor={mode('gray.400', 'gray.600')}
+            id="password"
+            type="password"
+            {...register('password')}
+          />
           <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
         </FormControl>
 

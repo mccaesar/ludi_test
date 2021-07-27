@@ -5,22 +5,20 @@ import {
   Stack,
   Switch,
   useColorModeValue,
-  useColorMode
+  useColorMode,
 } from '@chakra-ui/react';
 
 import { Logo } from './Logo';
 
-
-
 export const Footer = () => {
-  const { toggleColorMode } = useColorMode()
+  const { toggleColorMode } = useColorMode();
   return (
     <Box
       w="full"
       position="fixed"
       bottom="0"
       bg={useColorModeValue('gray.100', 'gray.900')}
-     color={useColorModeValue('gray.700', 'gray.200')}
+      color={useColorModeValue('gray.700', 'gray.200')}
     >
       <Container
         as={Stack}
@@ -28,14 +26,20 @@ export const Footer = () => {
         py={4}
         spacing={4}
         justify={'center'}
-        align={'center'}>
+        align={'center'}
+      >
         <Logo />
         <Stack direction={'row'} spacing={6}>
           <Link href={'/'}>Home</Link>
           <Link href={'/about'}>About</Link>
           <Link href={'/upload'}>Submission</Link>
           <Link href="mailto:ludi@illinois.edu">Contact</Link>
-          <Switch onChange={toggleColorMode} colorScheme="gray" size="lg" defaultChecked />
+          <Switch
+            onChange={toggleColorMode}
+            colorScheme="gray"
+            size="lg"
+            defaultChecked
+          />
         </Stack>
       </Container>
     </Box>

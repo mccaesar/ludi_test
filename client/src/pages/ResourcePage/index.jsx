@@ -32,7 +32,7 @@ export const ResourcePage = () => {
   const [resource, setResource] = useState(null);
   const { resourceId } = useParams();
   const [alertIsOpen, setAlertIsOpen] = useState(false);
-  
+
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export const ResourcePage = () => {
   }, [isLoggedIn, resourceId]);
 
   const handleSave = () => {
-    if(isLoggedIn) {
+    if (isLoggedIn) {
       if (!isSaved) {
         resourceApi.saveResource(resourceId);
       } else {
@@ -72,37 +72,32 @@ export const ResourcePage = () => {
   let tagSearch = new URLSearchParams();
   tagSearch.set('sort', 'relevance');
   tagSearch.set('field', '');
-  
+
   const notLoggedInAlert = () => {
-    const onClose = () => setAlertIsOpen(false)
+    const onClose = () => setAlertIsOpen(false);
 
     return (
       <>
-        <AlertDialog
-          isOpen={alertIsOpen}
-          onClose={onClose}
-        >
+        <AlertDialog isOpen={alertIsOpen} onClose={onClose}>
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogBody pt={8}>
                 You must be logged in to save resources.
-            </AlertDialogBody>
+              </AlertDialogBody>
               <AlertDialogFooter>
-                <Button onClick={onClose}>
-                  Ok
-              </Button>
+                <Button onClick={onClose}>Ok</Button>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialogOverlay>
         </AlertDialog>
       </>
-    )
-  }
+    );
+  };
 
   return resource ? (
     <>
-      <NavBar/>
-      { notLoggedInAlert() }
+      <NavBar />
+      {notLoggedInAlert()}
       <Stack
         bg={mode('white', 'gray.800')}
         overflow="hidden"
@@ -162,17 +157,20 @@ export const ResourcePage = () => {
           />
         </Stack>
         <HStack mt={8} bg={mode('gray.200', 'gray.700')} p={6} rounded="md">
-          {console.log(tags)}
+          {console.log(resource)}
           {tags.map((tag) => {
-            tagSearch.set('tag', tag)
-            console.log(`/search?${tagSearch}`) 
-            return <Tag 
-            as="a"
-            href={`/search?${tagSearch}`}
-            color={mode('black', 'gray.300')}
-            bg={mode('gray.400', 'gray.600')}>
-              {tag}
-            </Tag>
+            tagSearch.set('tag', tag);
+            console.log(`/search?${tagSearch}`);
+            return (
+              <Tag
+                as="a"
+                href={`/search?${tagSearch}`}
+                color={mode('black', 'gray.300')}
+                bg={mode('gray.400', 'gray.600')}
+              >
+                {tag}
+              </Tag>
+            );
           })}
         </HStack>
         <Box mt={8} bg={mode('gray.200', 'gray.700')} p={6} rounded="md">
