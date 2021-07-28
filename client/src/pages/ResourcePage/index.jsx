@@ -64,16 +64,11 @@ export const ResourcePage = () => {
     }
   };
 
-  let title, author, description, longDescription, url, tags;
-  if (resource) {
-    ({ title, author, description, longDescription, url, tags } = resource);
-  }
-
-  let tagSearch = new URLSearchParams();
+  const tagSearch = new URLSearchParams();
   tagSearch.set('sort', 'relevance');
   tagSearch.set('field', '');
 
-  const notLoggedInAlert = () => {
+  const NotLoggedInAlert = () => {
     const onClose = () => setAlertIsOpen(false);
 
     return (
@@ -97,7 +92,7 @@ export const ResourcePage = () => {
   return resource ? (
     <>
       <NavBar />
-      {notLoggedInAlert()}
+      <NotLoggedInAlert />
       <Stack
         bg={mode('white', 'gray.800')}
         overflow="hidden"
@@ -121,15 +116,15 @@ export const ResourcePage = () => {
         >
           <Box w="full">
             <Text fontSize="4xl" color={mode('black', 'white')}>
-              {title}
+              {resource.title}
             </Text>
             <Text fontSize="2xl" color={mode('gray.600', 'gray.300')}>
-              {author}
+              {resource.author}
             </Text>
             <HStack spacing={4} mt={8}>
               <Button
                 as="a"
-                href={url}
+                href={resource.url}
                 target="_blank"
                 color={mode('black', 'gray.300')}
                 bg={mode('gray.400', 'gray.600')}
@@ -157,13 +152,12 @@ export const ResourcePage = () => {
           />
         </Stack>
         <HStack mt={8} bg={mode('gray.200', 'gray.700')} p={6} rounded="md">
-          {console.log(resource)}
-          {tags.map((tag) => {
+          {resource.tags.map((tag) => {
             tagSearch.set('tag', tag);
-            console.log(`/search?${tagSearch}`);
             return (
               <Tag
                 as="a"
+                key={`tag-${tag}`}
                 href={`/search?${tagSearch}`}
                 color={mode('black', 'gray.300')}
                 bg={mode('gray.400', 'gray.600')}
@@ -178,9 +172,9 @@ export const ResourcePage = () => {
             Description
           </Text>
           <Text color={mode('black', 'white')} pb={2}>
-            {description}
+            {resource.description}
           </Text>
-          <Text color={mode('black', 'white')}>{longDescription}</Text>
+          <Text color={mode('black', 'white')}>{resource.longDescription}</Text>
         </Box>
         <Grid
           templateColumns="repeat(2, 1fr)"

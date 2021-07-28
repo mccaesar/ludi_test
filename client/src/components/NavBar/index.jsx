@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import {
   chakra,
+  Box,
   Flex,
   HStack,
   Button,
@@ -80,8 +81,11 @@ export const NavBar = () => {
             >
               Search Resources
             </Button>
+
             {isLoggedIn && user ? (
-              <UserMenu fullname={user.firstName + ' ' + user.lastName} />
+              <Box>
+                <UserMenu fullname={user.firstName + ' ' + user.lastName} />
+              </Box>
             ) : (
               <HStack
                 spacing={2}

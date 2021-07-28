@@ -145,7 +145,7 @@ export const FilterBar = () => {
     }
   };
 
-  const noResultWarning = (bg) => {
+  const NoResultAlert = ({ bg }) => {
     if (
       selectedSearchFields &&
       !selectedSearchFields.length &&
@@ -155,48 +155,72 @@ export const FilterBar = () => {
       return (
         <Alert status="warning" bg={bg}>
           <AlertIcon />
-          <AlertTitle mr={2}>No search fields selected!</AlertTitle>
-          {/* <AlertDescription>Your Chakra experience may be degraded.</AlertDescription> */}
-          {/* <CloseButton position="absolute" right="8px" top="8px" /> */}
+          <AlertTitle p={2}>No search fields selected!</AlertTitle>
         </Alert>
       );
     }
     return null;
   };
 
-  const renderCollapse = () => {
-    switch (currentFilter) {
-      case SEARCH_FIELD:
-        return (
-          <CheckboxGroup
-            defaultValue={selectedSearchFields}
-            onChange={setSelectedSearchFields}
-          >
-            <HStack spacing={4}>
-              <Checkbox value="title">Title</Checkbox>
-              <Checkbox value="description">Description</Checkbox>
-              <Checkbox value="category">Category</Checkbox>
-            </HStack>
-          </CheckboxGroup>
-        );
-      case CATEGORY:
-        return (
-          <Box w="md">
-            <Select
-              isMulti
-              name="tagMultiSelect"
-              placeholder="Select some tags..."
-              closeMenuOnSelect={false}
-              size="md"
-              options={tagOptions}
-              value={selectedTags}
-              onChange={setSelectedTags}
-            />
-          </Box>
-        );
-      default:
-        return null;
-    }
+  const FilterCollapse = () => {
+    const CollapseContent = () => {
+      switch (currentFilter) {
+        case SEARCH_FIELD:
+          return (
+            <CheckboxGroup
+              defaultValue={selectedSearchFields}
+              onChange={setSelectedSearchFields}
+            >
+              <HStack spacing={4}>
+                <Checkbox value="title">Title</Checkbox>
+                <Checkbox value="description">Description</Checkbox>
+                <Checkbox value="category">Category</Checkbox>
+              </HStack>
+            </CheckboxGroup>
+          );
+        case CATEGORY:
+          return (
+            <Box w="md">
+              <Select
+                isMulti
+                name="tagMultiSelect"
+                placeholder="Select some tags..."
+                closeMenuOnSelect={false}
+                size="md"
+                options={tagOptions}
+                value={selectedTags}
+                onChange={setSelectedTags}
+              />
+            </Box>
+          );
+        default:
+          return null;
+      }
+    };
+    return (
+      <Collapse in={currentFilter} animateOpacity>
+        <Box pt={4}>
+          <CollapseContent />
+        </Box>
+      </Collapse>
+    );
+  };
+
+  const SortSelect = () => {
+    return (
+      <Box w="3xs">
+        <Select
+          name="sortSelect"
+          placeholder="Sort by..."
+          closeMenuOnSelect={true}
+          size="sm"
+          color={useColorModeValue('black', 'white')}
+          value={selectedSort}
+          onChange={setSelectedSort}
+          options={sortOptions}
+        />
+      </Box>
+    );
   };
 
   return (
@@ -236,25 +260,12 @@ export const FilterBar = () => {
           Tags
         </Button>
         <Spacer />
-        <Box w="3xs">
-          <Select
-            name="sortSelect"
-            placeholder="Sort by..."
-            closeMenuOnSelect={true}
-            size="sm"
-            color={useColorModeValue('black', 'white')}
-            value={selectedSort}
-            onChange={setSelectedSort}
-            options={sortOptions}
-          />
-        </Box>
+        <SortSelect />
       </Flex>
       <Flex mx={12} pb={8}>
-        <Collapse in={currentFilter} animateOpacity>
-          <Box pt={4}>{renderCollapse()}</Box>
-        </Collapse>
+        <FilterCollapse />
       </Flex>
-      {noResultWarning(useColorModeValue('#feebc8', 'yellow.800'))}
+      <NoResultAlert bg={useColorModeValue('#feebc8', 'yellow.800')} />
     </Box>
   );
 };

@@ -7,9 +7,7 @@ import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
 import { SearchBar } from '../../components/SearchBar';
 
-export const HomePage = ({ match }) => {
-  // const history = useHistory();
-
+export const HomePage = () => {
   const cannedSearch1 = 'Find newest added resources in the Python category';
   const cannedParams1 = new URLSearchParams();
   cannedParams1.set('q', 'python');
@@ -46,7 +44,7 @@ export const HomePage = ({ match }) => {
       </Center>
 
       {/* SearchBar */}
-      <SearchBar url={match.url} />
+      <SearchBar />
       <Box p={10}></Box>
 
       {/* Canned Search Options */}

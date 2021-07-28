@@ -20,7 +20,10 @@ export const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffectOnce(() => {
-    setSearchTerm(query.get('q'));
+    const initialSearchTerm = query.get('q');
+    if (searchTerm) {
+      setSearchTerm(initialSearchTerm);
+    }
   });
 
   const handleSearch = (e) => {
