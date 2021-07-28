@@ -21,7 +21,7 @@ export const SearchBar = () => {
 
   useEffectOnce(() => {
     const initialSearchTerm = query.get('q');
-    if (searchTerm) {
+    if (initialSearchTerm) {
       setSearchTerm(initialSearchTerm);
     }
   });
@@ -36,10 +36,6 @@ export const SearchBar = () => {
         history.push(`/search`);
       }
     }
-  };
-
-  const clear = () => {
-    setSearchTerm('');
   };
 
   return (
@@ -60,7 +56,7 @@ export const SearchBar = () => {
           rounded="full"
         />
         <InputRightElement>
-          <CloseButton size="sm" onClick={clear} />
+          <CloseButton size="sm" onClick={() => setSearchTerm('')} />
         </InputRightElement>
       </InputGroup>
     </Box>

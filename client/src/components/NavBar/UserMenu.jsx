@@ -42,7 +42,7 @@ export const UserMenu = ({ fullname }) => {
             ml="2"
           >
             <Text fontSize="sm">{fullname}</Text>
-            <Text fontSize="xs" color="gray.600">
+            <Text fontSize="xs" color={useColorModeValue('gray.600', 'gray.400')}>
               User
             </Text>
           </VStack>

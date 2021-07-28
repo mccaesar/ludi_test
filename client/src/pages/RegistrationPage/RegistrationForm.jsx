@@ -67,7 +67,6 @@ export const RegistrationForm = () => {
           <FormLabel mb={1}>First Name</FormLabel>
           <Input
             borderColor={mode('gray.400', 'gray.600')}
-            variant="filled"
             id="firstName"
             type="text"
             {...register('firstName')}
