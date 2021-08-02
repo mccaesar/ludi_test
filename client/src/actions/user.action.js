@@ -1,10 +1,10 @@
-import { userApi } from '../services';
+import { userApis } from '../services';
 
 export const fetchUser = () => async (dispatch) => {
   try {
     dispatch({ type: 'FETCH_USER_REQUEST' });
 
-    const user = await userApi.getUser();
+    const user = await userApis.getUser();
     const action = {
       type: 'FETCH_USER_SUCCESS',
       payload: user,

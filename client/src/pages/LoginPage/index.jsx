@@ -7,14 +7,14 @@ import {
   useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
-import { Footer } from '../../components/Footer';
+import { WithFooter } from '../../components/Footer';
 import { NavBar } from '../../components/NavBar';
 import { DividerWithText } from './DividerWithText';
 import { LoginForm } from './LoginForm';
 
 export const LoginPage = () => {
   return (
-    <>
+    <WithFooter>
       <NavBar />
       <Box
         w="full"
@@ -88,7 +88,6 @@ export const LoginPage = () => {
           </Box>
         </Text>
       </Box>
-      <Footer />
-    </>
+    </WithFooter>
   );
 };

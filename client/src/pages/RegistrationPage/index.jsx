@@ -8,13 +8,13 @@ import {
 } from '@chakra-ui/react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { NavBar } from '../../components/NavBar';
-import { Footer } from '../../components/Footer';
+import { WithFooter } from '../../components/Footer';
 import { DividerWithText } from './DividerWithText';
 import { RegistrationForm } from './RegistrationForm';
 
 export const RegistrationPage = () => {
   return (
-    <>
+    <WithFooter>
       <NavBar />
       <Box
         w="full"
@@ -88,7 +88,6 @@ export const RegistrationPage = () => {
           </Box>
         </Text>
       </Box>
-      <Footer />
-    </>
+    </WithFooter>
   );
 };

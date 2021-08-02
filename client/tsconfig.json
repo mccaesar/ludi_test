@@ -1,5 +1,5 @@
 {
-  "include": ["src"],
+  "include": ["src", "src/index.js"],
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

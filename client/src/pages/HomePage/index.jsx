@@ -4,8 +4,9 @@ import { Logo } from './Logo';
 import { CannedSearch } from './CannedSearch';
 
 import { NavBar } from '../../components/NavBar';
-import { Footer } from '../../components/Footer';
+import { WithFooter } from '../../components/Footer';
 import { SearchBar } from '../../components/SearchBar';
+import { Flex } from '@chakra-ui/react';
 
 export const HomePage = () => {
   const cannedSearch1 = 'Find newest added resources in the Python category';
@@ -27,7 +28,7 @@ export const HomePage = () => {
   cannedParams3.set('field', 'description');
 
   return (
-    <>
+    <WithFooter>
       <NavBar />
 
       {/* LUDI logo */}
@@ -59,8 +60,6 @@ export const HomePage = () => {
           <CannedSearch searchParams={cannedParams1} text={cannedSearch1} />
         </SimpleGrid>
       </Center>
-
-      <Footer />
-    </>
+    </WithFooter>
   );
 };

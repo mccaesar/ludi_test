@@ -224,48 +224,54 @@ export const FilterBar = () => {
   };
 
   return (
-    <Box
-      justifyContent="center"
-      mx="auto"
-      pt={6}
-      maxW={{ base: 'xl', md: '6xl' }}
-    >
-      <Flex justifyContent="space-between">
-        <Button
-          variant="ghost"
-          _hover={{}}
-          _active={{}}
-          _focus={{}}
-          onClick={() => handleCollapse(SEARCH_FIELD)}
-          rightIcon={
-            currentFilter === SEARCH_FIELD ? (
-              <ChevronUpIcon />
-            ) : (
-              <ChevronDownIcon />
-            )
-          }
-        >
-          Search Field
-        </Button>
-        <Button
-          variant="ghost"
-          _hover={{}}
-          _active={{}}
-          _focus={{}}
-          onClick={() => handleCollapse(CATEGORY)}
-          rightIcon={
-            currentFilter === CATEGORY ? <ChevronUpIcon /> : <ChevronDownIcon />
-          }
-        >
-          Tags
-        </Button>
-        <Spacer />
-        <SortSelect />
-      </Flex>
-      <Flex mx={12} pb={8}>
-        <FilterCollapse />
-      </Flex>
-      <NoResultAlert bg={useColorModeValue('#feebc8', 'yellow.800')} />
+    <Box w="full">
+      <Box
+        justifyContent="center"
+        mx="auto"
+        pt={6}
+        maxW={{ base: 'xl', md: '6xl' }}
+      >
+        <Flex w="full" justifyContent="space-between">
+          <Button
+            variant="ghost"
+            _hover={{}}
+            _active={{}}
+            _focus={{}}
+            onClick={() => handleCollapse(SEARCH_FIELD)}
+            rightIcon={
+              currentFilter === SEARCH_FIELD ? (
+                <ChevronUpIcon />
+              ) : (
+                <ChevronDownIcon />
+              )
+            }
+          >
+            Search Field
+          </Button>
+          <Button
+            variant="ghost"
+            _hover={{}}
+            _active={{}}
+            _focus={{}}
+            onClick={() => handleCollapse(CATEGORY)}
+            rightIcon={
+              currentFilter === CATEGORY ? (
+                <ChevronUpIcon />
+              ) : (
+                <ChevronDownIcon />
+              )
+            }
+          >
+            Tags
+          </Button>
+          <Spacer />
+          <SortSelect />
+        </Flex>
+        <Flex mx={12} pb={8}>
+          <FilterCollapse />
+        </Flex>
+        <NoResultAlert bg={useColorModeValue('#feebc8', 'yellow.800')} />
+      </Box>
     </Box>
   );
 };

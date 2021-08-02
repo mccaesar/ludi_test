@@ -38,9 +38,14 @@ export const SearchBar = () => {
     }
   };
 
+  const clearSearch = () => {
+    setSearchTerm('');
+    history.push(`/search`);
+  };
+
   return (
     <Box
-      maxW={{ base: 'md', md: '2xl' }}
+      minW={{ base: 'md', md: '2xl' }}
       px={{ base: '6', md: '8' }}
       pt={6}
       mx="auto"
@@ -56,7 +61,7 @@ export const SearchBar = () => {
           rounded="full"
         />
         <InputRightElement>
-          <CloseButton size="sm" onClick={() => setSearchTerm('')} />
+          <CloseButton size="sm" onClick={clearSearch} />
         </InputRightElement>
       </InputGroup>
     </Box>

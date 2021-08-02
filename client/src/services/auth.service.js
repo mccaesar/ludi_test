@@ -1,8 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
-import moment from 'moment';
+import { addDays, isBefore } from 'date-fns';
 
-import { url } from '.';
+import { API_URL } from '../config';
 
 (function authInterceptor() {
   const token = localStorage.getItem('id_token');
@@ -15,22 +15,21 @@ import { url } from '.';
 
 const setLocalStorage = (responseObj) => {
   const expiresIn = responseObj.expiresIn.split(/(\d+)/).filter(Boolean);
-  const expires = moment().add(expiresIn[0], expiresIn[1]);
+  const expiresAt = addDays(new Date(), expiresIn[0]);
   localStorage.setItem('user_id', responseObj.user._id);
   localStorage.setItem('id_token', responseObj.token);
-  localStorage.setItem('expires_at', JSON.stringify(expires.valueOf()));
+  localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
 };
 
 const getExpiration = () => {
-  const expiration = localStorage.getItem('expires_at');
-  const expiresAt = JSON.parse(expiration);
-  return moment(expiresAt);
+  const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+  return new Date(expiresAt);
 };
 
 export const getLoginStatus = () => {
   const token = localStorage.getItem('id_token');
   if (token) {
-    const loggedIn = moment().isBefore(getExpiration());
+    const loggedIn = isBefore(new Date(), getExpiration());
     return loggedIn;
   }
   return false;
@@ -38,7 +37,7 @@ export const getLoginStatus = () => {
 
 export const registerUser = async (data) => {
   return await axios
-    .post(`${url}/register`, qs.stringify(data))
+    .post(`${API_URL}/register`, qs.stringify(data))
     .catch((err) => {
       console.log(err);
     });
@@ -46,7 +45,7 @@ export const registerUser = async (data) => {
 
 export const loginUser = async (data) => {
   return await axios
-    .post(`${url}/login`, qs.stringify(data))
+    .post(`${API_URL}/login`, qs.stringify(data))
     .then((res) => {
       setLocalStorage(res.data);
     })

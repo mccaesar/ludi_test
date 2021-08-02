@@ -3,22 +3,29 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+// const BundleAnalyzerPlugin =
+//   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isProduction = process.env.NODE_ENV === 'production';
-
 const config = {
   entry: {
-    bundle: './src/index.js',
+    main: './src/index.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: isProduction
+      ? '[name].[contenthash].bundle.js'
+      : '[name].bundle.js',
+    clean: true,
   },
   devtool: 'source-map',
   plugins: [
+    // new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin(),
     new webpack.EnvironmentPlugin({
-      NODE_ENV: isProduction ? 'production' : 'development',
+      NODE_ENV: 'development',
+      REACT_APP_PORT: 3000,
+      REACT_APP_API_URL: 'http://localhost:5000/api',
     }),
   ],
   module: {
@@ -47,18 +54,28 @@ const config = {
     open: true,
     port: 3000,
     compress: true,
-    proxy: {
-      '/api': 'http://localhost:5000',
-    },
+    // proxy: {
+    //   '/api': 'http://localhost:5000',
+    // },
     historyApiFallback: true,
   },
   optimization: {
-    minimize: true,
+    minimize: isProduction ? true : false,
     minimizer: [
       new TerserPlugin({
         extractComments: false,
       }),
     ],
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   },
 };
 

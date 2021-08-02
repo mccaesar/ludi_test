@@ -1,4 +1,5 @@
 import {
+  Flex,
   Box,
   Container,
   Link,
@@ -14,9 +15,12 @@ export const Footer = () => {
   const { toggleColorMode } = useColorMode();
   return (
     <Box
-      w="full"
-      position="fixed"
-      bottom="0"
+      minW="full"
+      // position="absolute"
+      // bottom="0"
+      // shrink="false"
+      as="footer"
+      flexShrink="false"
       bg={useColorModeValue('gray.100', 'gray.900')}
       color={useColorModeValue('gray.700', 'gray.200')}
     >
@@ -43,5 +47,18 @@ export const Footer = () => {
         </Stack>
       </Container>
     </Box>
+  );
+};
+
+export const WithFooter = ({ children }) => {
+  return (
+    <Flex w="full" h="100vh" direction="column">
+      <Flex w="full" direction="column" grow="true" shrink="false" basis="auto">
+        {children}
+      </Flex>
+      <Box mt="auto">
+        <Footer />
+      </Box>
+    </Flex>
   );
 };

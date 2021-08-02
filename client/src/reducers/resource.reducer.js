@@ -55,7 +55,7 @@ const filterResources = ({
       includeScore: true,
       ignoreLocation: true,
       keys: searchFields,
-      threshold: 0,
+      threshold: 0.6,
     };
     const fuse = new Fuse(filteredResources, options);
     filteredResources = fuse.search(searchTerm).map(({ item }) => item);

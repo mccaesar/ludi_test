@@ -1,8 +1,8 @@
-import { chakra, VisuallyHidden, useColorModeValue } from '@chakra-ui/react';
+import { Button, VisuallyHidden, useColorModeValue } from '@chakra-ui/react';
 
 export const SocialButton = ({ children, label, href }) => {
   return (
-    <chakra.button
+    <Button
       bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
       rounded={'full'}
       w={8}
@@ -20,6 +20,6 @@ export const SocialButton = ({ children, label, href }) => {
     >
       <VisuallyHidden>{label}</VisuallyHidden>
       {children}
-    </chakra.button>
+    </Button>
   );
 };

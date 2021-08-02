@@ -20,11 +20,11 @@ import {
 } from '@chakra-ui/react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 
-import { resourceApi } from '../../services';
+import { resourceApis } from '../../services';
 import { fetchLoginStatus } from '../../actions/auth.action';
 
 import { NavBar } from '../../components/NavBar';
-import { Footer } from '../../components/Footer';
+import { WithFooter } from '../../components/Footer';
 
 export const ResourcePage = () => {
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ export const ResourcePage = () => {
   }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
-    resourceApi.getResourceByRID(resourceId).then((data) => {
+    resourceApis.getResourceByRID(resourceId).then((data) => {
       data.resource.tags = data.resource.tags
         .split(',')
         .map((tag) => tag.trim());
@@ -54,9 +54,9 @@ export const ResourcePage = () => {
   const handleSave = () => {
     if (isLoggedIn) {
       if (!isSaved) {
-        resourceApi.saveResource(resourceId);
+        resourceApis.saveResource(resourceId);
       } else {
-        resourceApi.unsaveResource(resourceId);
+        resourceApis.unsaveResource(resourceId);
       }
       setSaved(!isSaved);
     } else {
@@ -90,7 +90,7 @@ export const ResourcePage = () => {
   };
 
   return resource ? (
-    <>
+    <WithFooter>
       <NavBar />
       <NotLoggedInAlert />
       <Stack
@@ -192,7 +192,7 @@ export const ResourcePage = () => {
           </Box>
         </Grid>
       </Stack>
-      <Footer />
-    </>
+      {/* <Footer /> */}
+    </WithFooter>
   ) : null;
 };

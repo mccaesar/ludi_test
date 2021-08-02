@@ -1,11 +1,11 @@
-import { Footer } from '../../components/Footer';
+import { WithFooter } from '../../components/Footer';
 import { NavBar } from '../../components/NavBar';
 
 import { Text, Center } from '@chakra-ui/react';
 
 export const UploadPage = () => {
   return (
-    <>
+    <WithFooter>
       <NavBar />
 
       <Center py={10}>
@@ -28,8 +28,6 @@ export const UploadPage = () => {
           Loading…
         </iframe>
       </Center>
-
-      <Footer />
-    </>
+    </WithFooter>
   );
 };

@@ -1,11 +1,11 @@
-import { resourceApi } from '../services';
+import { resourceApis } from '../services';
 
 export const fetchResources =
   (searchTerm, searchFields, filterTags, sortOption) => async (dispatch) => {
     try {
       dispatch({ type: 'FETCH_RESOURCES_REQUEST' });
 
-      const { data: resources } = await resourceApi.getResources();
+      const { data: resources } = await resourceApis.getResources();
       const action = {
         type: 'FETCH_RESOURCES_SUCCESS',
         payload: {
@@ -32,9 +32,9 @@ export const fetchSavedResources = () => async (dispatch) => {
   try {
     dispatch({ type: 'FETCH_SAVED_RESOURCES_REQUEST' });
 
-    const { data: resources } = await resourceApi.getResources();
+    const { data: resources } = await resourceApis.getResources();
     const { resourceIds: savedResourceIds } =
-      await resourceApi.getSavedResourceIds();
+      await resourceApis.getSavedResourceIds();
     const action = {
       type: 'FETCH_SAVED_RESOURCES_SUCCESS',
       payload: {
@@ -58,9 +58,9 @@ export const fetchSavedResources = () => async (dispatch) => {
 //   try {
 //     dispatch({ type: 'SAVE_RESOURCE_REQUEST' });
 
-//     const { data: resources } = await resourceApi.getResources();
+//     const { data: resources } = await resourceApis.getResources();
 //     const { resourceIds: savedResourceIds } =
-//       await resourceApi.getSavedResourceIds();
+//       await resourceApis.getSavedResourceIds();
 //     const action = {
 //       type: 'SAVE_RESOURCE_SUCCESS',
 //       payload: {

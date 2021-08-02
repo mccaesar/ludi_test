@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchResources } from '../../actions/resource.action';
-import { Footer } from '../../components/Footer';
+import { WithFooter } from '../../components/Footer';
 import { NavBar } from '../../components/NavBar';
 import { ResourceContainer } from '../../components/ResourceContainer';
 import { FilterBar } from '../../components/FilterBar';
@@ -25,12 +25,11 @@ export const FilterPage = () => {
   const { resources } = useSelector((state) => state.resources);
 
   return (
-    <>
+    <WithFooter>
       <NavBar />
       <SearchBar />
       <FilterBar />
       <ResourceContainer resources={resources} />
-      <Footer />
-    </>
+    </WithFooter>
   );
 };
