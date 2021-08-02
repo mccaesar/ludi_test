@@ -7,7 +7,7 @@ import {
   validateRegistration,
   validateLogin,
 } from '../validators/auth.validator.js';
-import * as utils from '../lib/utils.js';
+import * as authUtils from '../utils/auth.util.js';
 
 const router = express.Router();
 const { User } = db;
@@ -49,7 +49,7 @@ export const registerUser = async (req, res, next) => {
   }
 
   // Hash the password
-  const saltHash = utils.encryptPassword(req.body.password);
+  const saltHash = authUtils.encryptPassword(req.body.password);
 
   const passwordSalt = saltHash.salt;
   const passwordHash = saltHash.hash;
@@ -66,7 +66,7 @@ export const registerUser = async (req, res, next) => {
   // Add user to the database
   try {
     await user.save();
-    const jwt = utils.issueJWT(user);
+    const jwt = authUtils.issueJWT(user);
     res.status(201).json({
       success: true,
       user: user,
@@ -102,14 +102,14 @@ export const logInUser = async (req, res, next) => {
     }
 
     // Verify password is correct
-    const validPassword = utils.validPassword(
+    const validPassword = authUtils.validPassword(
       req.body.password,
       user.hash,
       user.salt
     );
 
     if (validPassword) {
-      const tokenObj = utils.issueJWT(user);
+      const tokenObj = authUtils.issueJWT(user);
       res.status(200).json({
         success: true,
         user: user,
