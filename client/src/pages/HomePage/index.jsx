@@ -6,7 +6,6 @@ import { CannedSearch } from './CannedSearch';
 import { NavBar } from '../../components/NavBar';
 import { WithFooter } from '../../components/Footer';
 import { SearchBar } from '../../components/SearchBar';
-import { Flex } from '@chakra-ui/react';
 
 export const HomePage = () => {
   const cannedSearch1 = 'Find newest added resources in the Python category';

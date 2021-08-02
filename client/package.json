@@ -31,12 +31,11 @@
     ]
   },
   "dependencies": {
-    "@chakra-ui/icons": "^1.0.13",
-    "@chakra-ui/react": "^1.6.4",
-    "@choc-ui/chakra-autocomplete": "^3.5.0",
+    "@chakra-ui/icons": "^1.0.14",
+    "@chakra-ui/react": "^1.6.5",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
-    "@hookform/resolvers": "^2.6.0",
+    "@hookform/resolvers": "^2.7.0",
     "axios": "^0.21.1",
     "date-fns": "^2.23.0",
     "framer-motion": "^4.1.17",
