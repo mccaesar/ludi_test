@@ -1,15 +1,15 @@
 import dotenv from 'dotenv';
-const isProduction = process.env.NODE_ENV !== 'production';
-if (isProduction) {
-  dotenv.config();
-}
-
 import cors from 'cors';
 import express from 'express';
 import passport from 'passport';
 
 import db from './models/index.js';
 import routes from './routes/index.js';
+
+const isProduction = process.env.NODE_ENV === 'production';
+if (!isProduction) {
+  dotenv.config();
+}
 
 const { json, urlencoded } = express;
 const { mongoose, url } = db;
