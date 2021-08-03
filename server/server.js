@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
-if (process.env.NODE_ENV !== 'production') {
+const isProduction = process.env.NODE_ENV !== 'production';
+if (isProduction) {
   dotenv.config();
 }
 
@@ -16,7 +17,9 @@ const { mongoose, url } = db;
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: isProduction
+    ? 'https://luditesttest.web.illinois.edu'
+    : 'http://localhost:3000',
 };
 app.use(cors(corsOptions));
 

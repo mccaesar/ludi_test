@@ -21,13 +21,13 @@ const config = {
   devtool: 'source-map',
   plugins: [
     // new BundleAnalyzerPlugin(),
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({ title: 'Ludi' }),
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
+      NODE_ENV: isProduction ? 'production' : 'development',
       REACT_APP_PORT: 3000,
       REACT_APP_API_URL: isProduction
-        ? 'http://localhost:5000/api'
-        : 'https://luditesttest.web.illinois.edu/api',
+        ? 'https://server.luditesttest.web.illinois.edu/api'
+        : 'http://localhost:5000/api',
     }),
   ],
   module: {

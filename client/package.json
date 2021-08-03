@@ -1,15 +1,16 @@
 {
   "name": "ludi-client",
-  "homepage": "http://luditesttest.web.illinois.edu/",
+  "homepage": "https://luditesttest.web.illinois.edu/",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "build": "webpack --mode=production --node-env=production",
+    "clean": "rm -rf dist && mkdir dist",
+    "build": "yarn clean && yarn build:prod && cp .htaccess ./dist && zip -rj ./dist/bundle.zip ./dist",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
+    "build:dev": "yarn clean && webpack --mode=development",
+    "build:prod": "yarn clean && webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
     "serve": "webpack serve"
   },
