@@ -25,7 +25,9 @@ const config = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
       REACT_APP_PORT: 3000,
-      REACT_APP_API_URL: 'http://localhost:5000/api',
+      REACT_APP_API_URL: isProduction
+        ? 'http://localhost:5000/api'
+        : 'https://luditesttest.web.illinois.edu/api',
     }),
   ],
   module: {
@@ -54,9 +56,6 @@ const config = {
     open: true,
     port: 3000,
     compress: true,
-    // proxy: {
-    //   '/api': 'http://localhost:5000',
-    // },
     historyApiFallback: true,
   },
   optimization: {
