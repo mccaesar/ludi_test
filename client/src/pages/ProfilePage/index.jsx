@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Text, Center } from '@chakra-ui/react';
+import { Box, Heading, Text, Stack } from '@chakra-ui/react';
 
 import { fetchSavedResources } from '../../actions/resource.action';
 
-import { Footer } from '../../components/Footer';
+import { WithFooter } from '../../components/Footer';
 import { NavBar } from '../../components/NavBar';
 import { ResourceContainer } from '../../components/ResourceContainer';
 import { fetchUser } from '../../actions/user.action';
@@ -21,33 +21,33 @@ export const ProfilePage = () => {
   const { savedResources } = useSelector((state) => state.resources);
 
   return (
-    <>
+    <WithFooter>
       {user ? (
         <>
           <NavBar />
-          <Box p={10} justifyContent="center">
-            <Text fontSize="lg">
-              {' '}
-              Name: {user.firstName + ' ' + user.lastName}{' '}
+          
+          {/* User Info */}
+          <Heading pt={10} pb={2} mx="auto" fontSize="2xl"> User: </Heading>
+          <Stack
+            pb={5}
+            justifyContent="center"
+            mx="auto"
+          >
+            <Text fontSize="lg">{' '}Name: {user.firstName + ' ' + user.lastName}{' '}
             </Text>
             <Text fontSize="lg"> Email: {user.email} </Text>
-          </Box>
+          </Stack>
 
-          <Center py={5}>
-            <Text fontSize="2xl"> Saved Resources:</Text>
-          </Center>
+          {/* Saved Resources */}
+          <Heading py={5} mx="auto" fontSize="2xl"> Saved Resources:</Heading>
           <ResourceContainer resources={savedResources} />
-          <Footer />
         </>
       ) : (
         <>
           <NavBar />
-          <Center py={10}>
-            <Text fontSize="2xl"> Log in to view saved resources </Text>
-          </Center>
-          <Footer />
+          <Text py={10} mx="auto" fontSize="2xl"> Log in to view saved resources </Text>
         </>
       )}
-    </>
+    </WithFooter>
   );
 };
