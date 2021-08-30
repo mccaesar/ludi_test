@@ -1,8 +1,8 @@
 import express from 'express';
+import passport from 'passport';
 import {
   getResources,
-  getResourceByRID,
-  getSavedResourceIds,
+  getTags,
   saveResource,
   unsaveResource,
 } from '../controllers/resource.controller.js';
@@ -10,10 +10,16 @@ import {
 const router = express.Router();
 
 router.get('/resources', getResources);
-// router.get('/resource/:resourceId', getResourceByRID);
-router.get('/resource/:resourceId/:userId', getResourceByRID);
-router.get('/saved/:userId', getSavedResourceIds);
-router.patch('/resource/:resourceId/save', saveResource);
-router.patch('/resource/:resourceId/unsave', unsaveResource);
+router.get('/resource/tags', getTags);
+router.put(
+  '/resource/:resourceId/save',
+  passport.authenticate('jwt', { session: false }),
+  saveResource
+);
+router.put(
+  '/resource/:resourceId/unsave',
+  passport.authenticate('jwt', { session: false }),
+  unsaveResource
+);
 
 export default router;

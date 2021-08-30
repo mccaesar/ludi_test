@@ -2,8 +2,6 @@ import { Box, SimpleGrid, useColorModeValue as mode } from '@chakra-ui/react';
 import { ResourceCard } from './ResourceCard';
 
 export const ResourceContainer = ({ resources }) => {
-  // const { isLoading, resources } = useSelector((state) => state.resources);
-
   return (
     <>
       {resources && resources.length > 0 ? (

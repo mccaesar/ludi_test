@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
-import url from '../config/db.config.js';
+import uri from '../config/db.config.js';
 import Resource from './resource.model.js';
-import SavedResource from './savedresources.model.js';
 import User from './user.model.js';
+import Review from './review.model.js'
 
 const db = {
   mongoose,
-  url,
+  uri,
   Resource,
-  SavedResource,
   User,
+  Review,
 };
 
 export default db;

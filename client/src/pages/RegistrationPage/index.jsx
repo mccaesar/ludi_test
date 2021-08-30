@@ -7,7 +7,7 @@ import {
   useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
-import { NavBar } from '../../components/NavBar';
+import { Navbar } from '../../components/Navbar';
 import { WithFooter } from '../../components/Footer';
 import { DividerWithText } from './DividerWithText';
 import { RegistrationForm } from './RegistrationForm';
@@ -15,7 +15,7 @@ import { RegistrationForm } from './RegistrationForm';
 export const RegistrationPage = () => {
   return (
     <WithFooter>
-      <NavBar />
+      <Navbar />
       <Box
         w="full"
         maxW="xl"

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,12 +12,14 @@ import {
   useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { RegistrationSchema } from '../../validators/auth.validator';
-import { registerUser } from '../../actions/auth.action';
+import { authApis } from '../../services';
+import { useQueryClient } from 'react-query';
 
 export const RegistrationForm = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const { errorMessage } = useSelector((state) => state.auth);
+  const queryClient = useQueryClient();
+  
+  const [errorMessage, setErrorMessage] = useState('');
 
   const initialValues = {
     firstName: '',
@@ -46,7 +48,8 @@ export const RegistrationForm = () => {
           email: values.email,
           password: values.password,
         };
-        dispatch(registerUser(data));
+        authApis.registerUser(data);
+        queryClient.refetchQueries(['user'], { active: true });
         if (errorMessage) {
           alert(errorMessage);
         } else {

@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import {
   Avatar,
   HStack,
@@ -11,15 +10,17 @@ import {
   MenuList,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { logoutUser } from '../../actions/auth.action';
+import { useQueryClient } from 'react-query';
+import { authApis } from '../../services';
 
 export const UserMenu = ({ fullname }) => {
-  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
-  const handleLogout = (values) => {
+  const handleLogout = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        dispatch(logoutUser());
+        authApis.logoutUser();
+        queryClient.refetchQueries(['user'], { active: true });
         resolve();
       }, 500);
     });
@@ -42,7 +43,10 @@ export const UserMenu = ({ fullname }) => {
             ml="2"
           >
             <Text fontSize="sm">{fullname}</Text>
-            <Text fontSize="xs" color={useColorModeValue('gray.600', 'gray.400')}>
+            <Text
+              fontSize="xs"
+              color={useColorModeValue('gray.600', 'gray.400')}
+            >
               User
             </Text>
           </VStack>
@@ -52,7 +56,7 @@ export const UserMenu = ({ fullname }) => {
         bg={useColorModeValue('white', 'gray.900')}
         borderColor={useColorModeValue('gray.200', 'gray.700')}
       >
-        <MenuItem as="a" href="/profile">
+        <MenuItem as="a" href="/user/profile">
           Profile
         </MenuItem>
         <MenuItem>Settings</MenuItem>

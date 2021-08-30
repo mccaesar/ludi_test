@@ -1,41 +1,42 @@
 import mongoose from 'mongoose';
 
-const userSchema = mongoose.Schema(
+const SavedResourceSchema = mongoose.Schema({
+  resourceId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'resources',
+    required: true,
+  },
+  dateSaved: {
+    type: Date,
+    default: Date.now,
+  },
+  _id: false,
+});
+
+const UserSchema = mongoose.Schema(
   {
     firstName: {
       type: String,
       required: true,
-      min: 1,
-      max: 255,
     },
     lastName: {
       type: String,
       required: true,
-      min: 1,
-      max: 255,
     },
     email: {
       type: String,
       required: true,
-      min: 8,
-      max: 255,
     },
-    hash: {
-      type: String,
-      required: true,
-    },
-    salt: {
-      type: String,
-      required: true,
-    },
+    hash: String,
     dateJoined: {
       type: Date,
       default: Date.now,
     },
+    savedResources: [SavedResourceSchema],
   },
   { collection: 'users' }
 );
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', UserSchema);
 
 export default User;

@@ -1,4 +1,4 @@
-import { pbkdf2Sync, randomBytes } from 'crypto';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { readFileSync } from 'fs';
 import path from 'path';
@@ -6,6 +6,7 @@ import path from 'path';
 const __dirname = path.resolve();
 const pathToKey = path.join(__dirname, 'keys', 'id_rsa_priv.pem');
 const PRIV_KEY = readFileSync(pathToKey, 'utf8');
+const SALT_ROUNDS = 10;
 
 /**
  * -------------- HELPER FUNCTIONS ----------------
@@ -20,11 +21,8 @@ const PRIV_KEY = readFileSync(pathToKey, 'utf8');
  * This function uses the crypto library to decrypt the hash using the salt and then compares
  * the decrypted hash/salt with the password that the user provided at login
  */
-export const validPassword = (password, hash, salt) => {
-  var hashVerify = pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString(
-    'hex'
-  );
-  return hash === hashVerify;
+export const validPassword = async (password, hash) => {
+  return bcrypt.compare(password, hash);
 };
 
 /**
@@ -37,14 +35,8 @@ export const validPassword = (password, hash, salt) => {
  * ALTERNATIVE: It would also be acceptable to just use a hashing algorithm to make a hash of the plain text password.
  * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
  */
-export const encryptPassword = (password) => {
-  var salt = randomBytes(32).toString('hex');
-  var genHash = pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
-
-  return {
-    salt: salt,
-    hash: genHash,
-  };
+export const encryptPassword = async (password) => {
+  return bcrypt.hash(password, SALT_ROUNDS);
 };
 
 /**

@@ -1,17 +1,22 @@
-import { useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchResources } from '../../actions/resource.action';
+import { Spinner } from '@chakra-ui/spinner';
+import { Center } from '@chakra-ui/layout';
+
+import { Navbar } from '../../components/Navbar';
 import { WithFooter } from '../../components/Footer';
-import { NavBar } from '../../components/NavBar';
-import { ResourceContainer } from '../../components/ResourceContainer';
-import { FilterBar } from '../../components/FilterBar';
 import { SearchBar } from '../../components/SearchBar';
+import { FilterBar } from '../../components/FilterBar';
+import { ResourceContainer } from '../../components/ResourceContainer';
+
+import { useResources } from '../../hooks/useResources';
+import { filterResources } from '../../utils/filter.util';
 
 export const FilterPage = () => {
-  const dispatch = useDispatch();
   const url = useLocation();
+  const { resources, isLoading } = useResources();
+  const [filteredResources, setFilteredResources] = useState([]);
 
   useEffect(() => {
     const query = new URLSearchParams(url.search);
@@ -19,17 +24,32 @@ export const FilterPage = () => {
     const searchFields = query.getAll('field');
     const filterTags = query.getAll('tag');
     const sortOption = query.get('sort');
-    dispatch(fetchResources(searchTerm, searchFields, filterTags, sortOption));
-  }, [dispatch, url]);
 
-  const { resources } = useSelector((state) => state.resources);
+    if (resources) {
+      setFilteredResources(
+        filterResources({
+          resources,
+          searchTerm,
+          searchFields,
+          filterTags,
+          sortOption,
+        })
+      );
+    }
+  }, [resources, url]);
 
   return (
     <WithFooter>
-      <NavBar />
+      <Navbar />
       <SearchBar />
       <FilterBar />
-      <ResourceContainer resources={resources} />
+      {!isLoading ? (
+        <ResourceContainer resources={filteredResources} />
+      ) : (
+        <Center>
+          <Spinner />
+        </Center>
+      )}
     </WithFooter>
   );
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { batch, useDispatch, useSelector } from 'react-redux';
+import { useQueryClient, useQuery, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import {
@@ -20,43 +20,47 @@ import {
 } from '@chakra-ui/react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 
-import { resourceApis } from '../../services';
-import { fetchLoginStatus } from '../../actions/auth.action';
-
-import { NavBar } from '../../components/NavBar';
+import { Navbar } from '../../components/Navbar';
 import { WithFooter } from '../../components/Footer';
 
+import { authApis, resourceApis } from '../../services';
+import { useResources } from '../../hooks/useResources';
+import { useUser } from '../../hooks/useUser';
+
 export const ResourcePage = () => {
-  const dispatch = useDispatch();
   const [isSaved, setSaved] = useState(false);
   const [resource, setResource] = useState(null);
-  const { resourceId } = useParams();
   const [alertIsOpen, setAlertIsOpen] = useState(false);
 
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { index: resourceIdx } = useParams();
+
+  const { resources } = useResources();
+  const { savedResourceIds, saveMutation, unsaveMutation } = useUser();
+
+  const isLoggedIn = authApis.isLoggedIn();
 
   useEffect(() => {
-    batch(() => {
-      dispatch(fetchLoginStatus());
-    });
-  }, [dispatch, isLoggedIn]);
+    if (resourceIdx && resources) {
+      setResource(
+        resources.find(
+          (currentResource) => currentResource.index === Number(resourceIdx)
+        )
+      );
+    }
+  }, [resourceIdx, resources]);
 
-  useEffect(() => {
-    resourceApis.getResourceByRID(resourceId).then((data) => {
-      data.resource.tags = data.resource.tags
-        .split(',')
-        .map((tag) => tag.trim());
-      setSaved(data.isSaved);
-      setResource(data.resource);
-    });
-  }, [isLoggedIn, resourceId]);
+  // useEffect(() => {
+  //   if (resource && savedResourceIds && savedResourceIds.length) {
+  //     setSaved(savedResourceIds.includes(resource.resourceId));
+  //   }
+  // }, [resource, savedResourceIds]);
 
   const handleSave = () => {
     if (isLoggedIn) {
       if (!isSaved) {
-        resourceApis.saveResource(resourceId);
+        saveMutation.mutate(resource.resourceId);
       } else {
-        resourceApis.unsaveResource(resourceId);
+        unsaveMutation.mutate(resource.resourceId);
       }
       setSaved(!isSaved);
     } else {
@@ -65,8 +69,6 @@ export const ResourcePage = () => {
   };
 
   const tagSearch = new URLSearchParams();
-  tagSearch.set('sort', 'relevance');
-  tagSearch.set('field', '');
 
   const NotLoggedInAlert = () => {
     const onClose = () => setAlertIsOpen(false);
@@ -91,7 +93,7 @@ export const ResourcePage = () => {
 
   return resource ? (
     <WithFooter>
-      <NavBar />
+      <Navbar />
       <NotLoggedInAlert />
       <Stack
         bg={mode('white', 'gray.800')}
@@ -99,7 +101,7 @@ export const ResourcePage = () => {
         mt={4}
         p={6}
         rounded="md"
-        maxW={{ base: '2xl', md: '6xl' }}
+        minW={{ base: '2xl', md: '6xl' }}
         h="full"
         justifyContent="center"
         mx="auto"
@@ -176,7 +178,7 @@ export const ResourcePage = () => {
           </Text>
           <Text color={mode('black', 'white')}>{resource.longDescription}</Text>
         </Box>
-        <Grid
+        {/* <Grid
           templateColumns="repeat(2, 1fr)"
           gap={6}
           mt={8}
@@ -190,9 +192,8 @@ export const ResourcePage = () => {
           <Box>
             <Text color={mode('gray.600', 'gray.400')}>Use Cases</Text>
           </Box>
-        </Grid>
+        </Grid> */}
       </Stack>
-      {/* <Footer /> */}
     </WithFooter>
   ) : null;
 };

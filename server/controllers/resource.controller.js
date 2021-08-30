@@ -2,9 +2,9 @@ import express from 'express';
 import db from '../models/index.js';
 
 const router = express.Router();
-const { Resource, SavedResource, User } = db;
+const { Resource, User } = db;
 
-export const getResources = async (req, res) => {
+export const getResources = async (req, res, next) => {
   try {
     const resources = await Resource.find();
     res.status(200).send(resources);
@@ -15,120 +15,122 @@ export const getResources = async (req, res) => {
   }
 };
 
-// export const getResourceByRID = async (req, res) => {
-//   try {
-//     const resource = await Resource.findOne({
-//       resourceId: req.params.resourceId,
-//     });
-//     res.status(200).send(resource);
-//   } catch (err) {
-//     res.status(404).send({
-//       message:
-//         err.message ||
-//         `Some error occurred while retrieving resource with id: ${resourceId}.`,
-//     });
-//   }
-// };
-
-export const getResourceByRID = async (req, res) => {
-  const { resourceId, userId } = req.params;
-  // const { userId } = req.data;
+export const getTags = async (req, res, next) => {
   try {
-    const resource = await Resource.findOne({
-      resourceId: resourceId,
+    const tags = await Resource.find().distinct('tags', {
+      tags: { $nin: ['', null] },
     });
-    const isSaved = !!(await SavedResource.findOne({
-      $and: [{ userId: userId }, { resourceIds: { $in: [resourceId] } }],
-    }));
-    res.status(200).json({ resource: resource, isSaved: isSaved });
+    res.status(200).send(tags);
   } catch (err) {
     res.status(404).send({
-      message:
-        err.message ||
-        `Some error occurred while retrieving resource with id: ${resourceId}.`,
+      message: err.message || 'Some error occurred while retrieving tags.',
     });
   }
 };
 
-export const getSavedResourceIds = async (req, res) => {
+export const getSavedResourceIds = async (req, res, next) => {
   const { userId } = req.params;
+  if (!req.user || req.user !== userId) {
+    res.status(401).send({
+      message: 'You are not authorized to retrieve saved resources.',
+    });
+  }
   try {
-    const savedResourceIds = await SavedResource.findOne({
-      userId: userId,
+    const savedResourceIds = await User.findOne({
+      _id: userId,
+    }).select({
+      savedResources: 1,
     });
     res.status(200).send(savedResourceIds);
   } catch (err) {
     res.status(404).send({
       message:
-        err.message || `Some error occurred while retrieving saved resources.`,
+        err.message || 'Some error occurred while retrieving saved resources.',
     });
   }
 };
 
-export const saveResource = async (req, res) => {
+export const saveResource = async (req, res, next) => {
   const { resourceId } = req.params;
-  const { userId } = req.body;
-
-  const user = await User.findOne({ _id: userId });
-  if (!user) {
-    return res.status(401).send(`No user with id: ${userId}`);
+  if (!req.user) {
+    res.status(401).send({
+      message: 'You are not authorized to save this resource.',
+    });
   }
-  const resource = await Resource.findOne({ resourceId: resourceId });
-  if (!resource) {
-    return res.status(401).send(`No resource with id: ${resourceId}`);
-  }
+  try {
+    const resource = await Resource.findOne({ _id: resourceId });
+    if (!resource) {
+      return res.status(404).send(`No resource with id: ${resourceId}`);
+    }
 
-  const savedResource = await SavedResource.updateOne(
-    { userId: userId },
-    {
-      $set: {
-        userId: userId,
+    const savedResource = await User.updateOne(
+      {
+        _id: req.user._id,
+        savedResources: {
+          $not: {
+            $elemMatch: {
+              resourceId: resourceId,
+            },
+          },
+        },
       },
-      $addToSet: {
-        resourceIds: resourceId,
-      },
-    },
-    { upsert: true }
-  );
-
-  if (savedResource) {
-    await Resource.updateOne(
-      { resourceId: resourceId },
-      { $inc: { saveCount: 1 } }
+      {
+        $push: { savedResources: { resourceId: resourceId } },
+      }
     );
-  }
 
-  res.status(200).json(savedResource);
+    if (savedResource) {
+      await Resource.updateOne({ _id: resourceId }, { $inc: { saveCount: 1 } });
+    }
+
+    res.status(201).send(savedResource);
+  } catch (err) {
+    res.status(404).send({
+      message: err.message || 'Some error occurred while saving resource.',
+    });
+  }
 };
 
-export const unsaveResource = async (req, res) => {
+export const unsaveResource = async (req, res, next) => {
   const { resourceId } = req.params;
-  const { userId } = req.body;
-
-  const user = await User.findOne({ _id: userId });
-  if (!user) {
-    return res.status(401).send(`No user with id: ${userId}`);
+  if (!req.user) {
+    res.status(401).send({
+      message: 'You are not authorized to unsave this resource.',
+    });
   }
-  const resource = await Resource.findOne({ resourceId: resourceId });
-  if (!resource) {
-    return res.status(401).send(`No resource with id: ${resourceId}`);
-  }
-
-  const unsavedResource = await SavedResource.updateOne(
-    { userId: userId },
-    {
-      $pull: { resourceIds: { $in: [resourceId] } },
+  try {
+    const resource = await Resource.findOne({ _id: resourceId });
+    if (!resource) {
+      return res.status(404).send(`No resource with id: ${resourceId}`);
     }
-  );
 
-  if (unsavedResource) {
-    await Resource.updateOne(
-      { resourceId: resourceId },
-      { $inc: { saveCount: -1 } }
+    const unsavedResource = await User.updateOne(
+      {
+        _id: req.user._id,
+        savedResources: {
+          $elemMatch: {
+            resourceId: resourceId,
+          },
+        },
+      },
+      {
+        $pull: { savedResources: { resourceId: resourceId } },
+      }
     );
-  }
 
-  res.status(200).json(unsavedResource);
+    if (unsavedResource) {
+      await Resource.updateOne(
+        { _id: resourceId },
+        { $inc: { saveCount: -1 } }
+      );
+    }
+
+    res.status(201).send(unsavedResource);
+  } catch (err) {
+    res.status(404).send({
+      message: err.message || 'Some error occurred while unsaving resource.',
+    });
+  }
 };
 
 export default router;

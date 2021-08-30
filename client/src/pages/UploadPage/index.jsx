@@ -1,12 +1,12 @@
 import { WithFooter } from '../../components/Footer';
-import { NavBar } from '../../components/NavBar';
+import { Navbar } from '../../components/Navbar';
 
 import { Text, Center } from '@chakra-ui/react';
 
 export const UploadPage = () => {
   return (
     <WithFooter>
-      <NavBar />
+      <Navbar />
 
       <Center py={10}>
         <Text fontSize="lg">

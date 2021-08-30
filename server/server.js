@@ -6,13 +6,12 @@ import passport from 'passport';
 import db from './models/index.js';
 import routes from './routes/index.js';
 
+
+dotenv.config();
 const isProduction = process.env.NODE_ENV === 'production';
-if (!isProduction) {
-  dotenv.config();
-}
 
 const { json, urlencoded } = express;
-const { mongoose, url } = db;
+const { mongoose, uri } = db;
 
 const app = express();
 
@@ -34,9 +33,10 @@ app.use(passport.initialize());
 app.use('/api', routes);
 
 mongoose
-  .connect(url, {
+  .connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(() => {
     console.log('Connected to the database!');

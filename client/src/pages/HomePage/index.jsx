@@ -3,7 +3,7 @@ import { Center, Text, SimpleGrid, Box } from '@chakra-ui/react';
 import { Logo } from './Logo';
 import { CannedSearch } from './CannedSearch';
 
-import { NavBar } from '../../components/NavBar';
+import { Navbar } from '../../components/Navbar';
 import { WithFooter } from '../../components/Footer';
 import { SearchBar } from '../../components/SearchBar';
 
@@ -28,7 +28,7 @@ export const HomePage = () => {
 
   return (
     <WithFooter>
-      <NavBar />
+      <Navbar />
 
       {/* LUDI logo */}
       <Center pt={20}>

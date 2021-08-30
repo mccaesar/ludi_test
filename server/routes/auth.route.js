@@ -12,6 +12,10 @@ const router = express.Router();
 router.get('/protected', userAuthorized);
 router.post('/register', registerUser);
 router.post('/login', logInUser);
-router.delete('/logout', logOutUser);
+router.delete(
+  '/logout',
+  passport.authenticate('jwt', { session: false }),
+  logOutUser
+);
 
 export default router;

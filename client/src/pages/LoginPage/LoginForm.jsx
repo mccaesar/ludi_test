@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,11 +11,12 @@ import {
   useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { LoginSchema } from '../../validators/auth.validator';
-import { loginUser } from '../../actions/auth.action';
+import { authApis } from '../../services';
+import { useQueryClient } from 'react-query';
 
 export const LoginForm = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const initialValues = {
     email: '',
@@ -40,7 +40,8 @@ export const LoginForm = () => {
           email: values.email,
           password: values.password,
         };
-        dispatch(loginUser(data));
+        authApis.loginUser(data);
+        queryClient.refetchQueries(['user'], { active: true });
         history.push('/');
         resolve();
       }, 500);

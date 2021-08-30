@@ -8,14 +8,14 @@ import {
 } from '@chakra-ui/react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { WithFooter } from '../../components/Footer';
-import { NavBar } from '../../components/NavBar';
+import { Navbar } from '../../components/Navbar';
 import { DividerWithText } from './DividerWithText';
 import { LoginForm } from './LoginForm';
 
 export const LoginPage = () => {
   return (
     <WithFooter>
-      <NavBar />
+      <Navbar />
       <Box
         w="full"
         maxW="xl"

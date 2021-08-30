@@ -1,37 +1,24 @@
 import axios from 'axios';
-import qs from 'qs';
-import { API_URL } from '../config';
+import { API_URI } from '../config';
 
-export const getResources = async () => {
-  return await axios.get(`${API_URL}/resources`);
-};
+export const getResources = async () =>
+  await axios
+    .get(`${API_URI}/resources`)
+    .then(({ data }) => data)
+    .catch((err) => console.error(err));
 
-export const getResourceByRID = async (resourceId) => {
-  const userId = localStorage.getItem('user_id');
-  return await axios
-    .get(`${API_URL}/resource/${resourceId}/${userId}`)
-    .then((res) => res.data);
-};
+export const getTags = async () =>
+  await axios
+    .get(`${API_URI}/resource/tags`)
+    .then(({ data }) => data)
+    .catch((err) => console.error(err));
 
-export const getSavedResourceIds = async () => {
-  const userId = localStorage.getItem('user_id');
-  return await axios.get(`${API_URL}/saved/${userId}`).then((res) => res.data);
-};
+export const saveResource = async (resourceId) =>
+  await axios
+    .put(`${API_URI}/resource/${resourceId}/save`)
+    .catch((err) => console.error(err));
 
-export const saveResource = async (resourceId) => {
-  const userId = localStorage.getItem('user_id');
-  const data = { userId: userId };
-  return await axios.patch(
-    `${API_URL}/resource/${resourceId}/save`,
-    qs.stringify(data)
-  );
-};
-
-export const unsaveResource = async (resourceId) => {
-  const userId = localStorage.getItem('user_id');
-  const data = { userId: userId };
-  return await axios.patch(
-    `${API_URL}/resource/${resourceId}/unsave`,
-    qs.stringify(data)
-  );
-};
+export const unsaveResource = async (resourceId) =>
+  await axios
+    .put(`${API_URI}/resource/${resourceId}/unsave`)
+    .catch((err) => console.error(err));

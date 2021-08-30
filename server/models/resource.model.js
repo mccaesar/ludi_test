@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-const resourceSchema = mongoose.Schema(
+const ResourceSchema = mongoose.Schema(
   {
-    resourceId: {
+    index: {
       type: Number,
       required: true,
     },
@@ -18,20 +18,31 @@ const resourceSchema = mongoose.Schema(
     },
     author: String,
     category: String,
-    tags: String,
+    tags: [{ type: String }],
     isOpenSource: Boolean,
     dateAdded: {
       type: Date,
-      required: true,
+      default: Date.now,
     },
     saveCount: {
       type: Number,
+      default: 0,
+      required: true,
+    },
+    ratingCount: {
+      type: Number,
+      default: 0,
+      required: true,
+    },
+    ratingAverage: {
+      type: Number,
+      default: 3,
       required: true,
     },
   },
   { collection: 'resources' }
 );
 
-const Resource = mongoose.model('Resource', resourceSchema);
+const Resource = mongoose.model('Resource', ResourceSchema);
 
 export default Resource;

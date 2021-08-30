@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import { batch, useDispatch, useSelector } from 'react-redux';
 import {
   chakra,
   Box,
@@ -13,30 +11,19 @@ import {
 import { AiOutlineSearch } from 'react-icons/ai';
 // import { BsSun, BsMoon } from 'react-icons/bs';
 
-import { fetchLoginStatus } from '../../actions/auth.action';
-import { fetchUser } from '../../actions/user.action';
-
 import { Logo } from './Logo';
 import { MobileNav } from './MobileNav';
 // import { SearchModal } from '../SearchModal';
 import { UserMenu } from './UserMenu';
 
-export const NavBar = () => {
-  const dispatch = useDispatch();
+import { useUser } from '../../hooks/useUser';
 
+export const Navbar = () => {
   const bg = useColorModeValue('gray.50', 'gray.900');
   const mobileNav = useDisclosure();
   const searchModal = useDisclosure();
 
-  const { user } = useSelector((state) => state.users);
-  const { isLoggedIn } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    batch(() => {
-      dispatch(fetchLoginStatus());
-      dispatch(fetchUser());
-    });
-  }, [dispatch, isLoggedIn]);
+  const { user } = useUser();
 
   return (
     <>
@@ -82,7 +69,7 @@ export const NavBar = () => {
               Search Resources
             </Button>
 
-            {isLoggedIn && user ? (
+            {user ? (
               <Box>
                 <UserMenu fullname={user.firstName + ' ' + user.lastName} />
               </Box>

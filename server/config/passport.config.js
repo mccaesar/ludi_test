@@ -1,4 +1,7 @@
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as GithubStrategy } from 'passport-github2';
+
 import path from 'path';
 import fs from 'fs';
 
@@ -26,7 +29,7 @@ const initializePassport = (passport) => {
             return done(null, false, { message: 'Invalid Email or Password.' });
           }
         })
-        .catch((err) => done(err, null));
+        .catch((err) => done(err, false));
     })
   );
 };

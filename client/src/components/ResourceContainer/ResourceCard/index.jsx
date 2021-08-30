@@ -6,9 +6,10 @@ import {
   LinkOverlay,
   useColorModeValue,
 } from '@chakra-ui/react';
+import slugify from '../../../utils/slugify.util'
 
 export const ResourceCard = ({ resource }) => {
-  const { resourceId, title, category, description } = resource;
+  const { index, title, category, description } = resource;
 
   return (
     <LinkBox
@@ -27,7 +28,7 @@ export const ResourceCard = ({ resource }) => {
         background: useColorModeValue('gray.300', 'gray.600'),
       }}
     >
-      <LinkOverlay href={`/resource/${resourceId}`}>
+      <LinkOverlay href={`/resource/${index}/${slugify(title)}`}>
         <Flex justifyContent="space-between" alignItems="center">
           <chakra.span
             fontSize="sm"
