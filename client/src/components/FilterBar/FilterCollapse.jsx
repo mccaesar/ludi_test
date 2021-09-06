@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   Box,
@@ -15,11 +15,16 @@ import { BadFilterAlert } from './BadFilterAlert';
 
 import { useEffectOnce } from '../../hooks/useEffectOnce';
 import { useResources } from '../../hooks/useResources';
+
 import {
-  filterOptions,
-  tagLogicalOperators,
+  FilterOptions,
+  URISearchParamOptions,
+  TagOperatorOptions,
+  SearchFieldOptions,
 } from '../../constants/filter.constant';
+
 import {
+  nextTagOperator,
   selectOptionsToStrings,
   stringsToSelectOptions,
 } from '../../utils/filter.util';
@@ -30,46 +35,6 @@ export const FilterCollapse = ({ selectedFilter, handleFilterChange }) => {
   const query = new URLSearchParams(url.search);
 
   const { tags } = useResources();
-
-  const [selectedSearchFields, setSelectedSearchFields] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [tagOperator, setTagOperator] = useState(tagLogicalOperators.AND);
-
-  useEffectOnce(() => {
-    let initialSearchFields = query.getAll('field');
-    if (!initialSearchFields || !initialSearchFields.length) {
-      initialSearchFields = ['title'];
-    }
-
-    setSelectedSearchFields(initialSearchFields);
-    query.delete('field');
-    initialSearchFields.map((searchField) =>
-      query.append('field', searchField)
-    );
-
-    const initialTags = query.getAll('tag');
-    if (initialTags && initialTags.length) {
-      setSelectedTags(initialTags);
-      handleFilterChange(filterOptions.TAG);
-
-      query.delete('tag');
-      initialTags.map((selectedTag) => query.append('tag', selectedTag));
-    } else {
-      handleFilterChange(filterOptions.SEARCH_FIELD);
-    }
-
-    // let initialTagOperator = query.get('tag-op');
-    // if (!initialTagOperator && initialTags && initialTags.length) {
-    //   initialTagOperator = tagLogicalOperators.AND;
-    // }
-    // if (initialTagOperator) {
-    //   setTagOperator(initialTagOperator);
-    //   query.set('tag-op', initialTagOperator);
-    // }
-
-    history.replace(`/search?${query}`);
-  });
-
   const tagOptions = useMemo(() => {
     if (tags && tags.length > 0) {
       const tagOptions = [];
@@ -84,50 +49,96 @@ export const FilterCollapse = ({ selectedFilter, handleFilterChange }) => {
     return [];
   }, [tags]);
 
+  const [selectedSearchFields, setSelectedSearchFields] = useState([
+    SearchFieldOptions.Title,
+  ]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [tagOperator, setTagOperator] = useState(TagOperatorOptions.And);
+
+  useEffectOnce(() => {
+    let initialSearchFields = query.getAll(URISearchParamOptions.SearchField);
+    let initialTags = query.getAll(URISearchParamOptions.Tag);
+    let initialTagOperator = query.get(URISearchParamOptions.TagOperator);
+
+    if (!initialSearchFields || !initialSearchFields.length) {
+      initialSearchFields = [SearchFieldOptions.Title];
+      query.set(URISearchParamOptions.SearchField, SearchFieldOptions.Title);
+    } else {
+      handleFilterChange(FilterOptions.SearchField);
+    }
+
+    setSelectedSearchFields(initialSearchFields);
+
+    if (initialTags && initialTags.length) {
+      setSelectedTags(initialTags);
+      handleFilterChange(FilterOptions.Tag);
+    }
+
+    if (!initialTagOperator) {
+      initialTagOperator = TagOperatorOptions.And;
+      query.set('tag-op', TagOperatorOptions.And);
+    }
+
+    setTagOperator(initialTagOperator);
+
+    history.replace(`/search?${query}`);
+  });
+
   const handleSearchFieldChange = (e) => {
     const currentSearchFields = e;
     setSelectedSearchFields(currentSearchFields);
-    query.delete('field');
+
+    query.delete(URISearchParamOptions.SearchField);
     currentSearchFields.map((searchField) =>
-      query.append('field', searchField)
+      query.append(URISearchParamOptions.SearchField, searchField)
     );
-    history.push(`/search?${query}`);
+
+    history.replace(`/search?${query}`);
   };
 
   const handleTagChange = (e) => {
     const currentTags = selectOptionsToStrings(e);
     setSelectedTags(currentTags);
-    query.delete('tag');
-    currentTags.map((selectedTag) => query.append('tag', selectedTag));
-    history.push(`/search?${query}`);
+
+    query.delete(URISearchParamOptions.Tag);
+    currentTags.map((selectedTag) =>
+      query.append(URISearchParamOptions.Tag, selectedTag)
+    );
+
+    history.replace(`/search?${query}`);
   };
 
   const handleToggleTagOperator = () => {
-    setTagOperator((tagOperator + 1) % tagLogicalOperators.length);
+    const newTagOperator = nextTagOperator(tagOperator);
+    setTagOperator(newTagOperator);
+
+    query.set(URISearchParamOptions.TagOperator, newTagOperator);
+    history.replace(`/search?${query}`);
   };
 
   const CollapseContent = () => {
     switch (selectedFilter) {
-      case filterOptions.SEARCH_FIELD:
+      case FilterOptions.SearchField:
         return (
           <CheckboxGroup
             defaultValue={selectedSearchFields}
             onChange={handleSearchFieldChange}
           >
             <HStack spacing={4}>
-              <Checkbox value="title">Title</Checkbox>
-              <Checkbox value="description">Description</Checkbox>
-              <Checkbox value="category">Category</Checkbox>
-              <Checkbox value="author">Author</Checkbox>
+              {Object.entries(SearchFieldOptions).map(
+                ([label, value], index) => (
+                  <Checkbox key={index} value={value}>
+                    {label}
+                  </Checkbox>
+                )
+              )}
             </HStack>
           </CheckboxGroup>
         );
-      case filterOptions.TAG:
+      case FilterOptions.Tag:
         return (
           <HStack spacing={2}>
-            <Button onClick={handleToggleTagOperator}>
-              {tagLogicalOperators[tagOperator]}
-            </Button>
+            <Button onClick={handleToggleTagOperator}>{tagOperator}</Button>
             <Box w="md">
               <Select
                 isMulti

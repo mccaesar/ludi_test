@@ -4,15 +4,15 @@ import {
   Container,
   Link,
   Stack,
-  Switch,
+//   Switch,
   useColorModeValue,
-  useColorMode,
+//   useColorMode,
 } from '@chakra-ui/react';
 
 import { Logo } from './Logo';
 
 export const Footer = () => {
-  const { toggleColorMode } = useColorMode();
+//   const { toggleColorMode } = useColorMode();
   return (
     <Box
       minW="full"
@@ -38,12 +38,12 @@ export const Footer = () => {
           <Link href={'/about'}>About</Link>
           <Link href={'/upload'}>Submission</Link>
           <Link href="mailto:ludi@illinois.edu">Contact</Link>
-          <Switch
+          {/* <Switch
             onChange={toggleColorMode}
             colorScheme="gray"
             size="lg"
             defaultChecked
-          />
+          /> */}
         </Stack>
       </Container>
     </Box>

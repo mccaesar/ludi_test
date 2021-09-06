@@ -2,15 +2,19 @@ import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Spacer } from '@chakra-ui/react';
 
-import { filterOptions } from '../../constants/filter.constant';
+import { FilterOptions } from '../../constants/filter.constant';
 import { FilterCollapse } from './FilterCollapse';
 import { SortSelect } from './SortSelect';
 
 export const FilterBar = () => {
-  const [selectedFilter, setSelectedFilter] = useState(filterOptions.NONE);
+  const [selectedFilter, setSelectedFilter] = useState(FilterOptions.None);
 
   const handleFilterChange = (newFilter) => {
-    setSelectedFilter(newFilter);
+    if (newFilter !== selectedFilter) {
+      setSelectedFilter(newFilter);
+    } else {
+      setSelectedFilter(FilterOptions.None);
+    }
   };
 
   return (
@@ -27,9 +31,9 @@ export const FilterBar = () => {
             _hover={{}}
             _active={{}}
             _focus={{}}
-            onClick={() => handleFilterChange(filterOptions.SEARCH_FIELD)}
+            onClick={() => handleFilterChange(FilterOptions.SearchField)}
             rightIcon={
-              selectedFilter === filterOptions.SEARCH_FIELD ? (
+              selectedFilter === FilterOptions.SearchField ? (
                 <ChevronUpIcon />
               ) : (
                 <ChevronDownIcon />
@@ -43,9 +47,9 @@ export const FilterBar = () => {
             _hover={{}}
             _active={{}}
             _focus={{}}
-            onClick={() => handleFilterChange(filterOptions.TAG)}
+            onClick={() => handleFilterChange(FilterOptions.Tag)}
             rightIcon={
-              selectedFilter === filterOptions.TAG ? (
+              selectedFilter === FilterOptions.Tag ? (
                 <ChevronUpIcon />
               ) : (
                 <ChevronDownIcon />

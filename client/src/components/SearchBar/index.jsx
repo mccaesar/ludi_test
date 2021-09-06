@@ -11,6 +11,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useEffectOnce } from '../../hooks/useEffectOnce';
+import { URISearchParamOptions } from '../../constants/filter.constant';
 
 export const SearchBar = () => {
   const history = useHistory();
@@ -20,7 +21,7 @@ export const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffectOnce(() => {
-    const initialSearchTerm = query.get('q');
+    const initialSearchTerm = query.get(URISearchParamOptions.SearchTerm);
     if (initialSearchTerm) {
       setSearchTerm(initialSearchTerm);
     }
@@ -30,16 +31,14 @@ export const SearchBar = () => {
     if (e.code === 'Enter') {
       e.preventDefault();
       if (searchTerm) {
-        query.set('q', searchTerm);
+        query.set(URISearchParamOptions.SearchTerm, searchTerm);
         history.push(`/search?${query}`);
-      } else {
-        history.push(`/search`);
       }
     }
   };
 
   const clearSearch = () => {
-    setSearchTerm('');
+    query.delete(URISearchParamOptions.SearchTerm);
     history.push(`/search`);
   };
 

@@ -12,6 +12,7 @@ import { ResourceContainer } from '../../components/ResourceContainer';
 
 import { useResources } from '../../hooks/useResources';
 import { filterResources } from '../../utils/filter.util';
+import { URISearchParamOptions } from '../../constants/filter.constant';
 
 export const FilterPage = () => {
   const url = useLocation();
@@ -20,10 +21,11 @@ export const FilterPage = () => {
 
   useEffect(() => {
     const query = new URLSearchParams(url.search);
-    const searchTerm = query.get('q');
-    const searchFields = query.getAll('field');
-    const filterTags = query.getAll('tag');
-    const sortOption = query.get('sort');
+    const searchTerm = query.get(URISearchParamOptions.SearchTerm);
+    const searchFields = query.getAll(URISearchParamOptions.SearchField);
+    const filterTags = query.getAll(URISearchParamOptions.Tag);
+    const tagOperator = query.get(URISearchParamOptions.TagOperator);
+    const sortOption = query.get(URISearchParamOptions.Sort);
 
     if (resources) {
       setFilteredResources(
@@ -32,6 +34,7 @@ export const FilterPage = () => {
           searchTerm,
           searchFields,
           filterTags,
+          tagOperator,
           sortOption,
         })
       );

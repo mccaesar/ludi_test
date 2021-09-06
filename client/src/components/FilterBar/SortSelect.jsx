@@ -4,12 +4,15 @@ import { Box, useColorModeValue } from '@chakra-ui/react';
 
 import Select from '../Select';
 import { useEffectOnce } from '../../hooks/useEffectOnce';
+import { URISearchParamOptions } from '../../constants/filter.constant';
 
 export const SortSelect = () => {
   const history = useHistory();
   const url = useLocation();
   const query = new URLSearchParams(url.search);
-  const isSearching = !!query.get('q');
+  const isSearching = !!query.get(URISearchParamOptions.SearchTerm);
+
+  const [selectedSort, setSelectedSort] = useState(null);
 
   const sortOptions = [
     { value: 'relevance', label: 'Relevance', isDisabled: !isSearching },
@@ -20,31 +23,33 @@ export const SortSelect = () => {
     { value: 'old', label: 'Oldest' },
   ];
 
-  const [selectedSort, setSelectedSort] = useState();
-
   useEffectOnce(() => {
-    const initialSortOption = query.get('sort');
+    const initialSortOption = query.get(URISearchParamOptions.Sort);
     if (initialSortOption) {
       setSelectedSort(initialSortOption);
-      query.set('sort', initialSortOption);
+    }
+    if (isSearching && !initialSortOption) {
+      setSelectedSort('relevance');
+      query.set(URISearchParamOptions.Sort, 'relevance');
       history.replace(`/search?${query}`);
     }
   });
 
   useEffect(() => {
-    if ((!selectedSort || !selectedSort.length) && isSearching) {
-      setSelectedSort('relevance');
-      query.set('sort', 'relevance');
+    if (!isSearching && selectedSort === 'relevance') {
+      setSelectedSort(null);
+      query.delete(URISearchParamOptions.Sort);
       history.replace(`/search?${query}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSearching]);
 
   const handleSortChange = (e) => {
     const currentSort = e.value;
     if (currentSort) {
       setSelectedSort(currentSort);
-      query.set('sort', currentSort);
-      history.push(`/search?${query}`);
+      query.set(URISearchParamOptions.Sort, currentSort);
+      history.replace(`/search?${query}`);
     }
   };
 

@@ -4,16 +4,17 @@ import {
   Flex,
   HStack,
   Button,
+  IconButton,
   VisuallyHidden,
   useDisclosure,
+  useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { AiOutlineSearch } from 'react-icons/ai';
-// import { BsSun, BsMoon } from 'react-icons/bs';
+import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { Logo } from './Logo';
 import { MobileNav } from './MobileNav';
-// import { SearchModal } from '../SearchModal';
 import { UserMenu } from './UserMenu';
 
 import { useUser } from '../../hooks/useUser';
@@ -22,6 +23,7 @@ export const Navbar = () => {
   const bg = useColorModeValue('gray.50', 'gray.900');
   const mobileNav = useDisclosure();
   const searchModal = useDisclosure();
+  const { toggleColorMode } = useColorMode();
 
   const { user } = useUser();
 
@@ -52,7 +54,13 @@ export const Navbar = () => {
             </chakra.a>
           </HStack>
 
-          <HStack display="flex" alignItems="center" spacing={1}>
+          <HStack display="flex" alignItems="center" spacing={2}>
+            <IconButton
+              icon={useColorModeValue(<FaMoon />, <FaSun />)}
+              bg={useColorModeValue('gray.200', 'gray.700')}
+              color={useColorModeValue('gray.600', 'gray.300')}
+              onClick={toggleColorMode}
+            />
             <Button
               display={{ base: 'none', md: 'inline-flex' }}
               leftIcon={<AiOutlineSearch />}
@@ -60,9 +68,7 @@ export const Navbar = () => {
               bg={useColorModeValue('gray.200', 'gray.700')}
               color={useColorModeValue('gray.400', 'gray.500')}
               w="2xs"
-              mx={{ base: '2', md: '4' }}
               justifyContent="flex-start"
-              // onClick={searchModal.onOpen}
               as="a"
               href="/search"
             >
@@ -70,9 +76,7 @@ export const Navbar = () => {
             </Button>
 
             {user ? (
-              <Box>
-                <UserMenu fullname={user.firstName + ' ' + user.lastName} />
-              </Box>
+              <UserMenu fullname={user.firstName + ' ' + user.lastName} />
             ) : (
               <HStack
                 spacing={2}
@@ -99,7 +103,6 @@ export const Navbar = () => {
           />
         </Flex>
       </chakra.header>
-      {/* <SearchModal disclosure={searchModal} /> */}
     </>
   );
 };
