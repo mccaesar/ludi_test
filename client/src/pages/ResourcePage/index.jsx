@@ -23,7 +23,7 @@ import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { Navbar } from '../../components/Navbar';
 import { WithFooter } from '../../components/Footer';
 
-import { authApis, resourceApis } from '../../services';
+import { authApis } from '../../services';
 import { useResources } from '../../hooks/useResources';
 import { useUser } from '../../hooks/useUser';
 
@@ -35,7 +35,7 @@ export const ResourcePage = () => {
   const { index: resourceIdx } = useParams();
 
   const { resources } = useResources();
-  const { savedResourceIds, saveMutation, unsaveMutation } = useUser();
+  const { savedResources, saveMutation, unsaveMutation } = useUser();
 
   const isLoggedIn = authApis.isLoggedIn();
 
@@ -49,18 +49,22 @@ export const ResourcePage = () => {
     }
   }, [resourceIdx, resources]);
 
-  // useEffect(() => {
-  //   if (resource && savedResourceIds && savedResourceIds.length) {
-  //     setSaved(savedResourceIds.includes(resource.resourceId));
-  //   }
-  // }, [resource, savedResourceIds]);
+  useEffect(() => {
+    if (resource && savedResources && savedResources.length) {
+      setSaved(
+        savedResources.some(
+          (savedResource) => savedResource.resourceId === resource._id
+        )
+      );
+    }
+  }, [resource, savedResources]);
 
   const handleSave = () => {
     if (isLoggedIn) {
       if (!isSaved) {
-        saveMutation.mutate(resource.resourceId);
+        saveMutation.mutate(resource._id);
       } else {
-        unsaveMutation.mutate(resource.resourceId);
+        unsaveMutation.mutate(resource._id);
       }
       setSaved(!isSaved);
     } else {

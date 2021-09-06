@@ -5,18 +5,10 @@ import { authApis, resourceApis, userApis } from '../services';
 export const useUser = () => {
   const queryClient = useQueryClient();
 
-  const {
-    data: user,
-    isLoading,
-    error,
-  } = useQuery('user', userApis.getUser, {
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
+  const { data: user, isLoading, error } = useQuery('user', userApis.getUser);
 
-  const savedResourceIds = useMemo(
-    () => (user ? user.savedResourceIds : []),
+  const savedResources = useMemo(
+    () => (user ? user.savedResources : []),
     [user]
   );
 
@@ -40,10 +32,10 @@ export const useUser = () => {
       queryClient.invalidateQueries('user');
     },
   });
-  
+
   return {
     user,
-    savedResourceIds,
+    savedResources,
     saveMutation,
     unsaveMutation,
     loginMutation,

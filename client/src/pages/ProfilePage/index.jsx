@@ -1,4 +1,5 @@
 import { Box, Text, Center } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
 import { WithFooter } from '../../components/Footer';
 import { Navbar } from '../../components/Navbar';
@@ -9,11 +10,21 @@ import { useUser } from '../../hooks/useUser';
 
 export const ProfilePage = () => {
   const { resources } = useResources();
-  const { user } = useUser();
+  const { user, savedResources } = useUser();
 
-  // const savedResources = resources.find((resource) =>
-  //   savedResourceIds.includes(resource._id)
-  // );
+  const [userResources, setUserResources] = useState([]);
+
+  useEffect(() => {
+    if (resources && savedResources) {
+      const tempUserResources = resources.filter((resource) =>
+        savedResources.some(
+          (savedResource) => savedResource.resourceId === resource._id
+        )
+      );
+      console.log(resources, savedResources, tempUserResources);
+      setUserResources(tempUserResources);
+    }
+  }, [resources, savedResources]);
 
   return (
     <WithFooter>
@@ -31,7 +42,9 @@ export const ProfilePage = () => {
           <Center py={5}>
             <Text fontSize="2xl"> Saved Resources:</Text>
           </Center>
-          {/* <ResourceContainer resources={savedResources} /> */}
+          {userResources ? (
+            <ResourceContainer resources={userResources} />
+          ) : null}
         </>
       ) : (
         <Center py={10}>
