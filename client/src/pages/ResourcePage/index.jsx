@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useQueryClient, useQuery, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import {
@@ -9,7 +8,6 @@ import {
   IconButton,
   Button,
   Tag,
-  Grid,
   HStack,
   AlertDialog,
   AlertDialogBody,
@@ -40,14 +38,15 @@ export const ResourcePage = () => {
   const isLoggedIn = authApis.isLoggedIn();
 
   useEffect(() => {
-    if (resourceIdx && resources) {
+    if (resources) {
       setResource(
         resources.find(
           (currentResource) => currentResource.index === Number(resourceIdx)
         )
       );
     }
-  }, [resourceIdx, resources]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resources]);
 
   useEffect(() => {
     if (resource && savedResources && savedResources.length) {

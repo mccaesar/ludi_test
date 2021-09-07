@@ -20,14 +20,14 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <Router>
         <Switch>
-          <Route path="/" exact component={HomePage} />
           <Route path="/resource/:index" component={ResourcePage} />
+          <Route path="/user/profile" component={ProfilePage} />
+          <Route path="/search" exact component={FilterPage} />
           <Route path="/register" exact component={RegistrationPage} />
           <Route path="/login" exact component={LoginPage} />
-          <Route path="/user/profile" exact component={ProfilePage} />
-          <Route path="/search" component={FilterPage} />
-          <Route path="/upload" component={UploadPage} />
-          <Route path="/about" component={AboutPage} />
+          <Route path="/upload" exact component={UploadPage} />
+          <Route path="/about" exact component={AboutPage} />
+          <Route path="/" exact component={HomePage} />
           <Route path="/" component={() => <h1>404</h1>} />
         </Switch>
       </Router>

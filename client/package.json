@@ -1,6 +1,7 @@
 {
   "name": "ludi-client",
-  "homepage": "https://luditesttest.web.illinois.edu/",
+  "homepage": ".",
+  "homepage1": "https://luditesttest.web.illinois.edu/",
   "version": "1.0.0",
   "private": true,
   "scripts": {

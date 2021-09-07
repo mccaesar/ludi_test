@@ -9,10 +9,11 @@ const TerserPlugin = require('terser-webpack-plugin');
 const isProduction = process.env.NODE_ENV === 'production';
 const config = {
   entry: {
-    main: './src/index.js',
+    main: '/src/index.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     filename: isProduction
       ? '[name].[contenthash].bundle.js'
       : '[name].bundle.js',
