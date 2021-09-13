@@ -25,7 +25,7 @@ export const CannedProfilePage = () => {
       }}
     >
       {/*may need history.push(`/search?${searchParams}`); */}
-      <LinkOverlay href="/profile">
+      <LinkOverlay href="/user/profile">
         <Center>
           <chakra.h1
             fontSize="lg"

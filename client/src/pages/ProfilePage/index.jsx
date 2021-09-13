@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Heading, Text, Stack } from '@chakra-ui/react';
 
 import { WithFooter } from '../../components/Footer';
-import { NavBar } from '../../components/NavBar';
+import { Navbar } from '../../components/Navbar';
 import { ResourceContainer } from '../../components/ResourceContainer';
 
 import { useResources } from '../../hooks/useResources';
@@ -28,7 +28,7 @@ export const ProfilePage = () => {
 
   return (
     <WithFooter>
-    <NavBar />
+      <Navbar />
       {user ? (
         <>
           
