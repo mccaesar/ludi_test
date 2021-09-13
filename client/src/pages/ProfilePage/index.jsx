@@ -1,8 +1,8 @@
-import { Box, Text, Center } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { Heading, Text, Stack } from '@chakra-ui/react';
 
 import { WithFooter } from '../../components/Footer';
-import { Navbar } from '../../components/Navbar';
+import { NavBar } from '../../components/NavBar';
 import { ResourceContainer } from '../../components/ResourceContainer';
 
 import { useResources } from '../../hooks/useResources';
@@ -28,28 +28,32 @@ export const ProfilePage = () => {
 
   return (
     <WithFooter>
-      <Navbar />
+    <NavBar />
       {user ? (
         <>
-          <Box p={10} justifyContent="center">
-            <Text fontSize="lg">
-              {' '}
-              Name: {user.firstName + ' ' + user.lastName}{' '}
+          
+          {/* User Info */}
+          <Heading pt={10} pb={2} mx="auto" fontSize="2xl"> User: </Heading>
+          <Stack
+            pb={5}
+            justifyContent="center"
+            mx="auto"
+          >
+            <Text fontSize="lg">{' '}Name: {user.firstName + ' ' + user.lastName}{' '}
             </Text>
             <Text fontSize="lg"> Email: {user.email} </Text>
-          </Box>
+          </Stack>
 
-          <Center py={5}>
-            <Text fontSize="2xl"> Saved Resources:</Text>
-          </Center>
+          {/* Saved Resources */}
+          <Heading py={5} mx="auto" fontSize="2xl"> Saved Resources:</Heading>
           {userResources ? (
             <ResourceContainer resources={userResources} />
           ) : null}
         </>
       ) : (
-        <Center py={10}>
-          <Text fontSize="2xl"> Log in to view saved resources </Text>
-        </Center>
+        <>
+          <Text py={10} mx="auto" fontSize="2xl"> Log in to view saved resources </Text>
+        </>
       )}
     </WithFooter>
   );

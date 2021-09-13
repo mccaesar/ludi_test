@@ -2,29 +2,45 @@
 import { Center, Text, SimpleGrid, Box } from '@chakra-ui/react';
 import { Logo } from './Logo';
 import { CannedSearch } from './CannedSearch';
+import { CannedProfilePage } from './CannedProfilePage';
 
 import { Navbar } from '../../components/Navbar';
 import { WithFooter } from '../../components/Footer';
 import { SearchBar } from '../../components/SearchBar';
 
 export const HomePage = () => {
-  const cannedSearch1 = 'Find newest added resources in the Python category';
+  //example params to use:
+    //cannedParams1.set('q', 'python');
+    //cannedParams1.set('field', 'category');
+    //cannedParams1.set('sort', 'new');
+    //cannedParams1.append('tag', 'Python');
+
+  //"Find a good book on wireless protocols" --> tag:readings AND tag:wireless
+  const cannedSearch1 = 'Find a good book on wireless protocols';
   const cannedParams1 = new URLSearchParams();
-  cannedParams1.set('q', 'python');
-  cannedParams1.set('field', 'category');
-  cannedParams1.set('sort', 'new');
-  cannedParams1.append('tag', 'Python');
+  cannedParams1.set('field', '');
+  cannedParams1.append('tag', 'readings');
+  cannedParams1.append('tag', 'wireless');
 
-  const cannedSearch2 = 'Find Network Simulator resources';
+  //"Play with a real network" --> "GNS3"
+  const cannedSearch2 = 'Play with a real network';
   const cannedParams2 = new URLSearchParams();
-  cannedParams2.set('q', 'Network Simulator');
-  cannedParams2.set('field', 'category');
+  cannedParams2.set('q', 'GNS3');
+  cannedParams2.set('field', 'title');
 
-  const cannedSearch3 =
-    'Find resources with "collaborative" in their description';
+  // "Meet other people who love networking" --> Category:"Professional Societies"
+  const cannedSearch3 = 'Meet other people who love networking';
   const cannedParams3 = new URLSearchParams();
-  cannedParams3.set('q', 'collaborative');
-  cannedParams3.set('field', 'description');
+  cannedParams3.set('q', 'Professional Societies');
+  cannedParams3.set('field', 'category');
+
+  //"Help my students break the ice" --> should search for category:"Interaction Platforms" OR tag:social (can you handle ORs?)
+  const cannedSearch4 = 'Help my students break the ice';
+  const cannedParams4 = new URLSearchParams();
+  cannedParams4.set('field', '');
+  cannedParams4.append('tag', 'interaction platforms');
+  cannedParams4.append('tag', 'social');
+
 
   return (
     <WithFooter>
@@ -54,9 +70,10 @@ export const HomePage = () => {
 
       <Center pt={5}>
         <SimpleGrid w="80%" columns={{ base: 1, lg: 2 }} spacing="8">
-          <CannedSearch searchParams={cannedParams3} text={cannedSearch3} />
-          <CannedSearch searchParams={cannedParams2} text={cannedSearch2} />
           <CannedSearch searchParams={cannedParams1} text={cannedSearch1} />
+          <CannedSearch searchParams={cannedParams2} text={cannedSearch2} />
+          <CannedSearch searchParams={cannedParams3} text={cannedSearch3} />
+          <CannedProfilePage/>
         </SimpleGrid>
       </Center>
     </WithFooter>
