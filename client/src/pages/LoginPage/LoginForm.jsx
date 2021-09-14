@@ -26,6 +26,7 @@ export const LoginForm = () => {
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm({
     mode: 'onBlur',
@@ -33,19 +34,32 @@ export const LoginForm = () => {
     resolver: yupResolver(LoginSchema),
   });
 
-  const onSubmit = (values) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
+  const onSubmit = async (values) => {
+    // return new Promise((resolve) => {
+      // setTimeout(() => {
         const data = {
           email: values.email,
           password: values.password,
         };
-        authApis.loginUser(data);
-        queryClient.refetchQueries(['user'], { active: true });
-        history.push('/');
-        resolve();
-      }, 500);
-    });
+
+        try  {
+          await authApis.loginUser(data);
+          queryClient.refetchQueries(['user'], { active: true });
+          history.push('/');
+        } catch (err) {
+          console.log("LoginForm error: ", err.response.data)
+          setError("email", {
+            type: "manual",
+          });
+          setError("password", {
+            type: "manual",
+            message: err.response.data.message,
+          });
+        }
+
+        // resolve();
+      // }, 500);
+    // });
   };
 
   return (

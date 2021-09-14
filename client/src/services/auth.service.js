@@ -39,7 +39,9 @@ export const registerUser = async (data) => {
     .then(({ data }) => {
       setLocalStorage(data);
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      throw (err);
+    });
 };
 
 export const loginUser = async (data) => {
@@ -48,7 +50,9 @@ export const loginUser = async (data) => {
     .then(({ data }) => {
       setLocalStorage(data);
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      throw(err);
+    });
 };
 
 export const logoutUser = () => {

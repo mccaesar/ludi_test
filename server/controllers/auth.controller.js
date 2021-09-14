@@ -77,9 +77,10 @@ export const logInUser = async (req, res, next) => {
   const { isValid, errors: validationErrors } = validateLogin(req.body);
   if (!isValid) {
     return res.status(404).send({
-      message: validationErrors
-        ? validationErrors[0].message
-        : 'Some error occurred while validating user information for login.',
+      // message: validationErrors
+      //   ? validationErrors[0].message
+      //   : 'Some error occurred while validating user information for login.',
+      message: 'Invalid Email or Password.',
     });
   }
 
