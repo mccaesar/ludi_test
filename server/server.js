@@ -17,7 +17,7 @@ const app = express();
 
 const corsOptions = {
   origin: isProduction
-    ? 'https://luditesttest.web.illinois.edu'
+    ? 'https://ludi.cs.illinois.edu'
     : 'http://localhost:3000',
 };
 app.use(cors(corsOptions));

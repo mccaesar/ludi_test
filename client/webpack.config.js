@@ -27,7 +27,7 @@ const config = {
       NODE_ENV: isProduction ? 'production' : 'development',
       REACT_APP_PORT: 3000,
       REACT_APP_API_URI: isProduction
-        ? 'https://server.luditesttest.web.illinois.edu/api'
+        ? 'https://server.ludi.cs.illinois.edu/api'
         : 'http://localhost:5000/api',
     }),
   ],
