@@ -47,7 +47,6 @@ export const LoginForm = () => {
           queryClient.refetchQueries(['user'], { active: true });
           history.push('/');
         } catch (err) {
-          console.log("LoginForm error: ", err.response.data)
           setError("email", {
             type: "manual",
           });

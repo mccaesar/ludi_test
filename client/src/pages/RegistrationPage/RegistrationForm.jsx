@@ -19,7 +19,6 @@ export const RegistrationForm = () => {
   const history = useHistory();
   const queryClient = useQueryClient();
   
-  const [errorMessage, setErrorMessage] = useState('');
 
   const initialValues = {
     firstName: '',
@@ -32,6 +31,7 @@ export const RegistrationForm = () => {
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm({
     mode: 'onBlur',
@@ -39,25 +39,30 @@ export const RegistrationForm = () => {
     resolver: yupResolver(RegistrationSchema),
   });
 
-  const onSubmit = (values) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
+  const onSubmit = async (values) => {
+    // return new Promise((resolve) => {
+    //   setTimeout(() => {
         const data = {
           firstName: values.firstName,
           lastName: values.lastName,
           email: values.email,
           password: values.password,
         };
-        authApis.registerUser(data);
-        queryClient.refetchQueries(['user'], { active: true });
-        if (errorMessage) {
-          alert(errorMessage);
-        } else {
-          history.push('/login');
+        try {
+          await authApis.registerUser(data);
+          queryClient.refetchQueries(['user'], { active: true });
+          history.push('/');
+        } catch (err) {
+          setError("email", {
+            type: "manual",
+            message: err.response.data.message,
+          });
         }
-        resolve();
-      }, 500);
-    });
+
+
+    //     resolve();
+    //   }, 500);
+    // });
   };
 
   return (
