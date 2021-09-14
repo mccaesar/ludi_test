@@ -16,9 +16,10 @@ const { mongoose, uri } = db;
 const app = express();
 
 const corsOptions = {
-  origin: isProduction
-    ? 'https://ludi.cs.illinois.edu'
-    : 'http://localhost:3000',
+  // origin: isProduction
+  //   ? 'https://ludi.cs.illinois.edu'
+  //   : 'http://localhost:3000',
+  origin: '*',
 };
 app.use(cors(corsOptions));
 
