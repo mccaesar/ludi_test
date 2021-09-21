@@ -6,7 +6,6 @@ import passport from 'passport';
 import db from './models/index.js';
 import routes from './routes/index.js';
 
-
 dotenv.config();
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -51,6 +50,4 @@ mongoose.set('useFindAndModify', false);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+app.listen(PORT, console.log(`Server is running on port ${PORT}.`));

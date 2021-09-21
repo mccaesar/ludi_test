@@ -9,17 +9,9 @@ import {
 import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
 
 export const MobileNav = ({ disclosures, bg }) => {
-  const { mobileNav, searchModal } = disclosures;
+  const { mobileNav } = disclosures;
   return (
     <Box display={{ base: 'inline-flex', md: 'none' }}>
-      <IconButton
-        icon={<AiOutlineSearch />}
-        display={{ base: 'inline-flex', md: 'none' }}
-        mx={{ base: '4', md: '6' }}
-        colorScheme="brand"
-        isRound="true"
-        onClick={searchModal.onOpen}
-      />
       <IconButton
         display={{ base: 'flex', md: 'none' }}
         aria-label="Open menu"
@@ -30,7 +22,7 @@ export const MobileNav = ({ disclosures, bg }) => {
         onClick={mobileNav.onOpen}
       />
       <VStack
-        pos="absolute"
+        pos="fixed"
         top={0}
         left={0}
         right={0}
@@ -43,6 +35,7 @@ export const MobileNav = ({ disclosures, bg }) => {
         spacing={3}
         rounded="sm"
         shadow="sm"
+        zIndex={1000}
       >
         <CloseButton
           aria-label="Close menu"
@@ -53,7 +46,8 @@ export const MobileNav = ({ disclosures, bg }) => {
           w="full"
           variant="ghost"
           // onClick={mobileNav.onClose}
-          href="login"
+          as="a" 
+          href="/login"
         >
           Sign In
         </Button>
@@ -61,6 +55,7 @@ export const MobileNav = ({ disclosures, bg }) => {
           w="full"
           colorScheme="brand"
           // onClick={mobileNav.onClose}
+          as="a" 
           href="/register"
         >
           Sign Up

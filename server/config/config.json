@@ -1,0 +1,6 @@
+{
+  "mongoDB": {
+    "username": "ludi_user",
+    "password": "ludi_password"
+  }
+}

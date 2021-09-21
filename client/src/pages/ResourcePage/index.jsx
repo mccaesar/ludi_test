@@ -101,13 +101,13 @@ export const ResourcePage = () => {
       <Stack
         bg={mode('white', 'gray.800')}
         overflow="hidden"
+        rounded="md"
+        maxW={{ base: '2xl', md: '6xl' }}
+        justifyContent="center"
+        h="full"
+        mx="auto"
         mt={4}
         p={6}
-        rounded="md"
-        minW={{ base: '2xl', md: '6xl' }}
-        h="full"
-        justifyContent="center"
-        mx="auto"
       >
         <Stack
           spacing={2}
@@ -116,8 +116,8 @@ export const ResourcePage = () => {
           alignItems="stretch"
           display="flex"
           bg={mode('gray.200', 'gray.700')}
-          p={6}
           rounded="md"
+          p={6}
         >
           <Box w="full">
             <Text fontSize="4xl" color={mode('black', 'white')}>

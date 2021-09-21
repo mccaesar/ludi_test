@@ -30,21 +30,20 @@ export const SearchBar = () => {
   const handleSearch = (e) => {
     if (e.code === 'Enter') {
       e.preventDefault();
-      if (searchTerm) {
-        query.set(URISearchParamOptions.SearchTerm, searchTerm);
-        history.push(`/search?${query}`);
-      }
+      query.set(URISearchParamOptions.SearchTerm, searchTerm);
+      history.push(`/search?${query}`);
     }
   };
 
   const clearSearch = () => {
+    setSearchTerm('');
     query.delete(URISearchParamOptions.SearchTerm);
-    history.push(`/search`);
+    history.push(`/search?${query}`);
   };
 
   return (
     <Box
-      minW={{ base: 'md', md: '2xl' }}
+      maxW={{ base: 'md', md: '2xl' }}
       px={{ base: '6', md: '8' }}
       pt={6}
       mx="auto"

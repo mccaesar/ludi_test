@@ -53,7 +53,7 @@ export const HomePage = () => {
 
       {/* Tagline */}
       <Center pt={4}>
-        <Text fontSize="md" as="i">
+        <Text fontSize="md" as="i" textAlign="center">
           Search hundreds of resources for teaching and learning computer
           science
         </Text>
@@ -69,7 +69,7 @@ export const HomePage = () => {
       </Center>
 
       <Center pt={5}>
-        <SimpleGrid w="80%" columns={{ base: 1, lg: 2 }} spacing="8">
+        <SimpleGrid columns={{ base: 1, lg: 2 }} spacing="8">
           <CannedSearch searchParams={cannedParams1} text={cannedSearch1} />
           <CannedSearch searchParams={cannedParams2} text={cannedSearch2} />
           <CannedSearch searchParams={cannedParams3} text={cannedSearch3} />

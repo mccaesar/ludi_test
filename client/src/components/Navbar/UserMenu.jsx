@@ -55,11 +55,12 @@ export const UserMenu = ({ fullname }) => {
       <MenuList
         bg={useColorModeValue('white', 'gray.900')}
         borderColor={useColorModeValue('gray.200', 'gray.700')}
+        zIndex={1000}
       >
         <MenuItem as="a" href="/user/profile">
           Profile
         </MenuItem>
-        <MenuItem>Settings</MenuItem>
+        {/* <MenuItem>Settings</MenuItem> */}
         <MenuDivider />
         <MenuItem onClick={handleLogout}>Sign out</MenuItem>
       </MenuList>

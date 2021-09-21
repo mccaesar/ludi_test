@@ -11,6 +11,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { BiSearchAlt } from 'react-icons/bi';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { Logo } from './Logo';
@@ -33,14 +34,14 @@ export const Navbar = () => {
         bg={bg}
         w="full"
         px={{ base: 2, sm: 4 }}
-        py={4}
+        pt={1}
+        pb={4}
         shadow="md"
       >
         <Flex
-          maxW={{ base: 'xl', md: '8xl' }}
+          //   maxW={{ base: 'xl', md: '8xl' }}
           alignItems="center"
           justifyContent="space-between"
-          mx="auto"
         >
           <HStack display="flex" spacing={4} alignItems="center">
             <chakra.a
@@ -61,7 +62,8 @@ export const Navbar = () => {
               color={useColorModeValue('gray.600', 'gray.300')}
               onClick={toggleColorMode}
             />
-            <Button
+
+            {/* <Button
               display={{ base: 'none', md: 'inline-flex' }}
               leftIcon={<AiOutlineSearch />}
               fontWeight="medium"
@@ -73,7 +75,15 @@ export const Navbar = () => {
               href="/search"
             >
               Search Resources
-            </Button>
+            </Button> */}
+
+            <IconButton
+              icon={<BiSearchAlt />}
+              bg={useColorModeValue('gray.200', 'gray.700')}
+              color={useColorModeValue('gray.600', 'gray.300')}
+              as="a"
+              href="/search"
+            />
 
             {user ? (
               <UserMenu fullname={user.firstName + ' ' + user.lastName} />
@@ -92,15 +102,15 @@ export const Navbar = () => {
                 </Button>
               </HStack>
             )}
-          </HStack>
 
-          <MobileNav
-            disclosures={{
-              mobileNav,
-              searchModal,
-            }}
-            bg={bg}
-          />
+            <MobileNav
+              disclosures={{
+                mobileNav,
+                searchModal,
+              }}
+              bg={bg}
+            />
+          </HStack>
         </Flex>
       </chakra.header>
     </>
