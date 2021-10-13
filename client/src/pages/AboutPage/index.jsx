@@ -8,13 +8,13 @@ export const AboutPage = () => {
     <WithFooter>
       <Navbar />
 
-      <Heading pt={10} pb={5} mx="auto" fontSize="3xl"> About LUDI </Heading>
+      <Heading pt={10} pb={5} textAlign="center" mx="auto" fontSize="3xl"> About LUDI </Heading>
 
       <Text pb={10} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
         LUDI (Library for University Distance Instruction) aims to create a web service consisting of a user-friendly database of computer networking educational sources to provide an organized space for university educators to discover relevant software tools.
       </Text>
 
-      <Heading pt={1} pb={3} mx="auto" fontSize="3xl"> Contributors </Heading>
+      <Heading pt={1} pb={3} textAlign="center" mx="auto" fontSize="3xl"> Contributors </Heading>
       
       <Text pb={1} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
         Dr. Matthew Caesar
@@ -27,10 +27,10 @@ export const AboutPage = () => {
       </Text>
 
 
-      <Heading pt={10} pb={3} mx="auto" fontSize="3xl"> How to use LUDI </Heading>
+      <Heading pt={10} pb={3} textAlign="center" mx="auto" fontSize="3xl"> How to use LUDI </Heading>
 
       {/*  */}
-      <Heading pt={5} pb={2} mx="auto" as="u" fontSize="xl"> Searching: </Heading>
+      <Heading pt={5} pb={2} textAlign="center"  mx="auto" textDecoration="underline" fontSize="xl"> Searching: </Heading>
 
       <Text pb={5} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
         To search for resources, either enter text into the search bar or select a tag to search by. 
@@ -46,7 +46,7 @@ export const AboutPage = () => {
 
 
       {/*  */}
-      <Heading pt={10} pb={2} mx="auto" as="u" fontSize="xl"> Signing up and Logging in: </Heading>
+      <Heading pt={10} pb={2} textAlign="center" mx="auto" textDecoration="underline" fontSize="xl"> Signing up and Logging in: </Heading>
 
       <Text pb={5} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
         To sign up, click the ‘Sign Up’ button in the top right corner of the webpage. After you enter the required fields and click ‘Create my account’ a new account will be created if the email isn't already taken. Reload the page to check if you have been logged in successfully.
@@ -62,7 +62,7 @@ export const AboutPage = () => {
 
 
       {/*  */}
-      <Heading pt={10} pb={2} mx="auto" as="u" fontSize="xl"> Saving and Viewing saved resources: </Heading>
+      <Heading pt={10} pb={2} textAlign='center' mx="auto" textDecoration="underline" fontSize="xl"> Saving and Viewing saved resources: </Heading>
 
       <Text pb={5} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
         To save a resource, navigate to any resource and click on the bookmark icon. You must be signed in to save a resource.
@@ -74,7 +74,7 @@ export const AboutPage = () => {
 
 
       {/*  */}
-      <Heading pt={10} pb={2} mx="auto" as="u" fontSize="xl"> Submitting new resources: </Heading>
+      <Heading pt={10} pb={2} textAlign='center' mx="auto" textDecoration="underline" fontSize="xl"> Submitting new resources: </Heading>
 
       <Text pb={30} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
         To submit a new resource, click ‘Submission’ in the footer of the webpage. Fill out the embedded form and then click ‘Submit’.
