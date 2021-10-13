@@ -8,4 +8,4 @@ RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule . /index.html [L]
 </IfModule>
 
-Header set Access-Control-Allow-Origin "https://luditesttest.web.illinois.edu"
+Header set Access-Control-Allow-Origin "https://ludi.cs.illinois.edu"

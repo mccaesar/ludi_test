@@ -6,7 +6,6 @@ import passport from 'passport';
 import db from './models/index.js';
 import routes from './routes/index.js';
 
-
 dotenv.config();
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -16,9 +15,10 @@ const { mongoose, uri } = db;
 const app = express();
 
 const corsOptions = {
-  origin: isProduction
-    ? 'https://luditesttest.web.illinois.edu'
-    : 'http://localhost:3000',
+  // origin: isProduction
+  //   ? 'https://ludi.cs.illinois.edu'
+  //   : 'http://localhost:3000',
+  origin: '*',
 };
 app.use(cors(corsOptions));
 
@@ -50,6 +50,4 @@ mongoose.set('useFindAndModify', false);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+app.listen(PORT, console.log(`Server is running on port ${PORT}.`));

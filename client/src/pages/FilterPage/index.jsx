@@ -42,17 +42,19 @@ export const FilterPage = () => {
   }, [resources, url]);
 
   return (
-    <WithFooter>
+    <>
       <Navbar />
-      <SearchBar />
-      <FilterBar />
-      {!isLoading ? (
-        <ResourceContainer resources={filteredResources} />
-      ) : (
-        <Center>
-          <Spinner />
-        </Center>
-      )}
-    </WithFooter>
+      <WithFooter>
+        <SearchBar />
+        <FilterBar />
+        {!isLoading ? (
+          <ResourceContainer resources={filteredResources} />
+        ) : (
+          <Center>
+            <Spinner />
+          </Center>
+        )}
+      </WithFooter>
+    </>
   );
 };

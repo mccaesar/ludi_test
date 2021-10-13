@@ -27,34 +27,42 @@ export const ProfilePage = () => {
   }, [resources, savedResources]);
 
   return (
-    <WithFooter>
+    <>
       <Navbar />
-      {user ? (
-        <>
-          
-          {/* User Info */}
-          <Heading pt={10} pb={2} mx="auto" fontSize="2xl"> User: </Heading>
-          <Stack
-            pb={5}
-            justifyContent="center"
-            mx="auto"
-          >
-            <Text fontSize="lg">{' '}Name: {user.firstName + ' ' + user.lastName}{' '}
-            </Text>
-            <Text fontSize="lg"> Email: {user.email} </Text>
-          </Stack>
+      <WithFooter>
+        {user ? (
+          <>
+            {/* User Info */}
+            <Heading pt={10} pb={2} mx="auto" fontSize="2xl" textAlign="center">
+              {' '}
+              User:{' '}
+            </Heading>
+            <Stack pb={5} justifyContent="center" mx="auto">
+              <Text fontSize="lg" textAlign="center">
+                {' '}
+                Name: {user.firstName + ' ' + user.lastName}{' '}
+              </Text>
+              <Text fontSize="lg" textAlign="center"> Email: {user.email} </Text>
+            </Stack>
 
-          {/* Saved Resources */}
-          <Heading py={5} mx="auto" fontSize="2xl"> Saved Resources:</Heading>
-          {userResources ? (
-            <ResourceContainer resources={userResources} />
-          ) : null}
-        </>
-      ) : (
-        <>
-          <Text py={10} mx="auto" fontSize="2xl"> Log in to view saved resources </Text>
-        </>
-      )}
-    </WithFooter>
+            {/* Saved Resources */}
+            <Heading py={5} mx="auto" fontSize="2xl" textAlign="center">
+              {' '}
+              Saved Resources:
+            </Heading>
+            {userResources ? (
+              <ResourceContainer resources={userResources} />
+            ) : null}
+          </>
+        ) : (
+          <>
+            <Text py={10} mx="auto" fontSize="2xl">
+              {' '}
+              Log in to view saved resources{' '}
+            </Text>
+          </>
+        )}
+      </WithFooter>
+    </>
   );
 };

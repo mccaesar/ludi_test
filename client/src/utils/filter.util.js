@@ -25,6 +25,8 @@ export const filterResources = ({
       searchTerm,
       searchFields,
     });
+  } else if (searchTerm) {
+    return [];
   }
 
   if (sortOption) {

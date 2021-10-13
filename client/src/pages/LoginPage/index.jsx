@@ -50,7 +50,7 @@ export const LoginPage = () => {
               Enter your info to log in
             </Text>
           </Box>
-          <Stack spacing="4">
+          {/* <Stack spacing="4">
             <Button
               borderColor={mode('gray.400', 'gray.600')}
               variant="outline"
@@ -72,7 +72,7 @@ export const LoginPage = () => {
             </Button>
           </Stack>
 
-          <DividerWithText>or</DividerWithText>
+          <DividerWithText>or</DividerWithText> */}
           <LoginForm />
         </Box>
 

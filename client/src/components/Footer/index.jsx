@@ -4,18 +4,20 @@ import {
   Container,
   Link,
   Stack,
-//   Switch,
+  //   Switch,
+  Grid,
   useColorModeValue,
-//   useColorMode,
+  //   useColorMode,
 } from '@chakra-ui/react';
 
 import { Logo } from './Logo';
 
 export const Footer = () => {
-//   const { toggleColorMode } = useColorMode();
   return (
     <Box
       minW="full"
+      pt={2}
+      pb={{ base: 8, md: 4 }}
       // position="absolute"
       // bottom="0"
       // shrink="false"
@@ -38,12 +40,6 @@ export const Footer = () => {
           <Link href={'/about'}>About</Link>
           <Link href={'/upload'}>Submission</Link>
           <Link href="mailto:ludi@illinois.edu">Contact</Link>
-          {/* <Switch
-            onChange={toggleColorMode}
-            colorScheme="gray"
-            size="lg"
-            defaultChecked
-          /> */}
         </Stack>
       </Container>
     </Box>
@@ -52,13 +48,11 @@ export const Footer = () => {
 
 export const WithFooter = ({ children }) => {
   return (
-    <Flex w="full" h="100vh" direction="column">
-      <Flex w="full" direction="column" grow="true" shrink="false" basis="auto">
-        {children}
-      </Flex>
+    <Grid h="100vh" templateRows="repeat(2, 1fr)" gap={10}>
+      <Box>{children}</Box>
       <Box mt="auto">
         <Footer />
       </Box>
-    </Flex>
+    </Grid>
   );
 };

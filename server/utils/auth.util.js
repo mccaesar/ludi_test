@@ -1,11 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { readFileSync } from 'fs';
 import path from 'path';
+import fs from 'fs';
+const { promises: fsp } = fs;
 
 const __dirname = path.resolve();
 const pathToKey = path.join(__dirname, 'keys', 'id_rsa_priv.pem');
-const PRIV_KEY = readFileSync(pathToKey, 'utf8');
+const PRIV_KEY = fs.readFileSync(pathToKey, 'utf8');
 const SALT_ROUNDS = 10;
 
 /**

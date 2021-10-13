@@ -11,7 +11,7 @@ export const CannedProfilePage = () => {
     <LinkBox
       w="full"
       h="full"
-      // maxW="xl"
+      maxW="xl"
       minW="sm"
       mx="auto"
       position="relative"

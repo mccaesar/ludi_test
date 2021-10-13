@@ -18,10 +18,10 @@ export const BadFilterAlert = ({ bg }) => {
     const isSortingNotRelevance = currentSort && currentSort !== 'relevance';
     const isSortingRelevance = currentSort && currentSort === 'relevance';
 
-    if (!isSearchingField && !isFilteringTag && !isSortingNotRelevance) {
-      setAlertMessage('No filter selected!');
-    } else if (hasSearchTerm && !isSearchingField) {
+    if (hasSearchTerm && !isSearchingField) {
       setAlertMessage('Select at least one search field to search!');
+    } else if (!isSearchingField && !isFilteringTag && !isSortingNotRelevance) {
+      setAlertMessage('No filter selected!');
     } else if (!hasSearchTerm && isSortingRelevance) {
       setAlertMessage('Must be searching to sort by relevance!');
     } else {
