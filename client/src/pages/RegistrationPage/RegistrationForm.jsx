@@ -12,13 +12,13 @@ import {
   useColorModeValue as mode,
 } from '@chakra-ui/react';
 import { RegistrationSchema } from '../../validators/auth.validator';
-import { authApis } from '../../services';
-import { useQueryClient } from 'react-query';
+import { useUser } from '../../hooks/useUser';
 
 export const RegistrationForm = () => {
   const history = useHistory();
-  const queryClient = useQueryClient();
-  
+  const { registerMutation } = useUser();
+
+  const [responseError, setResponseError] = useState(null);
 
   const initialValues = {
     firstName: '',
@@ -40,8 +40,8 @@ export const RegistrationForm = () => {
   });
 
   const onSubmit = async (values) => {
-    // return new Promise((resolve) => {
-    //   setTimeout(() => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
         const data = {
           firstName: values.firstName,
           lastName: values.lastName,
@@ -49,20 +49,23 @@ export const RegistrationForm = () => {
           password: values.password,
         };
         try {
-          await authApis.registerUser(data);
-          queryClient.refetchQueries(['user'], { active: true });
-          history.push('/');
+          registerMutation.mutate(data, {
+            onSuccess: () => history.push('/'),
+            onError: (err) => {
+              if (err.response) {
+                setResponseError(err.response.data.message);
+              }
+            },
+          });
         } catch (err) {
-          setError("email", {
-            type: "manual",
+          setError('email', {
+            type: 'manual',
             message: err.response.data.message,
           });
         }
-
-
-    //     resolve();
-    //   }, 500);
-    // });
+        resolve();
+      }, 500);
+    });
   };
 
   return (
@@ -97,8 +100,8 @@ export const RegistrationForm = () => {
         </FormControl>
 
         <FormControl
-          isInvalid={!!errors?.email}
-          errortext={errors?.email?.message}
+          isInvalid={!!errors?.email || responseError}
+          errortext={errors?.email?.message || responseError}
         >
           <FormLabel mb={1}>Email</FormLabel>
           <Input
@@ -106,9 +109,12 @@ export const RegistrationForm = () => {
             id="email"
             type="email"
             autoComplete="email"
+            onChange={() => setResponseError(null)}
             {...register('email')}
           />
-          <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
+          <FormErrorMessage>
+            {errors?.email?.message || responseError}
+          </FormErrorMessage>
         </FormControl>
 
         <FormControl

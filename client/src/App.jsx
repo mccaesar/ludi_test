@@ -3,6 +3,9 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 
+import '@fontsource/lato/400.css';
+import '@fontsource/lato/700.css';
+
 import { customTheme } from './theme';
 import { HomePage } from './pages/HomePage';
 import { ResourcePage } from './pages/ResourcePage';
@@ -13,15 +16,17 @@ import { ProfilePage } from './pages/ProfilePage';
 import { UploadPage } from './pages/UploadPage';
 import { AboutPage } from './pages/AboutPage';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Default 20 seconds before refetching
+      staleTime: 1000 * 20,
+    },
+  },
+});
 
 const App = () => (
   <>
-    {/* TODO: This is a hack to make the website full-width on mobile */}
-    <meta
-      name="viewport"
-      content="initial-scale=0.65"
-    />
     <ChakraProvider theme={customTheme}>
       <QueryClientProvider client={queryClient}>
         <Router>

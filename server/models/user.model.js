@@ -1,18 +1,5 @@
 import mongoose from 'mongoose';
 
-const SavedResourceSchema = mongoose.Schema({
-  resourceId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'resources',
-    required: true,
-  },
-  dateSaved: {
-    type: Date,
-    default: Date.now,
-  },
-  _id: false,
-});
-
 const UserSchema = mongoose.Schema(
   {
     firstName: {
@@ -23,19 +10,42 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    screenName: String,
     email: {
       type: String,
       required: true,
     },
-    hash: String,
-    dateJoined: {
-      type: Date,
-      default: Date.now,
+    // TODO: Set permissions for each user
+    role: {
+      type: String,
+      enum: ['ADMIN', 'EDUCATOR', 'STUDENT', 'GUEST'],
+      default: 'GUEST',
     },
-    savedResources: [SavedResourceSchema],
+    passwordHash: String,
+    savedResources: [{
+      type: mongoose.Types.ObjectId,
+      ref: 'Resource',
+    }],
+    upvotedResources: [{
+      type: mongoose.Types.ObjectId,
+      ref: 'Resource',
+    }],
+    resourceScore: { type: Number, default: 0 },
+    upvotedComments: [{
+      type: mongoose.Types.ObjectId,
+      ref: 'Comment',
+    }],
+    commentScore: { type: Number, default: 0 },
   },
-  { collection: 'users' }
+  { collection: 'users', timestamps: true }
 );
+
+UserSchema.pre('save', function (next) {
+  if (!this.screenName) {
+    this.screenName = this.get('firstName') + ' ' + this.get('lastName');
+  }
+  next();
+});
 
 const User = mongoose.model('User', UserSchema);
 

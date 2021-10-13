@@ -22,3 +22,13 @@ export const unsaveResource = async (resourceId) =>
   await axios
     .put(`${API_URI}/resource/${resourceId}/unsave`)
     .catch((err) => console.error(err));
+
+export const upvoteResource = async (resourceId) =>
+  await axios
+    .put(`${API_URI}/resource/${resourceId}/upvote`)
+    .catch((err) => console.error(err));
+
+export const unupvoteResource = async (resourceId) =>
+  await axios
+    .put(`${API_URI}/resource/${resourceId}/unupvote`)
+    .catch((err) => console.error(err));

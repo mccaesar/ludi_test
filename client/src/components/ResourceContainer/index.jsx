@@ -4,7 +4,7 @@ import { ResourceCard } from './ResourceCard';
 export const ResourceContainer = ({ resources }) => {
   return (
     <>
-      {resources && resources.length > 0 ? (
+      {resources && resources.length ? (
         <Box
           as="section"
           bg={mode('white', 'gray.800')}

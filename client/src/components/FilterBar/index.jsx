@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Spacer } from '@chakra-ui/react';
+import { Box, Button, Flex, Spacer, Text } from '@chakra-ui/react';
 
 import { FilterOptions } from '../../constants/filter.constant';
 import { FilterCollapse } from './FilterCollapse';
 import { SortSelect } from './SortSelect';
 
-export const FilterBar = () => {
+export const FilterBar = ({ numResults }) => {
   const [selectedFilter, setSelectedFilter] = useState(FilterOptions.None);
 
   const handleFilterChange = (newFilter) => {
@@ -25,7 +25,7 @@ export const FilterBar = () => {
         pt={6}
         maxW={{ base: 'xl', md: '6xl' }}
       >
-        <Flex w="full" justifyContent="space-between">
+        <Flex w="full" alignItems="center" justifyContent="space-between">
           <Button
             variant="ghost"
             _hover={{}}
@@ -59,9 +59,13 @@ export const FilterBar = () => {
             Tags
           </Button>
           <Spacer />
+          <Text fontSize="md" fontWeight="bold" textAlign="center">
+            {numResults} results found.
+          </Text>
+          <Spacer />
           <SortSelect />
         </Flex>
-        <Flex mx={12} pb={4}>
+        <Flex mx={12}>
           <FilterCollapse
             selectedFilter={selectedFilter}
             handleFilterChange={handleFilterChange}

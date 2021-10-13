@@ -49,7 +49,7 @@ export const Footer = () => {
 export const WithFooter = ({ children }) => {
   return (
     <Grid h="100vh" templateRows="repeat(2, 1fr)" gap={10}>
-      <Box>{children}</Box>
+      <Box mb={10}>{children}</Box>
       <Box mt="auto">
         <Footer />
       </Box>

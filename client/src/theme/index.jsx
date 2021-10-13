@@ -21,7 +21,11 @@ export const customTheme = extendTheme({
     },
   },
   config: {
-    initialColorMode: 'light',
+    initialColorMode: 'dark',
     useSystemColorMode: false,
+  },
+  fonts: {
+    heading: 'Lato',
+    body: 'Lato',
   },
 });

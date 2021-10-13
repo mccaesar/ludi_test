@@ -1,11 +1,11 @@
-import { resourceApis } from '../services';
+import { resourceApi } from '../services';
 
 export const fetchResources =
   (searchTerm, searchFields, filterTags, sortOption) => async (dispatch) => {
     try {
       dispatch({ type: 'FETCH_RESOURCES_REQUEST' });
 
-      const { data: resources } = await resourceApis.getResources();
+      const { data: resources } = await resourceApi.getResources();
       const action = {
         type: 'FETCH_RESOURCES_SUCCESS',
         payload: {
@@ -32,9 +32,9 @@ export const fetchSavedResources = () => async (dispatch) => {
   try {
     dispatch({ type: 'FETCH_SAVED_RESOURCES_REQUEST' });
 
-    const { data: resources } = await resourceApis.getResources();
+    const { data: resources } = await resourceApi.getResources();
     const { resourceIds: savedResourceIds } =
-      await resourceApis.getSavedResourceIds();
+      await resourceApi.getSavedResourceIds();
     const action = {
       type: 'FETCH_SAVED_RESOURCES_SUCCESS',
       payload: {

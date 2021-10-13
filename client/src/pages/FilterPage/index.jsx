@@ -1,8 +1,8 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { Spinner } from '@chakra-ui/spinner';
-import { Center } from '@chakra-ui/layout';
+import { Center, Text } from '@chakra-ui/layout';
 
 import { Navbar } from '../../components/Navbar';
 import { WithFooter } from '../../components/Footer';
@@ -42,19 +42,17 @@ export const FilterPage = () => {
   }, [resources, url]);
 
   return (
-    <>
+    <WithFooter>
       <Navbar />
-      <WithFooter>
-        <SearchBar />
-        <FilterBar />
-        {!isLoading ? (
-          <ResourceContainer resources={filteredResources} />
-        ) : (
-          <Center>
-            <Spinner />
-          </Center>
-        )}
-      </WithFooter>
-    </>
+      <SearchBar />
+      <FilterBar numResults={filteredResources.length} />
+      {!isLoading ? (
+        <ResourceContainer resources={filteredResources} />
+      ) : (
+        <Center>
+          <Spinner />
+        </Center>
+      )}
+    </WithFooter>
   );
 };

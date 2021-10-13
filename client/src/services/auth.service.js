@@ -3,14 +3,16 @@ import qs from 'qs';
 import { addDays, isBefore } from 'date-fns';
 import { API_URI } from '../config';
 
-(function authInterceptor() {
+const authInterceptor = () => {
   const token = localStorage.getItem('id_token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = token;
   } else {
     axios.defaults.headers.common['Authorization'] = null;
   }
-})();
+};
+
+authInterceptor();
 
 const setLocalStorage = (responseObj) => {
   const expiresIn = responseObj.expiresIn.split(/(\d+)/).filter(Boolean);
@@ -28,6 +30,7 @@ export const isLoggedIn = () => {
   const token = localStorage.getItem('id_token');
   if (token) {
     const loggedIn = isBefore(new Date(), getExpiration());
+    authInterceptor();
     return loggedIn;
   }
   return false;
@@ -40,7 +43,7 @@ export const registerUser = async (data) => {
       setLocalStorage(data);
     })
     .catch((err) => {
-      throw (err);
+      throw err;
     });
 };
 
@@ -51,7 +54,7 @@ export const loginUser = async (data) => {
       setLocalStorage(data);
     })
     .catch((err) => {
-      throw(err);
+      throw err;
     });
 };
 

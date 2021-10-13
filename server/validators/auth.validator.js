@@ -8,8 +8,9 @@ export const validateRegistration = (data) => {
   const schema = {
     type: 'object',
     properties: {
-      firstName: { type: 'string', minLength: 2, maxLength: 50 },
-      lastName: { type: 'string', minLength: 2, maxLength: 50 },
+      firstName: { type: 'string', minLength: 2, maxLength: 63 },
+      lastName: { type: 'string', minLength: 2, maxLength: 63 },
+      screenName: { type: 'string', minLength: 2, maxLength: 127 },
       email: { type: 'string', format: 'email', maxLength: 255 },
       password: { type: 'string', minLength: 8, maxLength: 1023 },
     },
@@ -25,8 +26,8 @@ export const validateLogin = (data) => {
   const schema = {
     type: 'object',
     properties: {
-      email: { type: 'string', format: 'email', minLength: 6, maxLength: 255 },
-      password: { type: 'string', minLength: 6, maxLength: 1023 },
+      email: { type: 'string', format: 'email', maxLength: 255 },
+      password: { type: 'string', minLength: 8, maxLength: 1023 },
     },
     required: ['email', 'password'],
     additionalProperties: false,

@@ -19,13 +19,16 @@ import { MobileNav } from './MobileNav';
 import { UserMenu } from './UserMenu';
 
 import { useUser } from '../../hooks/useUser';
+import { useQuery } from 'react-query';
+import { userApi } from '../../services';
+
 
 export const Navbar = () => {
-  const bg = useColorModeValue('gray.50', 'gray.900');
-  const mobileNav = useDisclosure();
-  const searchModal = useDisclosure();
-  const { toggleColorMode } = useColorMode();
-
+    const bg = useColorModeValue('gray.50', 'gray.900');
+    const mobileNav = useDisclosure();
+    const searchModal = useDisclosure();
+    const { toggleColorMode } = useColorMode();
+    
   const { user } = useUser();
 
   return (
@@ -34,8 +37,7 @@ export const Navbar = () => {
         bg={bg}
         w="full"
         px={{ base: 2, sm: 4 }}
-        pt={1}
-        pb={4}
+        py={3}
         shadow="md"
       >
         <Flex
@@ -55,7 +57,11 @@ export const Navbar = () => {
             </chakra.a>
           </HStack>
 
-          <HStack display="flex" alignItems="center" spacing={2}>
+          <HStack
+            display="flex"
+            alignItems="center"
+            spacing={2}
+          >
             <IconButton
               icon={useColorModeValue(<FaMoon />, <FaSun />)}
               bg={useColorModeValue('gray.200', 'gray.700')}

@@ -11,7 +11,7 @@ const ResourceSchema = mongoose.Schema(
       required: true,
     },
     description: String,
-    longDescription: String,
+    additionalDescription: String,
     url: {
       type: String,
       required: true,
@@ -20,24 +20,25 @@ const ResourceSchema = mongoose.Schema(
     category: String,
     tags: [{ type: String }],
     isOpenSource: Boolean,
-    dateAdded: {
+    dateSubmitted: {
       type: Date,
       default: Date.now,
+    },
+    submittedBy: {
+      type: mongoose.Types.ObjectId,
+      ref: 'users',
     },
     saveCount: {
       type: Number,
       default: 0,
-      required: true,
     },
-    ratingCount: {
+    upvoteCount: {
       type: Number,
       default: 0,
-      required: true,
     },
-    ratingAverage: {
+    commentCount: {
       type: Number,
-      default: 3,
-      required: true,
+      default: 0,
     },
   },
   { collection: 'resources' }

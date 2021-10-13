@@ -10,59 +10,80 @@ import { useUser } from '../../hooks/useUser';
 
 export const ProfilePage = () => {
   const { resources } = useResources();
-  const { user, savedResources } = useUser();
+  const { user, savedResources, upvotedResources } = useUser();
 
-  const [userResources, setUserResources] = useState([]);
+  const [profileSavedResources, setProfileSavedResources] = useState([]);
+  const [profileUpvotedResources, setProfileUpvotedResources] = useState([]);
 
   useEffect(() => {
     if (resources && savedResources) {
-      const tempUserResources = resources.filter((resource) =>
-        savedResources.some(
-          (savedResource) => savedResource.resourceId === resource._id
-        )
+      const temp = resources.filter((resource) =>
+        savedResources.includes(String(resource._id))
       );
-      console.log(resources, savedResources, tempUserResources);
-      setUserResources(tempUserResources);
+      setProfileSavedResources(temp);
     }
   }, [resources, savedResources]);
 
-  return (
-    <>
-      <Navbar />
-      <WithFooter>
-        {user ? (
-          <>
-            {/* User Info */}
-            <Heading pt={10} pb={2} mx="auto" fontSize="2xl" textAlign="center">
-              {' '}
-              User:{' '}
-            </Heading>
-            <Stack pb={5} justifyContent="center" mx="auto">
-              <Text fontSize="lg" textAlign="center">
-                {' '}
-                Name: {user.firstName + ' ' + user.lastName}{' '}
-              </Text>
-              <Text fontSize="lg" textAlign="center"> Email: {user.email} </Text>
-            </Stack>
+  useEffect(() => {
+    if (resources && upvotedResources) {
+      const temp = resources.filter((resource) =>
+        upvotedResources.includes(String(resource._id))
+      );
+      setProfileUpvotedResources(temp);
+    }
+  }, [resources, upvotedResources]);
 
-            {/* Saved Resources */}
-            <Heading py={5} mx="auto" fontSize="2xl" textAlign="center">
+  return (
+    <WithFooter>
+      <Navbar />
+      {user ? (
+        <>
+          {/* User Info */}
+          <Heading pt={10} pb={2} mx="auto" fontSize="2xl" textAlign="center">
+            {' '}
+            User:{' '}
+          </Heading>
+          <Stack pb={5} justifyContent="center" mx="auto">
+            <Text fontSize="lg" textAlign="center">
               {' '}
-              Saved Resources:
-            </Heading>
-            {userResources ? (
-              <ResourceContainer resources={userResources} />
-            ) : null}
-          </>
-        ) : (
-          <>
-            <Text py={10} mx="auto" fontSize="2xl">
-              {' '}
-              Log in to view saved resources{' '}
+              Name: {user.firstName + ' ' + user.lastName}{' '}
             </Text>
-          </>
-        )}
-      </WithFooter>
-    </>
+            <Text fontSize="lg" textAlign="center">
+              {' '}
+              Screen Name: {user.screenName}{' '}
+            </Text>
+            <Text fontSize="lg" textAlign="center">
+              {' '}
+              Email: {user.email}{' '}
+            </Text>
+          </Stack>
+
+          {/* Saved Resources */}
+          <Heading py={5} mx="auto" fontSize="2xl" textAlign="center">
+            {' '}
+            Saved Resources:
+          </Heading>
+          {profileSavedResources ? (
+            <ResourceContainer resources={profileSavedResources} />
+          ) : null}
+
+          {/* Liked Resources */}
+          <Heading py={5} mx="auto" fontSize="2xl" textAlign="center">
+            {' '}
+            Liked Resources:
+          </Heading>
+          {profileUpvotedResources ? (
+            <ResourceContainer resources={profileUpvotedResources} />
+          ) : null}
+        </>
+      ) : (
+        <>
+          <Text py={10} mx="auto" fontSize="2xl">
+            {' '}
+            Log in to view your profile.{' '}
+          </Text>
+        </>
+      )}
+    </WithFooter>
   );
 };

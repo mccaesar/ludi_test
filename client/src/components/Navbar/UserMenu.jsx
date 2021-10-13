@@ -10,19 +10,17 @@ import {
   MenuList,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { useQueryClient } from 'react-query';
-import { authApis } from '../../services';
+import { useUser } from '../../hooks/useUser';
 
 export const UserMenu = ({ fullname }) => {
-  const queryClient = useQueryClient();
+  const { logoutMutation } = useUser();
 
   const handleLogout = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        authApis.logoutUser();
-        queryClient.refetchQueries(['user'], { active: true });
+        logoutMutation.mutate();
         resolve();
-      }, 500);
+      }, 200);
     });
   };
 

@@ -16,56 +16,85 @@ import {
   AlertDialogOverlay,
   useColorModeValue as mode,
 } from '@chakra-ui/react';
-import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart } from 'react-icons/fa';
 
 import { Navbar } from '../../components/Navbar';
 import { WithFooter } from '../../components/Footer';
 
-import { authApis } from '../../services';
+import { CommentSection } from '../../components/CommentContainer/CommentSection';
+
+import { authApi } from '../../services';
 import { useResources } from '../../hooks/useResources';
 import { useUser } from '../../hooks/useUser';
 
 export const ResourcePage = () => {
   const [isSaved, setSaved] = useState(false);
+  const [isUpvoted, setUpvoted] = useState(false);
   const [resource, setResource] = useState(null);
   const [alertIsOpen, setAlertIsOpen] = useState(false);
 
   const { index: resourceIdx } = useParams();
 
-  const { resources } = useResources();
-  const { savedResources, saveMutation, unsaveMutation } = useUser();
+  const {
+    resources,
+    saveResourceMutation,
+    unsaveResourceMutation,
+    upvoteResourceMutation,
+    unupvoteResourceMutation,
+  } = useResources();
+  const {
+    savedResources,
 
-  const isLoggedIn = authApis.isLoggedIn();
+    upvotedResources,
+  } = useUser();
+
+  const isLoggedIn = authApi.isLoggedIn();
 
   useEffect(() => {
     if (resources) {
       setResource(
         resources.find(
-          (currentResource) => currentResource.index === Number(resourceIdx)
+          (currentResource) =>
+            String(currentResource.index) === String(resourceIdx)
         )
       );
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resources]);
 
   useEffect(() => {
     if (resource && savedResources && savedResources.length) {
-      setSaved(
-        savedResources.some(
-          (savedResource) => savedResource.resourceId === resource._id
-        )
-      );
+      setSaved(savedResources.includes(String(resource._id)));
     }
   }, [resource, savedResources]);
+
+  useEffect(() => {
+    if (resource && upvotedResources && upvotedResources.length) {
+      setUpvoted(upvotedResources.includes(String(resource._id)));
+    }
+  }, [resource, upvotedResources]);
 
   const handleSave = () => {
     if (isLoggedIn) {
       if (!isSaved) {
-        saveMutation.mutate(resource._id);
+        saveResourceMutation.mutate(resource._id);
       } else {
-        unsaveMutation.mutate(resource._id);
+        unsaveResourceMutation.mutate(resource._id);
       }
       setSaved(!isSaved);
+    } else {
+      setAlertIsOpen(true);
+    }
+  };
+
+  const handleUpvote = () => {
+    if (isLoggedIn) {
+      if (!isUpvoted) {
+        upvoteResourceMutation.mutate(resource._id);
+      } else {
+        unupvoteResourceMutation.mutate(resource._id);
+      }
+      setUpvoted(!isUpvoted);
     } else {
       setAlertIsOpen(true);
     }
@@ -123,6 +152,13 @@ export const ResourcePage = () => {
             <Text fontSize="4xl" color={mode('black', 'white')}>
               {resource.title}
             </Text>
+            <Text
+              fontSize="2xl"
+              fontStyle="italic"
+              color={mode('gray.600', 'gray.300')}
+            >
+              {resource.category}
+            </Text>
             <Text fontSize="2xl" color={mode('gray.600', 'gray.300')}>
               {resource.author}
             </Text>
@@ -145,15 +181,28 @@ export const ResourcePage = () => {
               </Button> */}
             </HStack>
           </Box>
+          <Box>
+            <IconButton
+              variant="ghost"
+              icon={!isUpvoted ? <FaRegHeart /> : <FaHeart />}
+              onClick={handleUpvote}
+              color={mode('black', 'white')}
+              size="lg"
+              _hover={{}}
+              _focus={{}}
+            />
+            <Text textAlign="center" fontSize="xs">
+              {resource.upvoteCount}
+            </Text>
+          </Box>
           <IconButton
             variant="ghost"
             icon={!isSaved ? <FaRegBookmark /> : <FaBookmark />}
             onClick={handleSave}
             color={mode('black', 'white')}
             size="lg"
-            _hover={{
-              background: 'none',
-            }}
+            _hover={{}}
+            _focus={{}}
           />
         </Stack>
         <HStack mt={8} bg={mode('gray.200', 'gray.700')} p={6} rounded="md">
@@ -179,7 +228,9 @@ export const ResourcePage = () => {
           <Text color={mode('black', 'white')} pb={2}>
             {resource.description}
           </Text>
-          <Text color={mode('black', 'white')}>{resource.longDescription}</Text>
+          <Text color={mode('black', 'white')}>
+            {resource.additionalDescription}
+          </Text>
         </Box>
         {/* <Grid
           templateColumns="repeat(2, 1fr)"
@@ -196,6 +247,8 @@ export const ResourcePage = () => {
             <Text color={mode('gray.600', 'gray.400')}>Use Cases</Text>
           </Box>
         </Grid> */}
+
+        <CommentSection resourceId={resource._id} />
       </Stack>
     </WithFooter>
   ) : null;

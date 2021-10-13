@@ -1,10 +1,10 @@
-import { authApis } from '../services';
+import { authApi } from '../services';
 
 export const fetchLoginStatus = () => async (dispatch) => {
   try {
     dispatch({ type: 'LOGIN_STATUS_REQUEST' });
 
-    const isLoggedIn = authApis.getLoginStatus();
+    const isLoggedIn = authApi.getLoginStatus();
     const action = {
       type: 'LOGIN_STATUS_SUCCESS',
       payload: isLoggedIn,
@@ -25,7 +25,7 @@ export const loginUser = (data) => async (dispatch) => {
   try {
     dispatch({ type: 'LOGIN_REQUEST' });
 
-    await authApis.loginUser(data);
+    await authApi.loginUser(data);
     const action = {
       type: 'LOGIN_SUCCESS',
     };
@@ -45,7 +45,7 @@ export const registerUser = (data) => async (dispatch) => {
   try {
     dispatch({ type: 'REGISTRATION_REQUEST' });
 
-    await authApis.registerUser(data);
+    await authApi.registerUser(data);
     const action = {
       type: 'REGISTRATION_SUCCESS',
     };
@@ -65,7 +65,7 @@ export const logoutUser = () => async (dispatch) => {
   try {
     dispatch({ type: 'LOGOUT_REQUEST' });
 
-    authApis.logoutUser();
+    authApi.logoutUser();
     const action = {
       type: 'LOGOUT_SUCCESS',
     };

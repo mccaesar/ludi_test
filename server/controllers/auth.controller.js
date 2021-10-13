@@ -53,8 +53,9 @@ export const registerUser = async (req, res, next) => {
     const user = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
+      screenName: req.body.screenName,
       email: req.body.email,
-      hash: passwordHash,
+      passwordHash: passwordHash,
     });
 
     // Add user to the database
@@ -77,10 +78,9 @@ export const logInUser = async (req, res, next) => {
   const { isValid, errors: validationErrors } = validateLogin(req.body);
   if (!isValid) {
     return res.status(404).send({
-      // message: validationErrors
-      //   ? validationErrors[0].message
-      //   : 'Some error occurred while validating user information for login.',
-      message: 'Invalid Email or Password.',
+      message: validationErrors
+        ? validationErrors[0].message
+        : 'Some error occurred while validating user information for login.',
     });
   }
 
@@ -96,7 +96,7 @@ export const logInUser = async (req, res, next) => {
     // Verify password is correct
     const validPassword = await authUtils.validPassword(
       req.body.password,
-      user.hash
+      user.passwordHash
     );
 
     if (validPassword) {
