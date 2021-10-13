@@ -22,7 +22,10 @@ const config = {
   devtool: 'source-map',
   plugins: [
     // new BundleAnalyzerPlugin(),
-    new HtmlWebpackPlugin({ title: 'Ludi' }),
+    new HtmlWebpackPlugin({ 
+      title: 'Ludi', 
+      template: 'public/index.html'
+    }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: isProduction ? 'production' : 'development',
       REACT_APP_PORT: 3000,
