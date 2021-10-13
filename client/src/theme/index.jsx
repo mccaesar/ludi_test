@@ -24,8 +24,8 @@ export const customTheme = extendTheme({
     initialColorMode: 'dark',
     useSystemColorMode: false,
   },
-  fonts: {
-    heading: 'Lato',
-    body: 'Lato',
-  },
+//   fonts: {
+//     heading: 'Lato',
+//     body: 'Lato',
+//   },
 });

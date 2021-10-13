@@ -48,7 +48,7 @@ export const ResourcePage = () => {
     upvotedResources,
   } = useUser();
 
-  const { isLoggedIn } = useUser();
+  const isLoggedIn = authApi.isLoggedIn();
 
   useEffect(() => {
     if (resources) {

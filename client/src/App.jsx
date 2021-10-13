@@ -3,8 +3,8 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import '@fontsource/lato/400.css';
-import '@fontsource/lato/700.css';
+// import '@fontsource/lato/400.css';
+// import '@fontsource/lato/700.css';
 
 import { customTheme } from './theme';
 import { HomePage } from './pages/HomePage';

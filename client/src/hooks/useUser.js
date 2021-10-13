@@ -6,7 +6,6 @@ export const useUser = () => {
   const queryClient = useQueryClient();
 
   const { data: user, error } = useQuery('user', userApi.getUser);
-  const { isLoggedIn } = useQuery('loginStatus', authApi.isLoggedIn);
 
   const savedResources = useMemo(
     () => (user ? user.savedResources : []),
@@ -22,6 +21,7 @@ export const useUser = () => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries('user');
+      queryClient.invalidateQueries('loginStatus');
     },
   });
 
@@ -29,6 +29,7 @@ export const useUser = () => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries('user');
+      queryClient.invalidateQueries('loginStatus');
     },
   });
 
@@ -37,12 +38,12 @@ export const useUser = () => {
       // Invalidate and refetch
       // queryClient.invalidateQueries('user');
       queryClient.setQueryData('user', null);
+      queryClient.invalidateQueries('loginStatus');
     },
   });
 
   return {
     user,
-    isLoggedIn,
     savedResources,
     upvotedResources,
     loginMutation,
