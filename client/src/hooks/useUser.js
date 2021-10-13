@@ -6,6 +6,7 @@ export const useUser = () => {
   const queryClient = useQueryClient();
 
   const { data: user, error } = useQuery('user', userApi.getUser);
+  const { isLoggedIn } = useQuery('loginStatus', authApi.isLoggedIn);
 
   const savedResources = useMemo(
     () => (user ? user.savedResources : []),
@@ -41,6 +42,7 @@ export const useUser = () => {
 
   return {
     user,
+    isLoggedIn,
     savedResources,
     upvotedResources,
     loginMutation,
