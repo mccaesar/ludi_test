@@ -9,20 +9,24 @@ import { Rating } from '../Rating';
 import { CommentContext } from '../../../contexts/CommentContext';
 import { useComments } from '../../../hooks/useComments';
 import { useUser } from '../../../hooks/useUser';
+import { useEffectOnce } from '../../../hooks/useEffectOnce';
 
 export let Comment = (props) => {
   const { comment, colorIdx, path, displayComments } = props;
-  //   const { replyingContext, user } = useContext(CommentContext);
-  const [replying, setReplying] = useContext(CommentContext);
+  const {
+    path: [selectedPath, setSelectedPath],
+    edit: [isEdit, setEdit],
+  } = useContext(CommentContext);
+
   const { user } = useUser();
-  //   const [editing, setEditing] = editingContext;
+  const { deleteCommentMutation } = useComments();
+
   const [minimized, setMinimized] = useState(false);
   const [hidden, setHidden] = useState(false);
 
-  const { deleteCommentMutation } = useComments();
   const ownComment = user ? compare(user._id, comment.author._id) : false;
 
-  useEffect(() => {
+  useEffectOnce(() => {
     if (path.length > 4 && path.length % 2 === 0) {
       setHidden(true);
     }
@@ -78,54 +82,57 @@ export let Comment = (props) => {
             <div id="actions" className={minimized ? 'hidden' : ''}>
               {user ? (
                 <span
-                  className={`${compare(replying, path) ? 'selected' : ''}`}
+                  className={`${
+                    !isEdit && compare(selectedPath, path) ? 'selected' : ''
+                  }`}
                   onClick={() => {
-                    if (compare(replying, path)) {
-                      setReplying([]);
+                    if (!isEdit && compare(selectedPath, path)) {
+                      setSelectedPath([]);
+                      setEdit(false);
                     } else {
-                      setReplying(path);
+                      setSelectedPath(path);
+                      setEdit(false);
                     }
                   }}
                 >
                   reply
                 </span>
               ) : null}
+
               {ownComment ? (
                 <>
-                  {/* <span
-                      className={`${
-                        ownComment && compare(editing, path) ? 'selected' : ''
-                      }`}
-                      onClick={() => {
-                        if (compare(editing, path)) {
-                          setEditing([]);
-                        } else {
-                          setEditing(path);
-                        }
-                      }}
-                    >
-                      edit
-                    </span> */}
+                  <span
+                    className={`${
+                      ownComment && isEdit && compare(selectedPath, path)
+                        ? 'selected'
+                        : ''
+                    }`}
+                    onClick={() => {
+                      if (isEdit && compare(selectedPath, path)) {
+                        setSelectedPath([]);
+                        setEdit(false);
+                      } else {
+                        setSelectedPath(path);
+                        setEdit(true);
+                      }
+                    }}
+                  >
+                    edit
+                  </span>
                   <span onClick={() => handleDelete()}>delete</span>
                 </>
               ) : null}
             </div>
-            <Reply
-              className={compare(replying, path) && !minimized ? '' : 'hidden'}
-              comment={comment}
-              isEdit="false"
-            />
-            {/* {ownComment ? (
-                <Reply
-                  className={
-                    ownComment && compare(editing, path) && !minimized
-                      ? ''
-                      : 'hidden'
-                  }
-                  comment={comment}
-                  isEdit="true"
-                />
-              ) : null} */}
+
+            {user ? (
+              <Reply
+                className={
+                  compare(selectedPath, path) && !minimized ? '' : 'hidden'
+                }
+                comment={comment}
+              />
+            ) : null}
+
             {comment.replies ? (
               <div className={`comments ${minimized ? 'hidden' : ''}`}>
                 {displayComments(comment.replies, colorIdx + 1, [...path])}

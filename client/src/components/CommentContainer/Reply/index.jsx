@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import TextArea from 'react-textarea-autosize';
 import {
@@ -15,13 +15,23 @@ import { useUser } from '../../../hooks/useUser';
 
 export let Reply = (props) => {
   const { comment } = props;
-  //   console.log(comment, isEdit);
   const [text, setText] = useState('');
 
-  //   const { user } = useContext(CommentContext);
-  const [replying, setReplying] = useContext(CommentContext);
+  const {
+    path: [selectedPath, setSelectedPath],
+    edit: [isEdit, setEdit],
+  } = useContext(CommentContext);
+
   const { user } = useUser();
   const { createCommentMutation, editCommentMutation } = useComments();
+
+  useEffect(() => {
+    if (comment && isEdit) {
+      setText(comment.content);
+    } else {
+      setText('');
+    }
+  }, [isEdit, comment]);
 
   const handleCreate = () => {
     createCommentMutation.mutate({
@@ -29,8 +39,6 @@ export let Reply = (props) => {
       content: text,
       parents: comment?.parents || [],
     });
-    setText('');
-    setReplying([]);
   };
 
   const handleEdit = () => {
@@ -40,9 +48,22 @@ export let Reply = (props) => {
     });
   };
 
-  const handleKeyDown = (e, func) => {
+  const handleSubmit = () => {
+    if (text) {
+      if (comment && isEdit) {
+        handleEdit();
+      } else {
+        handleCreate();
+      }
+    }
+    setText('');
+    setSelectedPath([]);
+    setEdit(false);
+  };
+
+  const handleKeyDown = (e) => {
     if (!e.shiftKey && e.key === 'Enter') {
-      func();
+      handleSubmit();
     }
   };
 
@@ -59,7 +80,7 @@ export let Reply = (props) => {
         placeholder="What are your thoughts?"
         minRows={2}
         value={text}
-        onKeyDown={(e) => handleKeyDown(e, handleCreate)}
+        onKeyDown={handleKeyDown}
         onChange={(e) => {
           setText(e.target.value);
         }}
@@ -81,11 +102,11 @@ export let Reply = (props) => {
           bg="#4f9eed"
           fontWeight="bold"
           onClick={() => {
-            handleCreate();
+            handleSubmit();
           }}
           _hover={{ background: '#2e78c2' }}
         >
-          COMMENT
+          {comment && isEdit ? 'DONE' : 'COMMENT'}
         </Button>
       </Flex>
     </Box>

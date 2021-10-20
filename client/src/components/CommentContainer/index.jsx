@@ -11,13 +11,10 @@ import { Comment } from './Comment';
 import { Reply } from './Reply';
 import { CommentContext } from '../../contexts/CommentContext';
 import { useComments } from '../../hooks/useComments';
-import { useUser } from '../../hooks/useUser';
-import { userApi } from '../../services';
-import { useQuery } from 'react-query';
 
 export const CommentContainer = ({ resourceId }) => {
-  const [replying, setReplying] = useState([]);
-  //   const [editing, setEditing] = useState([]);
+  const [selectedPath, setSelectedPath] = useState([]);
+  const [isEdit, setEdit] = useState(false);
   const { commentsByResourceId } = useComments(resourceId);
 
   const displayComments = (comments, colorIdx, path) => {
@@ -41,7 +38,9 @@ export const CommentContainer = ({ resourceId }) => {
       </Text>
       {commentsByResourceId ? (
         <>
-          <CommentContext.Provider value={[replying, setReplying]}>
+          <CommentContext.Provider
+            value={{ path: [selectedPath, setSelectedPath], edit: [isEdit, setEdit] }}
+          >
             <Reply resource={resourceId} />
             {displayComments(commentsByResourceId, 0, [])}
           </CommentContext.Provider>
