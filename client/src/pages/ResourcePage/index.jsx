@@ -21,7 +21,7 @@ import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart } from 'react-icons/fa';
 import { Navbar } from '../../components/Navbar';
 import { WithFooter } from '../../components/Footer';
 
-import { CommentSection } from '../../components/CommentContainer/CommentSection';
+import { CommentContainer } from '../../components/CommentContainer';
 
 import { authApi } from '../../services';
 import { useResources } from '../../hooks/useResources';
@@ -111,7 +111,7 @@ export const ResourcePage = () => {
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogBody pt={8}>
-                You must be logged in to save resources.
+                You must be logged in to save/upvote resources.
               </AlertDialogBody>
               <AlertDialogFooter>
                 <Button onClick={onClose}>Ok</Button>
@@ -195,15 +195,17 @@ export const ResourcePage = () => {
               {resource.upvoteCount}
             </Text>
           </Box>
-          <IconButton
-            variant="ghost"
-            icon={!isSaved ? <FaRegBookmark /> : <FaBookmark />}
-            onClick={handleSave}
-            color={mode('black', 'white')}
-            size="lg"
-            _hover={{}}
-            _focus={{}}
-          />
+          <Box>
+            <IconButton
+              variant="ghost"
+              icon={!isSaved ? <FaRegBookmark /> : <FaBookmark />}
+              onClick={handleSave}
+              color={mode('black', 'white')}
+              size="lg"
+              _hover={{}}
+              _focus={{}}
+            />
+          </Box>
         </Stack>
         <HStack mt={8} bg={mode('gray.200', 'gray.700')} p={6} rounded="md">
           {resource.tags.map((tag) => {
@@ -232,23 +234,8 @@ export const ResourcePage = () => {
             {resource.additionalDescription}
           </Text>
         </Box>
-        {/* <Grid
-          templateColumns="repeat(2, 1fr)"
-          gap={6}
-          mt={8}
-          bg={mode('gray.200', 'gray.700')}
-          p={6}
-          rounded="md"
-        >
-          <Box>
-            <Text color={mode('gray.600', 'gray.400')}>Strengths</Text>
-          </Box>
-          <Box>
-            <Text color={mode('gray.600', 'gray.400')}>Use Cases</Text>
-          </Box>
-        </Grid> */}
 
-        <CommentSection resourceId={resource._id} />
+        <CommentContainer resourceId={resource._id} />
       </Stack>
     </WithFooter>
   ) : null;

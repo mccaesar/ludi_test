@@ -22,8 +22,8 @@ export const FilterPage = () => {
   useEffect(() => {
     const query = new URLSearchParams(url.search);
     const searchTerm = query.get(URISearchParamOptions.SearchTerm);
-    const searchFields = query.getAll(URISearchParamOptions.SearchField);
-    const filterTags = query.getAll(URISearchParamOptions.Tag);
+    const searchFields = query.get(URISearchParamOptions.SearchField) ? query.getAll(URISearchParamOptions.SearchField) : [];
+    const filterTags = query.get(URISearchParamOptions.Tag) ? query.getAll(URISearchParamOptions.Tag) : [];
     const tagOperator = query.get(URISearchParamOptions.TagOperator);
     const sortOption = query.get(URISearchParamOptions.Sort);
 

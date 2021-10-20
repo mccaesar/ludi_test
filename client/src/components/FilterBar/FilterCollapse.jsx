@@ -56,8 +56,12 @@ export const FilterCollapse = ({ selectedFilter, handleFilterChange }) => {
   const [tagOperator, setTagOperator] = useState(TagOperatorOptions.And);
 
   useEffectOnce(() => {
-    let initialSearchFields = query.getAll(URISearchParamOptions.SearchField);
-    let initialTags = query.getAll(URISearchParamOptions.Tag);
+    let initialSearchFields = query.get(URISearchParamOptions.SearchField)
+      ? query.getAll(URISearchParamOptions.SearchField)
+      : [];
+    let initialTags = query.get(URISearchParamOptions.Tag)
+      ? query.getAll(URISearchParamOptions.Tag)
+      : [];
     let initialTagOperator = query.get(URISearchParamOptions.TagOperator);
 
     if (!initialSearchFields || !initialSearchFields.length) {
