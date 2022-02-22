@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import { getCurrentUser, getAllUsers } from '../controllers/user.controller.js';
+import { getCurrentUser, getAllUsers, getAllActiveUsers } from '../controllers/user.controller.js';
 
 const router = express.Router();
 
@@ -14,5 +14,11 @@ router.get(
   '/users',
   getAllUsers
 );
+
+router.get(
+  '/active-users',
+  getAllActiveUsers
+);
+
 
 export default router;
