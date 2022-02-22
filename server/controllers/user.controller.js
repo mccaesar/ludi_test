@@ -20,4 +20,15 @@ export const getCurrentUser = async (req, res, next) => {
   })(req, res, next);
 };
 
+export const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    res.status(200).send(users);
+  } catch (err) {
+    res.status(404).send({
+      message: err.message || 'Some error occurred while getting all users.',
+    });
+  }
+};
+
 export default router;
