@@ -2003,25 +2003,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fontsource/alegreya-sans@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/alegreya-sans/-/alegreya-sans-4.5.0.tgz#81d6234c18fb9c603db3913b11bc3fae39f131da"
-  integrity sha512-3fmvF7IH9N0jP1U5RybaBWtglD8xBuU74DnuYhSPQQ2YSNUsZAqww8vSPELt9cceeZjlULvIoS/x5+tEKTDaJA==
-
 "@fontsource/lato@^4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@fontsource/lato/-/lato-4.5.0.tgz#c248b083be330daafade76995fed9088d5b76c04"
   integrity sha512-Y1qluoF+5b2U6MWcEz70+euZwl4TEV+9v7nZCmuRgNHb5McYc3VmbNmYNEiLsnb1HHwlAHA70P/LktP9EJ61ag==
-
-"@fontsource/titillium-web@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/titillium-web/-/titillium-web-4.5.0.tgz#c428da3fea3448f84d2ee7bb9a1059f91a2531ef"
-  integrity sha512-QhMaLHRkcNqni+aLJ1CZ5cDEtIpKB90xp30SbGvOi5Q7DlziPVu+8D5yL0IXNzU4s76mPavOJ6jZxqd+jnq45w==
-
-"@fontsource/ubuntu@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/ubuntu/-/ubuntu-4.5.0.tgz#13700f2e34b8dead9c935850e5ef26add9e70cc9"
-  integrity sha512-PytR+FgXPPK+UNrLNhYucrNXewS9b4YOJpS2oYw4dfJq+5iyG8iV6CfwToy2UOVSOmBSBhCQ6mJa5Z6BqrGqMw==
 
 "@hapi/address@2.x.x", "@hapi/address@^2.1.2":
   version "2.1.4"
