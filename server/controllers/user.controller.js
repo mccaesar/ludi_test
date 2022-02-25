@@ -20,6 +20,18 @@ export const getCurrentUser = async (req, res, next) => {
   })(req, res, next);
 };
 
+export const getUserById = async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const users = await User.findOne({ _id: userId });
+    res.status(200).send(users);
+  } catch (err) {
+    res.status(404).send({
+      message: err.message || 'Some error occurred while getting a single user by id.',
+    });
+  }
+};
+
 export const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find();
@@ -33,11 +45,26 @@ export const getAllUsers = async (req, res, next) => {
 
 export const getAllActiveUsers = async (req, res, next) => {
   try {
-    const users = await User.find({'savedResources.2': {$exists: true}});
+    // const users = await User.find({'savedResources.2': {$exists: true}});
+    const users = await User.aggregate(
+      [
+        {
+          $match: {'upvotedResources.2': {$exists: true}}
+        },
+        {$lookup:
+          {
+            from: 'resources',
+            localField: 'upvotedResources',
+            foreignField: '_id',
+            as: 'upvotedResourcesPopulated'
+          }
+        }
+      ]  
+    );
     res.status(200).send(users);
   } catch (err) {
     res.status(404).send({
-      message: err.message || 'Some error occurred while getting all users.',
+      message: err.message || 'Some error occurred while getting all active users.',
     });
   }
 };
