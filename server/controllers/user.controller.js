@@ -37,14 +37,14 @@ export const getAllActiveUsers = async (req, res, next) => {
     const users = await User.aggregate(
       [
         {
-          $match: {'savedResources.2': {$exists: true}}
+          $match: {'upvotedResources.2': {$exists: true}}
         },
         {$lookup:
           {
             from: 'resources',
-            localField: 'savedResources',
+            localField: 'upvotedResources',
             foreignField: '_id',
-            as: 'newResources'
+            as: 'upvotedResourcesPopulated'
           }
         }
       ]  
