@@ -33,7 +33,22 @@ export const getAllUsers = async (req, res, next) => {
 
 export const getAllActiveUsers = async (req, res, next) => {
   try {
-    const users = await User.find({'savedResources.2': {$exists: true}});
+    // const users = await User.find({'savedResources.2': {$exists: true}});
+    const users = await User.aggregate(
+      [
+        {
+          $match: {'savedResources.2': {$exists: true}}
+        },
+        {$lookup:
+          {
+            from: 'resources',
+            localField: 'savedResources',
+            foreignField: '_id',
+            as: 'newResources'
+          }
+        }
+      ]  
+    );
     res.status(200).send(users);
   } catch (err) {
     res.status(404).send({
