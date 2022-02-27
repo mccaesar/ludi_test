@@ -9,7 +9,11 @@ import {
   useDisclosure,
   useColorMode,
   useColorModeValue,
+  Link,
+  Stack
 } from '@chakra-ui/react';
+
+
 import { AiOutlineSearch } from 'react-icons/ai';
 import { BiSearchAlt } from 'react-icons/bi';
 import { FaSun, FaMoon } from 'react-icons/fa';
@@ -62,6 +66,18 @@ export const Navbar = () => {
             alignItems="center"
             spacing={2}
           >
+
+              <Stack direction={'row'} spacing={6}>
+                  <Link href={'/'}>Home</Link>
+                  <Link href={'/about'}>About</Link>
+                  <Link href={'/upload'}>Submission</Link>
+                  <Link href="mailto:ludi@illinois.edu">Contact</Link>
+              </Stack>
+
+
+
+
+
             <IconButton
               icon={useColorModeValue(<FaMoon />, <FaSun />)}
               bg={useColorModeValue('gray.200', 'gray.700')}

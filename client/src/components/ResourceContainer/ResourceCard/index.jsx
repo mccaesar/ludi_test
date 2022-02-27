@@ -36,29 +36,6 @@ export const ResourceCard = ({ resource }) => {
           >
             {category}
           </chakra.span>
-          {/* <chakra.span
-          bg={useColorModeValue('brand.200', 'brand.300')}
-          color={useColorModeValue('brand.800', 'brand.900')}
-          px={3}
-          py={1}
-          rounded="full"
-          textTransform="uppercase"
-          fontSize="xs"
-          >
-          {category}
-        </chakra.span> */}
-          {/* <Flex alignItems="center" justifyContent="center" mt={6}>
-          <IconButton
-            aria-label="Save story"
-            icon={true ? <AiOutlineHeart /> : <AiFillHeart />}
-            variant="ghost"
-            isRound
-            size="sm"
-            // position="absolute"
-            // bottom={0}
-            // onClick={handleFavoriteClick}
-            />
-          </Flex> */}
         </Flex>
 
         <Box>
@@ -78,6 +55,7 @@ export const ResourceCard = ({ resource }) => {
             {description}
           </chakra.p>
         </Box>
+        
       </LinkOverlay>
     </LinkBox>
   );
