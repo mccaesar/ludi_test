@@ -13,6 +13,7 @@ import { ResourceContainer } from '../../components/ResourceContainer';
 import { useResources } from '../../hooks/useResources';
 import { filterResources } from '../../utils/filter.util';
 import { URISearchParamOptions } from '../../constants/filter.constant';
+import { FilterType } from '../../constants/commonVariable';
 
 export const FilterPage = () => {
   const url = useLocation();
@@ -47,7 +48,7 @@ export const FilterPage = () => {
       <SearchBar />
       <FilterBar numResults={filteredResources.length} />
       {!isLoading ? (
-        <ResourceContainer resources={filteredResources} />
+        <ResourceContainer resources={filteredResources} type={FilterType.SHOW_RESOURCES} />
       ) : (
         <Center>
           <Spinner />

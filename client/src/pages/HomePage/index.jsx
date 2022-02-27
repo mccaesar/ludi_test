@@ -2,6 +2,7 @@
 import { Center, Text, SimpleGrid, Box } from '@chakra-ui/react';
 import { Logo } from './Logo';
 import { CannedSearch } from './CannedSearch';
+import { LinkArea } from './LinkArea';
 import { CannedProfilePage } from './CannedProfilePage';
 
 import { Navbar } from '../../components/Navbar';
@@ -16,11 +17,13 @@ export const HomePage = () => {
     //cannedParams1.append('tag', 'Python');
 
   //"Find a good book on wireless protocols" --> tag:readings AND tag:wireless
-  const cannedSearch1 = 'Find a good book on wireless protocols';
-  const cannedParams1 = new URLSearchParams();
-  cannedParams1.set('field', '');
-  cannedParams1.append('tag', 'readings');
-  cannedParams1.append('tag', 'wireless');
+  // const cannedSearch1 = 'Find a good book on wireless protocols';
+  // const cannedParams1 = new URLSearchParams();
+  // cannedParams1.set('field', '');
+  // cannedParams1.append('tag', 'readings');
+  // cannedParams1.append('tag', 'wireless');
+  const cannedSearch1 = 'See what other people like';
+
 
   //"Play with a real network" --> "GNS3"
   const cannedSearch2 = 'Play with a real network';
@@ -70,9 +73,9 @@ export const HomePage = () => {
 
       <Center pt={5}>
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing="8">
-          <CannedSearch searchParams={cannedParams1} text={cannedSearch1} />
-          <CannedSearch searchParams={cannedParams2} text={cannedSearch2} />
-          <CannedSearch searchParams={cannedParams3} text={cannedSearch3} />
+          <LinkArea text={cannedSearch1}/>
+          <CannedSearch searchParams={cannedParams2} text={cannedSearch2}/>
+          <CannedSearch searchParams={cannedParams3} text={cannedSearch3}/>
           <CannedProfilePage/>
         </SimpleGrid>
       </Center>

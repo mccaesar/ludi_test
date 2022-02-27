@@ -8,6 +8,8 @@ import { ResourceContainer } from '../../components/ResourceContainer';
 import { useResources } from '../../hooks/useResources';
 import { useUser } from '../../hooks/useUser';
 
+import { FilterType } from '../../constants/commonVariable';
+
 export const ProfilePage = () => {
   const { resources } = useResources();
   const { user, savedResources, upvotedResources } = useUser();
@@ -64,7 +66,7 @@ export const ProfilePage = () => {
             Saved Resources:
           </Heading>
           {profileSavedResources ? (
-            <ResourceContainer resources={profileSavedResources} />
+            <ResourceContainer resources={profileSavedResources} type={FilterType.SHOW_RESOURCES} />
           ) : null}
 
           {/* Liked Resources */}
@@ -73,7 +75,7 @@ export const ProfilePage = () => {
             Liked Resources:
           </Heading>
           {profileUpvotedResources ? (
-            <ResourceContainer resources={profileUpvotedResources} />
+            <ResourceContainer resources={profileUpvotedResources} type={FilterType.SHOW_RESOURCES} />
           ) : null}
         </>
       ) : (

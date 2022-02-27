@@ -35,12 +35,7 @@ export const Footer = () => {
         align={'center'}
       >
         <Logo />
-        <Stack direction={'row'} spacing={6}>
-          <Link href={'/'}>Home</Link>
-          <Link href={'/about'}>About</Link>
-          <Link href={'/upload'}>Submission</Link>
-          <Link href="mailto:ludi@illinois.edu">Contact</Link>
-        </Stack>
+
       </Container>
     </Box>
   );
