@@ -11,3 +11,17 @@ export const getUser = async () => {
   }
   return null;
 };
+
+export const getActiveUser = async () => {
+  return await axios
+    .get(`${API_URI}/active-users`)
+    .then(({ data }) => data)
+    .catch((err) => console.error(err));
+};
+
+export const getUserById = async (id) => {
+  return await axios
+    .get(`${API_URI}/user/${id}`)
+    .then(({ data }) => data)
+    .catch((err) => console.error(err));
+};
