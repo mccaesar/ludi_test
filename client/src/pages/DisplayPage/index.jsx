@@ -34,7 +34,7 @@ export const DisplayPage = () => {
       
       <center pt={4}>
         <chakra.h2> 
-              Nothing is pleasuanter than exploring a library.
+              Nothing is pleasanter than exploring a library.
         </chakra.h2>
       </center>
 

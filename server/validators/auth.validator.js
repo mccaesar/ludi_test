@@ -12,9 +12,10 @@ export const validateRegistration = (data) => {
       lastName: { type: 'string', minLength: 2, maxLength: 63 },
       screenName: { type: 'string', minLength: 2, maxLength: 127 },
       email: { type: 'string', format: 'email', maxLength: 255 },
+      affiliation: { type: 'string', minLength:1},
       password: { type: 'string', minLength: 8, maxLength: 1023 },
     },
-    required: ['firstName', 'lastName', 'email', 'password'],
+    required: ['firstName', 'lastName', 'email', 'affiliation', 'password'],
     additionalProperties: false,
   };
   const validate = ajv.compile(schema);

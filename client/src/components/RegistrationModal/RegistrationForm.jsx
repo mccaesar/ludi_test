@@ -21,6 +21,10 @@ export const RegistrationForm = ({ initialRef }) => {
           <FormLabel mb={1}>Email</FormLabel>
           <Input type="email" autoComplete="email" />
         </FormControl>
+        <FormControl id="affiliation">
+          <FormLabel mb={1}>affiliation</FormLabel>
+          <Input type="text" />
+        </FormControl>
         <FormControl>
           <FormLabel mb={1}>Password</FormLabel>
           <Input type="password" autoComplete="current-password" />

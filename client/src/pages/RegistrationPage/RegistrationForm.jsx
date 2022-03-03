@@ -24,6 +24,7 @@ export const RegistrationForm = () => {
     firstName: '',
     lastName: '',
     email: '',
+    affiliation: '',
     password: '',
     passwordConfirmation: '',
   };
@@ -46,6 +47,7 @@ export const RegistrationForm = () => {
           firstName: values.firstName,
           lastName: values.lastName,
           email: values.email,
+          affiliation: values.affiliation,
           password: values.password,
         };
         try {
@@ -116,6 +118,24 @@ export const RegistrationForm = () => {
             {errors?.email?.message || responseError}
           </FormErrorMessage>
         </FormControl>
+
+        <FormControl
+          isInvalid={!!errors?.affiliation || responseError}
+          errortext={errors?.affiliation?.message || responseError}
+        >
+          <FormLabel mb={1}>Affiliation</FormLabel>
+          <Input
+            borderColor={mode('gray.400', 'gray.600')}
+            id="affiliation"
+            type="text"
+            onChange={() => setResponseError(null)}
+            {...register('affiliation')}
+          />
+          <FormErrorMessage>
+            {errors?.affiliation?.message || responseError}
+          </FormErrorMessage>
+        </FormControl>
+
 
         <FormControl
           isInvalid={!!errors?.password}

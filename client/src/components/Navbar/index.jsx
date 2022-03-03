@@ -67,7 +67,7 @@ export const Navbar = () => {
             spacing={2}
           >
 
-              <Stack direction={'row'} spacing={6}>
+              <Stack direction={'row'} spacing={6} mr={4}>
                   <Link href={'/'}>Home</Link>
                   <Link href={'/about'}>About</Link>
                   <Link href={'/upload'}>Submission</Link>
