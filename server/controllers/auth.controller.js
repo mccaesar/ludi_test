@@ -55,7 +55,7 @@ export const registerUser = async (req, res, next) => {
       lastName: req.body.lastName,
       screenName: req.body.screenName,
       email: req.body.email,
-      // affiliation: req.body.affiliation,
+      affiliation: req.body.affiliation,
       passwordHash: passwordHash,
     });
 
