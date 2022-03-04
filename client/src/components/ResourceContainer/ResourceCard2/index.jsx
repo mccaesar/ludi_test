@@ -43,7 +43,7 @@ export const ResourceCard2 = ({ resource }) => {
             color={useColorModeValue('black', 'white')}
           >
 
-           <Link href={`/user/${resource._id}`}> {resource.lastName} {resource.firstName} </Link> 
+           <Link href={`/user/${resource._id}`}>  {resource.firstName} {resource.lastName} </Link> 
           </chakra.h1>
 
           <chakra.h3
