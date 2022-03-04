@@ -17,13 +17,13 @@ export const AboutPage = () => {
       <Heading pt={1} pb={3} textAlign="center" mx="auto" fontSize="3xl"> Contributors </Heading>
       
       <Text pb={1} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
-        Dr. Matthew Caesar
+        Dr. Jim Kurose, Dr. Matthew Caesar
       </Text>
       <Text pb={1} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
         Michael Chen, Vien Vuong
       </Text>
       <Text pb={1} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
-        Liana Koleva, Andrea Kirit Roy, Yaning (Calvin) Wang 
+        Liana Koleva, Andrea Kirit Roy, Yaning (Calvin) Wang, Jianan Hou 
       </Text>
 
 
