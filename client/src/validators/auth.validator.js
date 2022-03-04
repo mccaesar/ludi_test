@@ -12,13 +12,15 @@ export const RegistrationSchema = yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!'),
   email: yup.string().email('Invalid email').required('No email provided'),
+  affiliation: yup.string().required('No affiliation provided'),
   password: yup
     .string()
     .required('No password provided.')
     .min(8, 'Password should be at least 8 characters.')
     .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-      'Password must contain eight characters, at least one letter and one number.'
+      ///^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,  
+      'Password must contain eight characters, at least one letter and one number. It can also contain @$!%*?&'
     ),
   passwordConfirmation: yup
     .string()

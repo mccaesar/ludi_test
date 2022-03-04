@@ -52,7 +52,7 @@ export const ViewProfilePage = () => {
               </Text>
               <Text fontSize="lg" textAlign="center">
                 {' '}
-                Email: {user.email}{' '}
+                Affiliation: {user.affiliation}{' '}
               </Text>
             </Stack>
   

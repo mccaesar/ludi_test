@@ -55,10 +55,12 @@ export const registerUser = async (req, res, next) => {
       lastName: req.body.lastName,
       screenName: req.body.screenName,
       email: req.body.email,
+      affiliation: req.body.affiliation,
       passwordHash: passwordHash,
     });
 
-    // Add user to the database
+  
+    //Add user to the database
     await user.save();
     const jwt = authUtils.issueJWT(user);
     res.status(201).send({
@@ -71,6 +73,8 @@ export const registerUser = async (req, res, next) => {
       message: err.message || 'Some error occurred while registering user.',
     });
   }
+
+
 };
 
 export const logInUser = async (req, res, next) => {
