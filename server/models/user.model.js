@@ -15,6 +15,10 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    affiliation: {
+      type: String,
+      required: true,
+    },
     // TODO: Set permissions for each user
     role: {
       type: String,
