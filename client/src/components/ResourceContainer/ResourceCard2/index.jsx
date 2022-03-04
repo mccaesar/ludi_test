@@ -51,7 +51,7 @@ export const ResourceCard2 = ({ resource }) => {
             mt={1}
             color={useColorModeValue('gray.800', 'gray.300')}
           >
-            {resource.email}
+            {resource.affiliation}
           </chakra.h3>
 
           <Divider />
