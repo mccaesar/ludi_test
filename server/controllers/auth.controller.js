@@ -6,8 +6,11 @@ import db from '../models/index.js';
 import {
   validateRegistration,
   validateLogin,
+  validateEmail
 } from '../validators/auth.validator.js';
 import * as authUtils from '../utils/auth.util.js';
+import { sendEmail } from '../service/email.service.js';
+import { cipher, decipher } from '../service/crypto.service.js';
 
 const router = express.Router();
 const { User } = db;
@@ -133,4 +136,43 @@ export const logOutUser = async (req, res, next) => {
   }
 };
 
+
+
+// --------------- RESET PASSWORD ------------------------------
+
+export const forgotPassword = async (req, res, next) => {
+    // Verify email is in database
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(404).send({
+        message: 'The user is not existed',
+      });
+    }
+
+    let url = req.body.url +'/'+ cipher(user._id)
+    const userObj = {
+      url: url,
+      name: user.screenName,
+      email: user.email
+    }
+    sendEmail(userObj);
+    res.status(200).send();
+}
+
+
+export const resetPassword = async (req, res, next) => {
+  const passwordHash = await authUtils.encryptPassword(req.body.password);
+  let id =  decipher(req.body.userId.id)
+  let filter = { _id: id }
+  let newPassword = {passwordHash : passwordHash}
+  User.findOneAndUpdate(filter, newPassword, {upsert: true}, function(err, doc) {
+    if (err) console.log("wrong")
+  });
+  res.status(200).send();
+}
+
+
+    
 export default router;
+
+

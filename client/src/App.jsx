@@ -17,6 +17,8 @@ import { UploadPage } from './pages/UploadPage';
 import { AboutPage } from './pages/AboutPage';
 import { DisplayPage } from './pages/DisplayPage';
 import { ViewProfilePage } from './pages/ViewProfilePage';
+import { PasswordRequestPage } from './pages/PasswordRequestPage';
+import { PasswordResetPage } from './pages/PasswordResetPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +44,8 @@ const App = () => (
             <Route path="/upload" exact component={UploadPage} />
             <Route path="/about" exact component={AboutPage} />
             <Route path="/display" exact component={DisplayPage} />
+            <Route path="/password/reset" exact component={PasswordRequestPage} />
+            <Route path="/password/reset/:index" component={PasswordResetPage} />
             <Route path="/" exact component={HomePage} />
             <Route path="/" component={() => <h1>404</h1>} />
           </Switch>

@@ -5,6 +5,8 @@ import {
   registerUser,
   logInUser,
   logOutUser,
+  forgotPassword,
+  resetPassword
 } from '../controllers/auth.controller.js';
 
 const router = express.Router();
@@ -17,5 +19,11 @@ router.delete(
   passport.authenticate('jwt', { session: false }),
   logOutUser
 );
+
+
+
+router.post('/password/reset', forgotPassword);
+router.post('/password/reset/done', resetPassword);
+
 
 export default router;

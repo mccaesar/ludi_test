@@ -42,6 +42,26 @@ export const useUser = () => {
     },
   });
 
+
+  const requestPasswordMutation = useMutation(authApi.requestPassword, {
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries('user');
+      queryClient.invalidateQueries('loginStatus');
+    },
+  });
+
+
+  const resetPasswordMutation = useMutation(authApi.resetPassword, {
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries('user');
+      queryClient.invalidateQueries('loginStatus');
+    },
+  });
+
+
+
   return {
     user,
     savedResources,
@@ -49,6 +69,8 @@ export const useUser = () => {
     loginMutation,
     registerMutation,
     logoutMutation,
+    requestPasswordMutation,
+    resetPasswordMutation,
     error,
   };
 };

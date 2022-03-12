@@ -9,14 +9,28 @@ import {
   Input,
   Stack,
   useColorModeValue as mode,
+  Alert,
+  AlertIcon
 } from '@chakra-ui/react';
-import { LoginSchema } from '../../validators/auth.validator';
+
+
+
+import { RequestPasswordSchema } from '../../validators/auth.validator';
 import { useUser } from '../../hooks/useUser';
 import { useState } from 'react';
 
-export const LoginForm = () => {
+const alertBox =() => {
+    return (        
+    <Alert status='success'>
+        <AlertIcon />
+        Email sent!
+    </Alert>
+)}
+
+
+export const ResetForm = () => {
   const history = useHistory();
-  const { loginMutation } = useUser();
+  const { requestPasswordMutation } = useUser();
 
   const [responseError, setResponseError] = useState(null);
 
@@ -33,7 +47,7 @@ export const LoginForm = () => {
   } = useForm({
     mode: 'onBlur',
     defaultValues: initialValues,
-    resolver: yupResolver(LoginSchema),
+    resolver: yupResolver(RequestPasswordSchema),
   });
 
   const onSubmit = async (values) => {
@@ -41,12 +55,12 @@ export const LoginForm = () => {
       setTimeout(() => {
         const data = {
           email: values.email,
-          password: values.password,
+          url: window.location.href
         };
 
         try {
-          loginMutation.mutate(data, {
-            onSuccess: () => history.push('/'),
+          requestPasswordMutation.mutate(data, {
+            onSuccess: () => alert("Email sent."),
             onError: (err) => {
                 if (err.response) {
                   setResponseError(err.response.data.message);
@@ -68,6 +82,9 @@ export const LoginForm = () => {
     });
   };
 
+
+
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={4}>
@@ -86,19 +103,6 @@ export const LoginForm = () => {
           <FormErrorMessage>{errors?.email?.message || responseError}</FormErrorMessage>
         </FormControl>
 
-        <FormControl
-          isInvalid={!!errors?.password || responseError}
-          errortext={errors?.password?.message || responseError}
-        >
-          <FormLabel mb={1}>Password</FormLabel>
-          <Input
-            borderColor={mode('gray.400', 'gray.600')}
-            id="password"
-            type="password"
-            {...register('password')}
-          />
-          <FormErrorMessage>{errors?.password?.message || responseError}</FormErrorMessage>
-        </FormControl>
 
         <Button
           type="submit"
@@ -107,14 +111,8 @@ export const LoginForm = () => {
           size="lg"
           fontSize="md"
         >
-          Log in
+          Submit
         </Button>
-
-        <Button colorScheme='blue' variant='outline' onClick={()=> history.push("/password/reset")}>
-          Forgot password?
-        </Button>
-
-
 
       </Stack>
     </form>

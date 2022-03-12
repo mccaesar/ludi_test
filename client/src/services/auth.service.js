@@ -60,3 +60,32 @@ export const logoutUser = () => {
   localStorage.removeItem('id_token');
   localStorage.removeItem('expires_at');
 };
+
+
+// ------------- RESET PASSWORD -----------------------------------
+
+export const requestPassword = async (data) => {
+  console.log("AJAX confrim")
+  return await axios
+    .post(`${API_URI}/password/reset`, qs.stringify(data))
+    .then(({ data }) => {
+      console.log("SUCCESS")
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
+
+
+
+export const resetPassword = async (data) => {
+  return await axios
+    .post(`${API_URI}/password/reset/done`, qs.stringify(data))
+    .then(({ data }) => {
+      console.log("SUCCESS")
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
+
