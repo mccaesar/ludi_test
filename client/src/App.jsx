@@ -18,7 +18,6 @@ import { AboutPage } from './pages/AboutPage';
 import { DisplayPage } from './pages/DisplayPage';
 import { ViewProfilePage } from './pages/ViewProfilePage';
 import { CategoryPage } from './pages/CategoryPage';
-import { SpecificCategoryPage } from './pages/SpecificCategoryPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
