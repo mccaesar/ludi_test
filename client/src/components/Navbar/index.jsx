@@ -70,8 +70,9 @@ export const Navbar = () => {
               <Stack direction={'row'} spacing={6} mr={4}>
                   <Link href={'/'}>Home</Link>
                   <Link href={'/about'}>About</Link>
+                  <Link href={'/category'}>Categories</Link>
                   <Link href={'/upload'}>Submission</Link>
-                  <Link href="mailto:ludi@illinois.edu">Contact</Link>
+                  <Link href="mailto:ludi-help@illinois.edu">Contact</Link>
               </Stack>
 
 

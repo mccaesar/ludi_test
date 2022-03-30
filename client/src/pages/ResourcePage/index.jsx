@@ -191,7 +191,7 @@ export const ResourcePage = () => {
               _hover={{}}
               _focus={{}}
             />
-            <Text textAlign="center" fontSize="xs">
+            <Text textAlign="center" fontSize="s">
               {resource.upvoteCount}
             </Text>
           </Box>
@@ -236,6 +236,10 @@ export const ResourcePage = () => {
         </Box>
 
         <CommentContainer resourceId={resource._id} />
+
+        <Text pb={5}  textAlign='center' mx="auto" fontSize="lg">
+          Do you have feedback or an improved description? Please email to ludi-help@illinois.edu.
+        </Text>
       </Stack>
     </WithFooter>
   ) : null;
