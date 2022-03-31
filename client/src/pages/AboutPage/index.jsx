@@ -48,6 +48,9 @@ export const AboutPage = () => {
       <Text pb={1} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
       Jennifer Rexford, Princeton, USA
       </Text>
+      <Text pb={1} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
+      Aditya Akella, University of Texas at Austin, USA
+      </Text>
 
 
       <Heading pt={10} pb={3} textAlign="center" mx="auto" fontSize="3xl"> How to use LUDI </Heading>
