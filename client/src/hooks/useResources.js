@@ -26,6 +26,19 @@ export const useResources = () => {
     [resources]
   );
 
+  const uniqueCategories = (resources) => {
+    const categories = new Set();
+    for (const resource of resources) {
+      categories.add(resource.category)
+    }
+    return Array.from(categories);
+  };
+
+  const categories = useMemo(
+    () => (resources ? uniqueCategories(resources) : []),
+    [resources]
+  );
+
   const saveResourceMutation = useMutation(resourceApi.saveResource, {
     onSuccess: () => {
       // Invalidate and refetch
@@ -63,6 +76,7 @@ export const useResources = () => {
     isLoading,
     error,
     tags,
+    categories,
     saveResourceMutation,
     unsaveResourceMutation,
     upvoteResourceMutation,
