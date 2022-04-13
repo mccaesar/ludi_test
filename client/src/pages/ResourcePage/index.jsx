@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import {
+  chakra,
   Box,
   Text,
   Stack,
@@ -230,9 +231,9 @@ export const ResourcePage = () => {
           <Text color={mode('black', 'white')} pb={2}>
             {resource.description}
           </Text>
-          <Text color={mode('black', 'white')}>
-            {resource.additionalDescription}
-          </Text>
+          <chakra.p color={mode('black', 'white')} whiteSpace = 'pre-line' 
+              dangerouslySetInnerHTML={{ __html: resource.additionalDescription }}>
+          </chakra.p>
         </Box>
 
         <CommentContainer resourceId={resource._id} />
