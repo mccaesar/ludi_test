@@ -11,7 +11,7 @@ import { FilterType } from '../../constants/commonVariable';
 import { userApi } from '../../services';
 import { useQuery } from 'react-query';
 
-export const DisplayPage = () => {
+export const ActiveUserPage = () => {
   const {
     isLoading, error, data, isFetching 
   } = useQuery('activeUser', userApi.getActiveUser);

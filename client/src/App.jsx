@@ -15,8 +15,9 @@ import { FilterPage } from './pages/FilterPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { UploadPage } from './pages/UploadPage';
 import { AboutPage } from './pages/AboutPage';
-import { DisplayPage } from './pages/DisplayPage';
+import { ActiveUserPage } from './pages/ActiveUserPage';
 import { ViewProfilePage } from './pages/ViewProfilePage';
+import { CategoryPage } from './pages/CategoryPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,9 +42,11 @@ const App = () => (
             <Route path="/login" exact component={LoginPage} />
             <Route path="/upload" exact component={UploadPage} />
             <Route path="/about" exact component={AboutPage} />
-            <Route path="/display" exact component={DisplayPage} />
+            <Route path="/active-users" exact component={ActiveUserPage} />
+            <Route path="/category" component={CategoryPage} />
             <Route path="/" exact component={HomePage} />
             <Route path="/" component={() => <h1>404</h1>} />
+            
           </Switch>
         </Router>
         <ReactQueryDevtools initialIsOpen={true} />
