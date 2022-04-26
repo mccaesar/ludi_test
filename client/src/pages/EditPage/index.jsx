@@ -17,6 +17,12 @@ import { useResources } from '../../hooks/useResources';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { API_URI } from '../../config';
+import { FaYinYang } from 'react-icons/fa';
+
+
  
 export const EditPage = () => {
 
@@ -25,6 +31,15 @@ export const EditPage = () => {
     const { resources, tags } = useResources();
     const { index: resourceIdx } = useParams();
     const [isHovering, setIsHovering] = useState(false);
+
+    const {
+        handleSubmit,
+        register,
+        setError,
+        formState: { errors, isSubmitting },
+      } = useForm({
+        mode: 'onBlur'
+      });
 
     useEffect(() => {
         if (resources) {
@@ -59,6 +74,21 @@ export const EditPage = () => {
         );
     }
 
+    const updateResource = async (values) => {
+        const update = { title: values.title, 
+                         author: values.author,
+                         url: values.url, 
+                         description: values.description, 
+                         additionalDescription: values.additionalDescription,
+                         tags:values.tags};
+        axios.put(`${API_URI}/resource/${resource._id}/edit`, update).catch(function(error) {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+            }
+        })
+    }
+
     //const tagsCheckbox = resource.tags.map((tag)=> <FormLabel><input type="checkbox" value={tag} checked={true}/> {tag}</FormLabel>)
     return resource ? (
     <WithFooter>
@@ -79,7 +109,7 @@ export const EditPage = () => {
               borderColor={mode('transparent', 'transparent')}
               shadow={{ md: 'lg' }}
             >
-              <form>
+              <form onSubmit={handleSubmit(updateResource)}>
                 <Stack spacing={4}>
                     <FormLabel mb={1}>Title</FormLabel>
                     <Input
@@ -87,6 +117,7 @@ export const EditPage = () => {
                         id="title"
                         type="text"
                         defaultValue ={resource.title}
+                        {...register("title")}
                     />
 
                     <FormLabel mb={1}>Author</FormLabel>
@@ -95,6 +126,7 @@ export const EditPage = () => {
                         id="author"
                         type="text"
                         defaultValue ={resource.author}
+                        {...register("author")}
                     />
 
                     <FormLabel mb={1}>URL</FormLabel>
@@ -103,6 +135,7 @@ export const EditPage = () => {
                         id="url"
                         type="text"
                         defaultValue ={resource.url}
+                        {...register("url")}
                     />
 
                     <FormLabel mb={1}>Short Description</FormLabel>
@@ -111,6 +144,7 @@ export const EditPage = () => {
                         id="shortDescription"
                         type="text"
                         defaultValue={resource.description}
+                        {...register("description")}
                     />
 
                     <FormLabel mb={1}>Long Description</FormLabel>
@@ -119,6 +153,7 @@ export const EditPage = () => {
                         id="longDescription"
                         type="text"
                         defaultValue={resource.additionalDescription}
+                        {...register("additionalDescription")}
                     />
 
                     <HStack spacing={2} mb={1}>
@@ -128,21 +163,30 @@ export const EditPage = () => {
                                 spacing={2}
                       > 
                           Render HTML 
-                          
                       </FormLabel>
-                      <input type="checkbox"/> 
+                      <input type="checkbox" {...register("html")}/> 
                       {isHovering ? hoverText() : <Text whiteSpace="pre-line">{"\n"}</Text>}
                     </HStack>
                     
 
                     <FormLabel mb={1}>Tags</FormLabel>
-                    {tags.map((tag)=> <FormLabel><input type="checkbox" key={tag} defaultChecked={resource.tags.includes(tag)}/> {tag}</FormLabel>)}
+                    {tags.map((tag)=> 
+                    <FormLabel>
+                        <input type="checkbox" 
+                               key={tag} 
+                               value={tag}
+                               name={tag}
+                               defaultChecked={resource.tags.includes(tag)} 
+                               {...register("tags")}
+                               /> {tag}
+                    </FormLabel>)}
 
                     <Button
                       type="submit"
                       colorScheme="blue"
                       size="lg"
                       fontSize="md"
+                      isLoading={isSubmitting}
                     >
                       Update resource
                     </Button>
