@@ -15,12 +15,14 @@ import { WithFooter } from '../../components/Footer';
 import { Navbar } from '../../components/Navbar';
 import { useResources } from '../../hooks/useResources';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { API_URI } from '../../config';
  
 export const AdminPage = () => {
     const { user } = useUser();
     const { tags } = useResources();
     const [isHovering, setIsHovering] = useState(false);
-    const tagsCheckbox = tags.map((tag)=> <FormLabel><input type="checkbox" key={tag} /> {tag}</FormLabel>)
 
     const handleMouseOver = () => {
       setIsHovering(true);
@@ -42,6 +44,32 @@ export const AdminPage = () => {
             </Box>
         );
     }
+
+    const {
+      handleSubmit,
+      register,
+      setError,
+      formState: { errors, isSubmitting },
+    } = useForm({
+      mode: 'onBlur'
+    });
+
+    const addResource = async (values) => {
+      const newResource = { title: values.title, 
+                            author: values.author,
+                            url: values.url, 
+                            description: values.description, 
+                            additionalDescription: values.additionalDescription,
+                            tags:values.tags};
+      console.log(newResource);
+      axios.post(`${API_URI}/resource/create`, newResource).catch(function(error) {
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+        }
+      });
+    }
+
     return (
     <WithFooter>
         <Navbar />
@@ -61,13 +89,14 @@ export const AdminPage = () => {
               borderColor={mode('transparent', 'transparent')}
               shadow={{ md: 'lg' }}
             >
-              <form>
+              <form onSubmit={handleSubmit(addResource)}>
                 <Stack spacing={4}>
                     <FormLabel mb={1}>Title</FormLabel>
                     <Input
                         borderColor={mode('gray.400', 'gray.600')}
                         id="title"
                         type="text"
+                        {...register("title")}
                     />
 
                     <FormLabel mb={1}>Author</FormLabel>
@@ -75,6 +104,7 @@ export const AdminPage = () => {
                         borderColor={mode('gray.400', 'gray.600')}
                         id="author"
                         type="text"
+                        {...register("author")}
                     />
 
                     <FormLabel mb={1}>URL</FormLabel>
@@ -82,6 +112,7 @@ export const AdminPage = () => {
                         borderColor={mode('gray.400', 'gray.600')}
                         id="url"
                         type="text"
+                        {...register("url")}
                     />
 
                     <FormLabel mb={1}>Short Description</FormLabel>
@@ -89,6 +120,7 @@ export const AdminPage = () => {
                         borderColor={mode('gray.400', 'gray.600')}
                         id="shortDescription"
                         type="text"
+                        {...register("description")}
                     />
 
                     <FormLabel mb={1}>Long Description</FormLabel>
@@ -96,6 +128,7 @@ export const AdminPage = () => {
                         borderColor={mode('gray.400', 'gray.600')}
                         id="longDescription"
                         type="text"
+                        {...register("additionalDescription")}
                     />
                     <HStack spacing={2}>
                       <FormLabel mb={1} marginBottom={0}
@@ -104,20 +137,28 @@ export const AdminPage = () => {
                                 spacing={2}
                       > 
                           Render HTML 
-                          
                       </FormLabel>
-                      <input type="checkbox"/> 
+                      <input type="checkbox" {...register("html")}/> 
                       {isHovering ? hoverText() : <Text whiteSpace="pre-line">{"\n"}</Text>}
                     </HStack>
 
                     <FormLabel mb={1}>Tags</FormLabel>
-                    {tagsCheckbox}
+                    {tags.map((tag)=> 
+                    <FormLabel>
+                        <input type="checkbox" 
+                               key={tag} 
+                               value={tag}
+                               name={tag}
+                               {...register("tags")}
+                               /> {tag}
+                    </FormLabel>)}
 
                     <Button
                       type="submit"
                       colorScheme="blue"
                       size="lg"
                       fontSize="md"
+                      isLoading={isSubmitting}
                     >
                       Add resource
                     </Button>

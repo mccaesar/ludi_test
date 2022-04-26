@@ -20,7 +20,6 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { API_URI } from '../../config';
-import { FaYinYang } from 'react-icons/fa';
 
 
  

@@ -29,6 +29,8 @@ import { CommentContainer } from '../../components/CommentContainer';
 import { authApi } from '../../services';
 import { useResources } from '../../hooks/useResources';
 import { useUser } from '../../hooks/useUser';
+import axios from 'axios';
+import { API_URI } from '../../config';
 
 export const ResourcePage = () => {
   const [isSaved, setSaved] = useState(false);
@@ -111,6 +113,16 @@ export const ResourcePage = () => {
     }
   };
 
+  const deleteResource = () => {
+    axios.delete(`${API_URI}/resource/${resource._id}/delete`).catch(function(error) {
+      if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+      }
+    });
+    history.push("/");
+  }
+
   const tagSearch = new URLSearchParams();
 
   const NotLoggedInAlert = () => {
@@ -144,7 +156,7 @@ export const ResourcePage = () => {
                 Are you sure you want to delete {resource.title}?
               </AlertDialogBody>
               <AlertDialogFooter>
-                <Button colorScheme="red" mr={3} >Yes</Button>
+                <Button colorScheme="red" mr={3} onClick={deleteResource}>Yes</Button>
                 <Button ref={cancelRef} onClick={onClose}>
                   Cancel
                 </Button>
