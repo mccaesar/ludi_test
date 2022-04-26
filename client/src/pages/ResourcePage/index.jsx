@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useRef } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import {
+  chakra,
   Box,
   Text,
   Stack,
@@ -14,9 +15,11 @@ import {
   AlertDialogFooter,
   AlertDialogContent,
   AlertDialogOverlay,
+  useDisclosure,
   useColorModeValue as mode,
 } from '@chakra-ui/react';
-import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart } from 'react-icons/fa';
+
+import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart, FaPen, FaTrash } from 'react-icons/fa';
 
 import { Navbar } from '../../components/Navbar';
 import { WithFooter } from '../../components/Footer';
@@ -32,8 +35,11 @@ export const ResourcePage = () => {
   const [isUpvoted, setUpvoted] = useState(false);
   const [resource, setResource] = useState(null);
   const [alertIsOpen, setAlertIsOpen] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = useRef()
 
   const { index: resourceIdx } = useParams();
+  const history = useHistory();
 
   const {
     resources,
@@ -44,7 +50,7 @@ export const ResourcePage = () => {
   } = useResources();
   const {
     savedResources,
-
+    user,
     upvotedResources,
   } = useUser();
 
@@ -87,6 +93,11 @@ export const ResourcePage = () => {
     }
   };
 
+  const handleEdit = () => {
+    const path = `/edit/${resourceIdx}/`;
+    history.push(path);
+  }
+
   const handleUpvote = () => {
     if (isLoggedIn) {
       if (!isUpvoted) {
@@ -122,11 +133,34 @@ export const ResourcePage = () => {
       </>
     );
   };
+  
+  const DeleteAlert = () => {
+
+    return (
+       <AlertDialog isOpen={isOpen} onClose={onClose} leastDestructiveRef={cancelRef}>
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogBody pt={8} textAlign="center">
+                Are you sure you want to delete {resource.title}?
+              </AlertDialogBody>
+              <AlertDialogFooter>
+                <Button colorScheme="red" mr={3} >Yes</Button>
+                <Button ref={cancelRef} onClick={onClose}>
+                  Cancel
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+    )
+  }
+
 
   return resource ? (
     <WithFooter>
       <Navbar />
       <NotLoggedInAlert />
+      <DeleteAlert />
       <Stack
         bg={mode('white', 'gray.800')}
         overflow="hidden"
@@ -206,6 +240,30 @@ export const ResourcePage = () => {
               _focus={{}}
             />
           </Box>
+          {user && user.role == "ADMIN" ? <Box>
+            <IconButton
+              variant="ghost"
+              icon={<FaPen/>}
+              onClick={handleEdit}
+              color={mode('black', 'white')}
+              size="lg"
+              _hover={{}}
+              _focus={{}}
+            />
+          </Box>
+           : <></>}
+           {user && user.role == "ADMIN" ? <Box>
+            <IconButton
+              variant="ghost"
+              icon={<FaTrash/>}
+              onClick={onOpen}
+              color={mode('black', 'white')}
+              size="lg"
+              _hover={{}}
+              _focus={{}}
+            />
+          </Box>
+           : <></>}
         </Stack>
         <HStack mt={8} bg={mode('gray.200', 'gray.700')} p={6} rounded="md">
           {resource.tags.map((tag) => {
@@ -230,9 +288,9 @@ export const ResourcePage = () => {
           <Text color={mode('black', 'white')} pb={2}>
             {resource.description}
           </Text>
-          <Text color={mode('black', 'white')}>
-            {resource.additionalDescription}
-          </Text>
+          <chakra.p color={mode('black', 'white')} whiteSpace = 'pre-line' 
+              dangerouslySetInnerHTML={{ __html: resource.additionalDescription }}>
+          </chakra.p>
         </Box>
 
         <CommentContainer resourceId={resource._id} />

@@ -6,6 +6,7 @@ import {
     FormErrorMessage,
     Input,
     Stack,
+    HStack,
     Text,
     Box,
     useColorModeValue as mode,
@@ -23,6 +24,7 @@ export const EditPage = () => {
     const { user } = useUser();
     const { resources, tags } = useResources();
     const { index: resourceIdx } = useParams();
+    const [isHovering, setIsHovering] = useState(false);
 
     useEffect(() => {
         if (resources) {
@@ -36,6 +38,27 @@ export const EditPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [resources]);
 
+    const handleMouseOver = () => {
+        setIsHovering(true);
+    }
+
+    const handleMouseLeave = () => {
+        setIsHovering(false);
+    }
+
+    const hoverText = () => {
+        return (
+            <Box textAlign="center" 
+                bg={{ md: mode('white', 'gray.500') }} 
+                width="fit-content"
+                paddingLeft={2}
+                paddingRight={2}
+                ml={3}>
+                <Text>select if description is in written HTML</Text>
+            </Box>
+        );
+    }
+
     //const tagsCheckbox = resource.tags.map((tag)=> <FormLabel><input type="checkbox" value={tag} checked={true}/> {tag}</FormLabel>)
     return resource ? (
     <WithFooter>
@@ -44,7 +67,7 @@ export const EditPage = () => {
         <Box
           w="full"
           maxW="2xl"
-          justifyConten="center"
+          justifyContent="center"
           mx="auto"
           py={{ base: '10', md: '20' }}
           px={{ base: '4', md: '10' }}>
@@ -98,8 +121,22 @@ export const EditPage = () => {
                         defaultValue={resource.additionalDescription}
                     />
 
+                    <HStack spacing={2} mb={1}>
+                      <FormLabel mb={1} marginBottom={0}
+                                onMouseOver={handleMouseOver}
+                                onMouseLeave={handleMouseLeave}
+                                spacing={2}
+                      > 
+                          Render HTML 
+                          
+                      </FormLabel>
+                      <input type="checkbox"/> 
+                      {isHovering ? hoverText() : <Text whiteSpace="pre-line">{"\n"}</Text>}
+                    </HStack>
+                    
+
                     <FormLabel mb={1}>Tags</FormLabel>
-                    {tags.map((tag)=> <FormLabel><input type="checkbox" value={tag} defaultChecked={resource.tags.includes(tag)}/> {tag}</FormLabel>)}
+                    {tags.map((tag)=> <FormLabel><input type="checkbox" key={tag} defaultChecked={resource.tags.includes(tag)}/> {tag}</FormLabel>)}
 
                     <Button
                       type="submit"

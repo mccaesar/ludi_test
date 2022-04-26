@@ -9,15 +9,39 @@ import {
     Text,
     Box,
     useColorModeValue as mode,
+    HStack,
   } from '@chakra-ui/react';
 import { WithFooter } from '../../components/Footer';
 import { Navbar } from '../../components/Navbar';
 import { useResources } from '../../hooks/useResources';
+import { useState } from 'react';
  
 export const AdminPage = () => {
     const { user } = useUser();
     const { tags } = useResources();
-    const tagsCheckbox = tags.map((tag)=> <FormLabel><input type="checkbox" value={tag} /> {tag}</FormLabel>)
+    const [isHovering, setIsHovering] = useState(false);
+    const tagsCheckbox = tags.map((tag)=> <FormLabel><input type="checkbox" key={tag} /> {tag}</FormLabel>)
+
+    const handleMouseOver = () => {
+      setIsHovering(true);
+    }
+
+    const handleMouseLeave = () => {
+        setIsHovering(false);
+    }
+
+    const hoverText = () => {
+        return (
+            <Box textAlign="center" 
+                bg={{ md: mode('white', 'gray.500') }} 
+                width="fit-content"
+                paddingLeft={2}
+                paddingRight={2}
+                ml={3}>
+                <Text>select if description is in written HTML</Text>
+            </Box>
+        );
+    }
     return (
     <WithFooter>
         <Navbar />
@@ -25,7 +49,7 @@ export const AdminPage = () => {
         <Box
           w="full"
           maxW="2xl"
-          justifyConten="center"
+          justifyContent="center"
           mx="auto"
           py={{ base: '10', md: '20' }}
           px={{ base: '4', md: '10' }}>
@@ -73,6 +97,18 @@ export const AdminPage = () => {
                         id="longDescription"
                         type="text"
                     />
+                    <HStack spacing={2}>
+                      <FormLabel mb={1} marginBottom={0}
+                                onMouseOver={handleMouseOver}
+                                onMouseLeave={handleMouseLeave}
+                                spacing={2}
+                      > 
+                          Render HTML 
+                          
+                      </FormLabel>
+                      <input type="checkbox"/> 
+                      {isHovering ? hoverText() : <Text whiteSpace="pre-line">{"\n"}</Text>}
+                    </HStack>
 
                     <FormLabel mb={1}>Tags</FormLabel>
                     {tagsCheckbox}
