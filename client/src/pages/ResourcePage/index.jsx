@@ -18,6 +18,7 @@ import {
   useDisclosure,
   useColorModeValue as mode,
 } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react'
 
 import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart, FaPen, FaTrash } from 'react-icons/fa';
 
@@ -39,6 +40,7 @@ export const ResourcePage = () => {
   const [alertIsOpen, setAlertIsOpen] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef()
+  const toast = useToast()
 
   const { index: resourceIdx } = useParams();
   const history = useHistory();
@@ -118,8 +120,22 @@ export const ResourcePage = () => {
       if (error.response) {
           console.log(error.response.data);
           console.log(error.response.status);
+          toast({
+            title: 'an error occured while deleting this resource',
+            description: error.response.data.message,
+            status: 'error',
+            duration: 9000,
+            position: 'bottom-right',
+            isClosable: true,
+          })
       }
-    });
+    }).then(toast({
+      title: 'successfully deleted resource',
+      status: 'success',
+      duration: 9000,
+      position: 'bottom-right',
+      isClosable: true,
+    }));;
     history.push("/");
   }
 

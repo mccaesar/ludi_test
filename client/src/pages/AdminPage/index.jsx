@@ -11,6 +11,7 @@ import {
     useColorModeValue as mode,
     HStack,
   } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react'
 import { WithFooter } from '../../components/Footer';
 import { Navbar } from '../../components/Navbar';
 import { useResources } from '../../hooks/useResources';
@@ -18,11 +19,13 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { API_URI } from '../../config';
+
  
 export const AdminPage = () => {
     const { user } = useUser();
     const { tags } = useResources();
     const [isHovering, setIsHovering] = useState(false);
+    const toast = useToast()
 
     const handleMouseOver = () => {
       setIsHovering(true);
@@ -66,8 +69,22 @@ export const AdminPage = () => {
         if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
-        }
-      });
+            toast({
+              title: 'an error occured while adding this resource',
+              description: error.response.data.message,
+              status: 'error',
+              duration: 9000,
+              position: 'bottom-right',
+              isClosable: true,
+            })
+        } 
+      }).then(toast({
+        title: 'successfully added resource',
+        status: 'success',
+        duration: 9000,
+        position: 'bottom-right',
+        isClosable: true,
+      }));
     }
 
     return (
@@ -166,6 +183,7 @@ export const AdminPage = () => {
               </form>
           </Box>
         </Box>
+        
         :
         <Stack justifyContent={'center'} direction={'column'} alignItems={'center'} height={'full'}>
           <Text textAlign='center' verticalAlign={'center'}>Sorry, you are not an admin</Text>

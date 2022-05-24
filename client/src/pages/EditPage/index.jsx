@@ -11,6 +11,7 @@ import {
     Box,
     useColorModeValue as mode,
   } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react'
 import { WithFooter } from '../../components/Footer';
 import { Navbar } from '../../components/Navbar';
 import { useResources } from '../../hooks/useResources';
@@ -30,6 +31,7 @@ export const EditPage = () => {
     const { resources, tags } = useResources();
     const { index: resourceIdx } = useParams();
     const [isHovering, setIsHovering] = useState(false);
+    const toast = useToast()
 
     const {
         handleSubmit,
@@ -84,8 +86,22 @@ export const EditPage = () => {
             if (error.response) {
                 console.log(error.response.data);
                 console.log(error.response.status);
+                toast({
+                  title: 'an error occured while updating this resource',
+                  description: error.response.data.message,
+                  status: 'error',
+                  duration: 9000,
+                  position: 'bottom-right',
+                  isClosable: true,
+                })
             }
-        })
+        }).then(toast({
+          title: 'successfully updated resource',
+          status: 'success',
+          duration: 9000,
+          position: 'bottom-right',
+          isClosable: true,
+        }));
     }
 
     //const tagsCheckbox = resource.tags.map((tag)=> <FormLabel><input type="checkbox" value={tag} checked={true}/> {tag}</FormLabel>)
