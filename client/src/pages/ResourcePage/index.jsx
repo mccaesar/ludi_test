@@ -116,7 +116,19 @@ export const ResourcePage = () => {
   };
 
   const deleteResource = () => {
-    axios.delete(`${API_URI}/resource/${resource._id}/delete`).catch(function(error) {
+    axios.delete(`${API_URI}/resource/${resource._id}/delete`)
+    .then(function(res) {
+      toast({
+        title: 'successfully deleted resource',
+        description: 'redircting to the home page after 3 seconds',
+        status: 'success',
+        duration: 3000,
+        position: 'bottom-right',
+        isClosable: true,
+        onCloseComplete: function() { history.push("/")
+                                      window.location.reload();}
+      });
+    }).catch(function(error) {
       if (error.response) {
           console.log(error.response.data);
           console.log(error.response.status);
@@ -129,14 +141,7 @@ export const ResourcePage = () => {
             isClosable: true,
           })
       }
-    }).then(toast({
-      title: 'successfully deleted resource',
-      status: 'success',
-      duration: 9000,
-      position: 'bottom-right',
-      isClosable: true,
-    }));;
-    history.push("/");
+    })
   }
 
   const tagSearch = new URLSearchParams();

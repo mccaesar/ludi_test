@@ -16,7 +16,7 @@ import { WithFooter } from '../../components/Footer';
 import { Navbar } from '../../components/Navbar';
 import { useResources } from '../../hooks/useResources';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -32,6 +32,7 @@ export const EditPage = () => {
     const { index: resourceIdx } = useParams();
     const [isHovering, setIsHovering] = useState(false);
     const toast = useToast()
+    const history = useHistory();
 
     const {
         handleSubmit,
@@ -82,7 +83,21 @@ export const EditPage = () => {
                          description: values.description, 
                          additionalDescription: values.additionalDescription,
                          tags:values.tags};
-        axios.put(`${API_URI}/resource/${resource._id}/edit`, update).catch(function(error) {
+        axios.put(`${API_URI}/resource/${resource._id}/edit`, update)
+        .then(function(res) {
+          toast({
+            title: 'successfully updated resource',
+            description: 'redircting to the resource page after 3 seconds',
+            status: 'success',
+            duration: 3000,
+            position: 'bottom-right',
+            isClosable: true,
+            onCloseComplete: function() { const path = `/resource/${resourceIdx}/`;
+                                          history.push(path);
+                                          window.location.reload();}
+          })
+        }).
+        catch(function(error) {
             if (error.response) {
                 console.log(error.response.data);
                 console.log(error.response.status);
@@ -95,13 +110,7 @@ export const EditPage = () => {
                   isClosable: true,
                 })
             }
-        }).then(toast({
-          title: 'successfully updated resource',
-          status: 'success',
-          duration: 9000,
-          position: 'bottom-right',
-          isClosable: true,
-        }));
+        });
     }
 
     //const tagsCheckbox = resource.tags.map((tag)=> <FormLabel><input type="checkbox" value={tag} checked={true}/> {tag}</FormLabel>)

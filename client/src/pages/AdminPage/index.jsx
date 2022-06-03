@@ -19,13 +19,15 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { API_URI } from '../../config';
+import { useParams, useHistory } from 'react-router-dom';
 
  
 export const AdminPage = () => {
     const { user } = useUser();
     const { tags } = useResources();
     const [isHovering, setIsHovering] = useState(false);
-    const toast = useToast()
+    const toast = useToast();
+    const history = useHistory();
 
     const handleMouseOver = () => {
       setIsHovering(true);
@@ -65,7 +67,19 @@ export const AdminPage = () => {
                             additionalDescription: values.additionalDescription,
                             tags:values.tags};
       console.log(newResource);
-      axios.post(`${API_URI}/resource/create`, newResource).catch(function(error) {
+      axios.post(`${API_URI}/resource/create`, newResource).
+      then(function(res) {
+        toast({
+          title: 'successfully added resource',
+          description: 'redirecting to the home page after 3 seconds',
+          status: 'success',
+          duration: 3000,
+          position: 'bottom-right',
+          isClosable: true,
+          onCloseComplete: function() { history.push(`/`);
+                                        window.location.reload();}
+        })
+      }).catch(function(error) {
         if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
@@ -78,13 +92,7 @@ export const AdminPage = () => {
               isClosable: true,
             })
         } 
-      }).then(toast({
-        title: 'successfully added resource',
-        status: 'success',
-        duration: 9000,
-        position: 'bottom-right',
-        isClosable: true,
-      }));
+      })
     }
 
     return (
