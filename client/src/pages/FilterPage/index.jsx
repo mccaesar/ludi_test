@@ -48,7 +48,7 @@ export const FilterPage = () => {
       <SearchBar />
       <FilterBar numResults={filteredResources.length} />
       {!isLoading ? (
-        <ResourceContainer resources={filteredResources} type={FilterType.SHOW_RESOURCES} />
+        <ResourceContainer resources={filteredResources} type={FilterType.SHOW_RESOURCES} showLikeButton={true} />
       ) : (
         <Center>
           <Spinner />
