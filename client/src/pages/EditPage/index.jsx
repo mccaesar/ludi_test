@@ -4,6 +4,7 @@ import {
     FormControl,
     FormLabel,
     FormErrorMessage,
+    Textarea,
     Input,
     Stack,
     HStack,
@@ -172,7 +173,7 @@ export const EditPage = () => {
                     />
 
                     <FormLabel mb={1}>Long Description</FormLabel>
-                    <Input
+                    <Textarea
                         borderColor={mode('gray.400', 'gray.600')}
                         id="longDescription"
                         type="text"
