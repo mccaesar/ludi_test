@@ -62,8 +62,8 @@ export const createResource = async (req, res, next) => {
 export const editResource = async (req, res, next) => {
   const { resourceId } = req.params;
   try {
-    const toEdit = await Resource.findOne({ _id: resourceId });
-    if (toEdit.submittedBy != String(req.user._id)) {
+    const toEdit = await Resource.findOne({ _id: resourceId }); 
+    if (String(req.user.role) != "ADMIN") {
       res.status(404).send({
         message: 'You are not authorized to edit this resource.',
       });
