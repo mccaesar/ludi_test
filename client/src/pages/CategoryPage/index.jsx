@@ -5,6 +5,7 @@ import { WithFooter } from '../../components/Footer';
 import { Navbar } from '../../components/Navbar';
 import { CategoryCard } from '../../components/CategoryCard';
 import { Heading } from '@chakra-ui/react';
+import { CATEGORIES } from '../../categories';
 
 export const CategoryPage = () => {
     const history = useHistory();
@@ -28,6 +29,7 @@ export const CategoryPage = () => {
                 // py={{ base: '10', sm: '24' }}
                 maxW={{ base: 'xl', md: '7xl' }}
                 mx="auto"
+                mt={3}
             >
                 <SimpleGrid columns={{ base: 2, lg: 2 }} spacing="12" mb="10">
                 {categoriesList}
