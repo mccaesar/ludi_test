@@ -12,8 +12,9 @@ export const CategoryPage = () => {
     const query = new URLSearchParams(url.search);
 
     const { categories } = useResources();
-    const categoriesList = categories.map((category)=> <CategoryCard category={category}></CategoryCard>)
+    const categoriesList = categories.map((category)=> category != null ? <CategoryCard category={category}></CategoryCard> : <></>)
 
+    console.log(categories)
        
     return (
         <WithFooter>
