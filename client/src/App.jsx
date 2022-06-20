@@ -20,6 +20,7 @@ import { ViewProfilePage } from './pages/ViewProfilePage';
 import { CategoryPage } from './pages/CategoryPage';
 import { AdminPage } from './pages/AdminPage';
 import { EditPage } from './pages/EditPage';
+import { CategoryResultPage } from './pages/CategoryResultPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/upload" exact component={UploadPage} />
             <Route path="/about" exact component={AboutPage} />
             <Route path="/active-users" exact component={ActiveUserPage} />
+            <Route path="/category/:category" component={CategoryResultPage} />
             <Route path="/category" component={CategoryPage} />
             <Route path="/admin" component={AdminPage}/>
             <Route path="/edit/:index" component={EditPage}/>

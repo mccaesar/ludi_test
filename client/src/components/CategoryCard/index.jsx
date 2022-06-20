@@ -5,20 +5,10 @@ import {
     LinkOverlay,
     useColorModeValue,
 } from '@chakra-ui/react';
-import { useHistory, useLocation } from 'react-router-dom';
-import {
-    URISearchParamOptions,
-    SearchFieldOptions,
-  } from '../../constants/filter.constant';
 import { CATEGORIES } from '../../categories';
   
 export const CategoryCard = ({ category }) => {
 
-    const history = useHistory();
-    const url = useLocation();
-    const query = new URLSearchParams(url.search);
-    query.set(URISearchParamOptions.SearchField, SearchFieldOptions.Category);
-    query.set(URISearchParamOptions.SearchTerm, category);
   
     return (
       <LinkBox
@@ -38,7 +28,7 @@ export const CategoryCard = ({ category }) => {
           background: useColorModeValue('gray.300', 'gray.600'),
         }}
       >
-        <LinkOverlay href={`/search?${query}`}>
+        <LinkOverlay href={`category/${category}`}>
           <Flex justifyContent="center" direction="column">
             <chakra.h1
               fontSize="lg"
