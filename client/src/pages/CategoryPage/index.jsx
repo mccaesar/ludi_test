@@ -1,19 +1,15 @@
 import { useHistory, useLocation } from 'react-router-dom';
 import { Box, SimpleGrid, useColorModeValue as mode } from '@chakra-ui/react';
-import { useResources } from '../../hooks/useResources';
 import { WithFooter } from '../../components/Footer';
 import { Navbar } from '../../components/Navbar';
 import { CategoryCard } from '../../components/CategoryCard';
 import { Heading } from '@chakra-ui/react';
+import { CATEGORIES } from '../../categories';
 
 export const CategoryPage = () => {
-    const history = useHistory();
-    const url = useLocation();
-    const query = new URLSearchParams(url.search);
 
-    const { categories } = useResources();
-    const categoriesList = categories.map((category)=> <CategoryCard category={category}></CategoryCard>)
-
+    const categoriesList = Object.keys(CATEGORIES).map(function(key, index) 
+        { return <CategoryCard category={key}></CategoryCard> })
        
     return (
         <WithFooter>
@@ -27,6 +23,7 @@ export const CategoryPage = () => {
                 // py={{ base: '10', sm: '24' }}
                 maxW={{ base: 'xl', md: '7xl' }}
                 mx="auto"
+                mt={3}
             >
                 <SimpleGrid columns={{ base: 2, lg: 2 }} spacing="12" mb="10">
                 {categoriesList}

@@ -5,21 +5,10 @@ import {
     LinkOverlay,
     useColorModeValue,
 } from '@chakra-ui/react';
-import { useHistory, useLocation } from 'react-router-dom';
-import {
-    FilterOptions,
-    URISearchParamOptions,
-    TagOperatorOptions,
-    SearchFieldOptions,
-  } from '../../constants/filter.constant';
+import { CATEGORIES } from '../../categories';
   
 export const CategoryCard = ({ category }) => {
 
-    const history = useHistory();
-    const url = useLocation();
-    const query = new URLSearchParams(url.search);
-    query.set(URISearchParamOptions.SearchField, SearchFieldOptions.Category);
-    query.set(URISearchParamOptions.SearchTerm, category);
   
     return (
       <LinkBox
@@ -27,10 +16,11 @@ export const CategoryCard = ({ category }) => {
         h="full"
         maxW="xl"
         minW="sm"
+        minH="20"
         mx="auto"
         position="relative"
-        px={3}
-        py={10}
+        px={5}
+        py={5}
         bg={useColorModeValue('gray.200', 'gray.700')}
         shadow="md"
         rounded="md"
@@ -38,13 +28,19 @@ export const CategoryCard = ({ category }) => {
           background: useColorModeValue('gray.300', 'gray.600'),
         }}
       >
-        <LinkOverlay href={`/search?${query}`}>
-          <Flex justifyContent="center" alignItems="center">
-            <chakra.span
-              fontSize="s"
-              color={useColorModeValue('gray.700', 'gray.400')}
+        <LinkOverlay href={`category/${category}`}>
+          <Flex justifyContent="center" direction="column">
+            <chakra.h1
+              fontSize="lg"
+              color={useColorModeValue('black', 'white')}
             >
               {category}
+            </chakra.h1>
+            <chakra.span 
+              fontSize="sm"
+              mt={3}
+              color={useColorModeValue('gray.800', 'gray.300')}>
+              {CATEGORIES[category]}
             </chakra.span>
           </Flex>
           

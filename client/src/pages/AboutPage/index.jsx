@@ -50,7 +50,7 @@ export const AboutPage = () => {
         Michael Chen, Vien Vuong
       </Text>
       <Text pb={1} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
-        Liana Koleva, Andrea Kirit Roy, Yaning (Calvin) Wang, Jianan Hou 
+        Liana Koleva, Andrea Kirit Roy, Yaning (Calvin) Wang, Jianan Hou, Xinshuo Lei, Lu Wang
       </Text>
 
 
