@@ -8,7 +8,6 @@ import {
 import { CATEGORIES } from '../../categories';
   
 export const CategoryCard = ({ category }) => {
-
   
     return (
       <LinkBox
@@ -28,7 +27,7 @@ export const CategoryCard = ({ category }) => {
           background: useColorModeValue('gray.300', 'gray.600'),
         }}
       >
-        <LinkOverlay href={`category/${category}`}>
+        <LinkOverlay href={`category/${encodeURIComponent(category)}`}>
           <Flex justifyContent="center" direction="column">
             <chakra.h1
               fontSize="lg"
