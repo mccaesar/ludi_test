@@ -97,6 +97,45 @@ export const ResourceCard = ({ resourceBasic, showLikeButton }) => {
 
   const tagSearch = new URLSearchParams();
 
+  const likeAndSave = () => {
+    return (
+      <Box
+        display="flex"
+        marginTop={-5}
+        alignItems="center"
+        flexDirection="row">
+        <Box 
+          display="flex"
+          flexDirection="row"
+          marginRight={4}
+          alignItems="center">
+          <IconButton
+            variant="ghost"
+            icon={!isUpvoted ? <FaRegHeart /> : <FaHeart />}
+            onClick={handleUpvote}
+            color={mode('black', 'white')}
+            size="lg"
+            marginRight={-1}
+            _hover={{}}
+            _focus={{}}
+          />
+          <chakra.p textAlign="center" fontSize="s">
+            {upvoteCount}
+          </chakra.p>
+        </Box>
+        <IconButton
+          variant="ghost"
+          icon={!isSaved ? <FaRegBookmark /> : <FaBookmark />}
+          onClick={handleSave}
+          color={mode('black', 'white')}
+          size="lg"
+          _hover={{}}
+          _focus={{}}
+        />
+      </Box>
+    )
+  }
+
   const NotLoggedInAlert = () => {
     const onClose = () => setAlertIsOpen(false);
 
@@ -135,60 +174,44 @@ export const ResourceCard = ({ resourceBasic, showLikeButton }) => {
         background: useColorModeValue('gray.300', 'gray.600'),
       }}
     >
-      <LinkOverlay href={`/resource/${index}/${slugify(title)}`}>
-        <Flex justifyContent="space-between" alignItems="center">
-          <chakra.span
-            fontSize="sm"
-            color={useColorModeValue('gray.700', 'gray.400')}
-          >
-            {category}
-          </chakra.span>
-        </Flex>
+      
+      <Box width="100%">
+        <Box 
+          display="flex"
+          justifyContent="space-between"
+          width="100%"
 
-        <Box>
-          <chakra.h1
-            fontSize="lg"
-            fontWeight="bold"
-            mt={2}
-            color={useColorModeValue('black', 'white')}
-          >
-            {title}
-          </chakra.h1>
+          flexDirection="row">
+            <Box as="a"  href={`/resource/${index}/${slugify(title)}`} width="100%">
+              <chakra.span
+                fontSize="sm"
+                color={useColorModeValue('gray.700', 'gray.400')}
+              >
+                {category}
+              </chakra.span>
+          
+                <chakra.h1
+                  fontSize="lg"
+                  fontWeight="bold"
+                  mt={2}
+                  color={useColorModeValue('black', 'white')}
+                >
+                  {title}
+                </chakra.h1>
+            </Box>
+            {showLikeButton ? likeAndSave() : null}
+
+      </Box>
+        <Box as="a" href={`/resource/${index}/${slugify(title)}`}>
           <chakra.p
             fontSize="sm"
-            mt={2}
-            color={useColorModeValue('gray.800', 'gray.300')}
-          >
+              mt={2}
+              color={useColorModeValue('gray.800', 'gray.300')}
+            >
             {description}
           </chakra.p>
         </Box>
-
-
-        
-      </LinkOverlay>
-      {showLikeButton ? (<Box>
-        <IconButton
-          variant="ghost"
-          icon={!isUpvoted ? <FaRegHeart /> : <FaHeart />}
-          onClick={handleUpvote}
-          color={mode('black', 'white')}
-          size="lg"
-          _hover={{}}
-          _focus={{}}
-        />
-        <Text textAlign="center" fontSize="s">
-          {upvoteCount}
-        </Text>
-        <IconButton
-          variant="ghost"
-          icon={!isSaved ? <FaRegBookmark /> : <FaBookmark />}
-          onClick={handleSave}
-          color={mode('black', 'white')}
-          size="lg"
-          _hover={{}}
-          _focus={{}}
-        />
-      </Box>) : null}
+      </Box>
     </LinkBox>
   );
 };
