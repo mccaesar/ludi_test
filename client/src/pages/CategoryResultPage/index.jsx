@@ -17,11 +17,12 @@ export const CategoryResultPage = () => {
   const { resources, isLoading } = useResources();
   const [filteredResources, setFilteredResources] = useState([]);
   const { category: categoryName } = useParams();
+  const categoryNameDecode = decodeURIComponent(categoryName)
 
   useEffect(() => {
     if (resources) {
       setFilteredResources(
-        resources.filter((resource) => resource.category == categoryName)
+        resources.filter((resource) => resource.category == categoryNameDecode)
       );
     }
   }, [resources]);
@@ -29,14 +30,14 @@ export const CategoryResultPage = () => {
   return (
     <WithFooter>
       <Navbar />
-      <Heading pt={10} pb={5} textAlign="center" mx="auto" fontSize="3xl"> {categoryName} </Heading>
+      <Heading pt={10} pb={5} textAlign="center" mx="auto" fontSize="3xl"> {categoryNameDecode} </Heading>
       <Text
         fontSize="md"
         textAlign="center"
         mx="auto"
         pb={10}
         color={useColorModeValue('gray.700', 'gray.400')}>
-        {CATEGORIES[categoryName]}
+        {CATEGORIES[categoryNameDecode]}
       </Text>
       {!isLoading ? (
         <ResourceContainer resources={filteredResources} type={FilterType.SHOW_RESOURCES} />
