@@ -158,6 +158,7 @@ export const ResourceCard = ({ resourceBasic, showLikeButton }) => {
   };
 
   return (
+    
     <LinkBox
       w="full"
       h="full"
@@ -174,7 +175,7 @@ export const ResourceCard = ({ resourceBasic, showLikeButton }) => {
         background: useColorModeValue('gray.300', 'gray.600'),
       }}
     >
-      
+      <NotLoggedInAlert />
       <Box width="100%">
         <Box 
           display="flex"
