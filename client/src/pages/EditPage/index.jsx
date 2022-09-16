@@ -81,8 +81,11 @@ export const EditPage = () => {
         const update = { title: values.title, 
                          author: values.author,
                          url: values.url, 
+                         category: resource.category,
                          description: values.description, 
                          additionalDescription: values.additionalDescription,
+                         submittedBy: resource.submittedBy ? resource.submittedBy : null,
+                         isOpenResource: resource.isOpenResource ? resource.isOpenResource : null,
                          tags:values.tags};
         axios.put(`${API_URI}/resource/${resource._id}/edit`, update)
         .then(function(res) {
