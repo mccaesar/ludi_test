@@ -71,6 +71,7 @@ export const Navbar = () => {
                   <Link href={'/'}>Home</Link>
                   <Link href={'/about'}>About</Link>
                   <Link href={'/category'}>Categories</Link>
+                  <Link href={'/peer-favorites'}>Favorites</Link>
                   <Link href={'/upload'}>Submission</Link>
                   <Link href="mailto:ludi-help@illinois.edu">Contact</Link>
                   {user && user.role == "ADMIN" ? <Link href={'/admin'}>Admin</Link> : <></>}
