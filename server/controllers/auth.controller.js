@@ -56,6 +56,7 @@ export const registerUser = async (req, res, next) => {
       screenName: req.body.screenName,
       email: req.body.email,
       affiliation: req.body.affiliation,
+      title: req.body.title,
       passwordHash: passwordHash,
     });
 
