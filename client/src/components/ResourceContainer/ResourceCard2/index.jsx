@@ -54,6 +54,15 @@ export const ResourceCard2 = ({ resource }) => {
             {resource.affiliation}
           </chakra.h3>
 
+          <chakra.h3
+            // fontSize="sm"
+            mt={1}
+            mb={1}
+            color={useColorModeValue('gray.800', 'gray.300')}
+          >
+            {resource.title}
+          </chakra.h3>
+
           <Divider />
 
           <chakra.p

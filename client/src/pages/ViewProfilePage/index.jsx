@@ -54,6 +54,10 @@ export const ViewProfilePage = () => {
                 {' '}
                 Affiliation: {user.affiliation}{' '}
               </Text>
+              <Text fontSize="lg" textAlign="center">
+                {' '}
+                Title: {user.title}{' '}
+              </Text>
             </Stack>
   
             {/* Liked Resources */}

@@ -25,7 +25,7 @@ export const LinkArea = ({ text }) => {
       }}
     >
       {/*may need history.push(`/search?${searchParams}`); */}
-      <LinkOverlay href={'/active-users'}>
+      <LinkOverlay href={'/peer-favorites'}>
         <Center>
           <chakra.h1
             fontSize="lg"

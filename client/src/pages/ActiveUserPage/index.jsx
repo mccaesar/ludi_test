@@ -34,7 +34,7 @@ export const ActiveUserPage = () => {
       
       <center pt={4}>
         <chakra.h2> 
-              Nothing is pleasanter than exploring a library.
+        Lists of what other people favorited on this site
         </chakra.h2>
       </center>
 

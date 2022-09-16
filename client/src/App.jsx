@@ -45,7 +45,7 @@ const App = () => (
             <Route path="/login" exact component={LoginPage} />
             <Route path="/upload" exact component={UploadPage} />
             <Route path="/about" exact component={AboutPage} />
-            <Route path="/active-users" exact component={ActiveUserPage} />
+            <Route path="/peer-favorites" exact component={ActiveUserPage} />
             <Route path="/category/:category" component={CategoryResultPage} />
             <Route path="/category" component={CategoryPage} />
             <Route path="/admin" component={AdminPage}/>
