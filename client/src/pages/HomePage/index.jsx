@@ -72,7 +72,7 @@ export const HomePage = () => {
       <Box p={10}></Box>
 
       {/* Canned Search Options */}
-      <Center pt={10}>
+      <Center pt={8}>
         <Text fontSize="lg">I want to...</Text>
       </Center>
 
