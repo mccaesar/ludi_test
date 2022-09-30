@@ -47,8 +47,8 @@ export const HomePage = () => {
   //""
   const cannedSearch5 = 'Create my own mini internet';
   const cannedParams5 = new URLSearchParams();
-  cannedParams5.set('q', 'emulate cisco');
-  cannedParams5.set('field', 'title');
+  cannedParams5.set('q', 'Emulator');
+  cannedParams5.set('field', 'category');
 
   return (
     <WithFooter>
