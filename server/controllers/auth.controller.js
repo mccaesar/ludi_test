@@ -8,9 +8,21 @@ import {
   validateLogin,
 } from '../validators/auth.validator.js';
 import * as authUtils from '../utils/auth.util.js';
+import logger from '../utils/logger.js';
 
 const router = express.Router();
 const { User } = db;
+
+const buildLogContent = (req) => {
+  const logContent = {
+    metadata: {
+      email: req.body.email,
+      content: req.body.content,
+      ip: req.socket.localAddress,
+    }
+  }
+  return logContent
+};
 
 initializePassport(passport);
 
@@ -29,7 +41,9 @@ export const userAuthorized = async (req, res, next) => {
 export const registerUser = async (req, res, next) => {
   // Validate user can be created from data
   const { isValid, errors: validationErrors } = validateRegistration(req.body);
+  const logContent = buildLogContent(req);
   if (!isValid) {
+    logger.error('Some error occurred while creating comment.', { ...logContent, action: 'create comment' })
     return res.status(404).send({
       message: validationErrors
         ? validationErrors[0].message
@@ -41,6 +55,7 @@ export const registerUser = async (req, res, next) => {
     // Check if email is already in the database
     const emailExists = await User.findOne({ email: req.body.email });
     if (emailExists) {
+      logger.error('Email Already in Use.', { ...logContent, action: 'Register' })
       return res.status(404).send({
         message: 'This email is already in use. Please use another one.',
       });
@@ -64,12 +79,14 @@ export const registerUser = async (req, res, next) => {
     //Add user to the database
     await user.save();
     const jwt = authUtils.issueJWT(user);
+    logger.info('successfully register user', { ...logContent, action: 'register' });
     res.status(201).send({
       user: user,
       token: jwt.token,
       expiresIn: jwt.expires,
     });
   } catch (err) {
+    logger.error('Some error occurred while registering user.', { ...logContent, action: 'register' })
     res.status(404).send({
       message: err.message || 'Some error occurred while registering user.',
     });
@@ -80,6 +97,7 @@ export const registerUser = async (req, res, next) => {
 
 export const logInUser = async (req, res, next) => {
   // Validate user can be created from data
+  const logContent = buildLogContent(req);
   const { isValid, errors: validationErrors } = validateLogin(req.body);
   if (!isValid) {
     return res.status(404).send({
@@ -105,6 +123,7 @@ export const logInUser = async (req, res, next) => {
     );
 
     if (validPassword) {
+      logger.info('successfully log in', { ...logContent, action: 'log in' });
       const tokenObj = authUtils.issueJWT(user);
       res.status(200).send({
         user: user,
@@ -112,11 +131,13 @@ export const logInUser = async (req, res, next) => {
         expiresIn: tokenObj.expires,
       });
     } else {
+      logger.error('Invalid Email or Password.', { ...logContent, action: 'log in' })
       return res.status(404).send({
         message: 'Invalid Email or Password.',
       });
     }
   } catch (err) {
+    logger.error('Some error occurred while log in.', { ...logContent, action: 'log in' })
     res.status(404).send({
       message: err.message || 'Some error occurred while logging user in.',
     });
@@ -124,10 +145,14 @@ export const logInUser = async (req, res, next) => {
 };
 
 export const logOutUser = async (req, res, next) => {
+  const logContent = buildLogContent(req);
   try {
+    console.log(req);
     req.logOut();
+    logger.info('successfully log out', { ...logContent, action: 'log out' });
     res.send({ message: 'You are logged out.' });
   } catch (err) {
+    logger.error('Some error occurred while logging out.', { ...logContent, action: 'log out' })
     res.status(404).send({
       message: err.message || 'Some error occurred while logging user out.',
     });
