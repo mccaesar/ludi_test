@@ -16,6 +16,10 @@ import { BadFilterAlert } from './BadFilterAlert';
 import { useEffectOnce } from '../../hooks/useEffectOnce';
 import { useResources } from '../../hooks/useResources';
 
+import axios from 'axios';
+import { API_URI } from '../../config';
+import { useUser } from '../../hooks/useUser';
+
 import {
   FilterOptions,
   URISearchParamOptions,
@@ -55,6 +59,23 @@ export const FilterCollapse = ({ selectedFilter, handleFilterChange }) => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [tagOperator, setTagOperator] = useState(TagOperatorOptions.And);
 
+  const { user } = useUser();
+
+  const logActivity = (url) => {
+    const metadata = {
+      author: user ? user._id : null,
+      url: url,
+      ip: '',
+    };
+    axios.put(`${API_URI}/logging/loggingUrl`, metadata)
+    .catch(function(error) {
+      if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+      }
+    });
+  }
+
   useEffectOnce(() => {
     let initialSearchFields = query.get(URISearchParamOptions.SearchField)
       ? query.getAll(URISearchParamOptions.SearchField)
@@ -84,7 +105,7 @@ export const FilterCollapse = ({ selectedFilter, handleFilterChange }) => {
     }
 
     setTagOperator(initialTagOperator);
-
+    logActivity(`/search?${query}`);
     history.replace(`/search?${query}`);
   });
 
@@ -96,7 +117,7 @@ export const FilterCollapse = ({ selectedFilter, handleFilterChange }) => {
     currentSearchFields.map((searchField) =>
       query.append(URISearchParamOptions.SearchField, searchField)
     );
-
+    logActivity(`/search?${query}`)
     history.replace(`/search?${query}`);
   };
 
@@ -108,7 +129,7 @@ export const FilterCollapse = ({ selectedFilter, handleFilterChange }) => {
     currentTags.map((selectedTag) =>
       query.append(URISearchParamOptions.Tag, selectedTag)
     );
-
+    logActivity(`/search?${query}`)
     history.replace(`/search?${query}`);
   };
 
@@ -117,6 +138,7 @@ export const FilterCollapse = ({ selectedFilter, handleFilterChange }) => {
     setTagOperator(newTagOperator);
 
     query.set(URISearchParamOptions.TagOperator, newTagOperator);
+    logActivity(`/search?${query}`)
     history.replace(`/search?${query}`);
   };
 

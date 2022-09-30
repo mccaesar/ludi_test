@@ -23,12 +23,36 @@ import { authApi } from '../../../services';
 import { useResources } from '../../../hooks/useResources';
 import { useUser } from '../../../hooks/useUser';
 
+import axios from 'axios';
+import { API_URI } from '../../../config';
+
 export const ResourceCard = ({ resourceBasic, showLikeButton }) => {
   const { index, title, category, description, upvoteCount } = resourceBasic;
   const [isSaved, setSaved] = useState(false);
   const [isUpvoted, setUpvoted] = useState(false);
   const [resource, setResource] = useState(null);
   const [alertIsOpen, setAlertIsOpen] = useState(false);
+  const {
+    savedResources,
+    user,
+    upvotedResources,
+  } = useUser();
+
+  const logActivity = () => {
+    const url = `/resource/${index}/${slugify(title)}`;
+    const metadata = {
+      author: user ? user._id : null,
+      url: url,
+      ip: '',
+    };
+    axios.put(`${API_URI}/logging/loggingUrl`, metadata)
+    .catch(function(error) {
+      if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+      }
+    });
+  }
 
   const {
     resources,
@@ -37,11 +61,7 @@ export const ResourceCard = ({ resourceBasic, showLikeButton }) => {
     upvoteResourceMutation,
     unupvoteResourceMutation,
   } = useResources();
-  const {
-    savedResources,
-
-    upvotedResources,
-  } = useUser();
+  
 
   const isLoggedIn = authApi.isLoggedIn();
 
@@ -174,6 +194,7 @@ export const ResourceCard = ({ resourceBasic, showLikeButton }) => {
       _hover={{
         background: useColorModeValue('gray.300', 'gray.600'),
       }}
+      onClick={logActivity}
     >
       <NotLoggedInAlert />
       <Box width="100%">
