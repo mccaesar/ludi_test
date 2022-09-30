@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../models/index.js';
+import logger from '../utils/logger.js';
 
 const router = express.Router();
 const { Comment, Resource, User } = db;
@@ -7,8 +8,8 @@ const { Comment, Resource, User } = db;
 const urlLogContent = (req) => {
     const logContent = {
       metadata: {
-        author: req.user._id,
-        url: req.body.resource,
+        author: req.body.author,
+        url: req.body.url,
         ip: req.body.ip,
       }
     }

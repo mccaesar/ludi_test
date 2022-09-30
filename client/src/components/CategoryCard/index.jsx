@@ -6,8 +6,30 @@ import {
     useColorModeValue,
 } from '@chakra-ui/react';
 import { CATEGORIES } from '../../categories';
+
+import axios from 'axios';
+import { API_URI } from '../../config';
+import { useUser } from '../../hooks/useUser';
   
 export const CategoryCard = ({ category }) => {
+
+  const { user } = useUser();
+
+  const logActivity = () => {
+    const url = `category/${encodeURIComponent(category)}`;
+    const metadata = {
+      author: user ? user._id : null,
+      url: url,
+      ip: '',
+    };
+    axios.put(`${API_URI}/logging/loggingUrl`, metadata)
+    .catch(function(error) {
+      if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+      }
+    });
+  }
   
     return (
       <LinkBox
@@ -26,6 +48,7 @@ export const CategoryCard = ({ category }) => {
         _hover={{
           background: useColorModeValue('gray.300', 'gray.600'),
         }}
+        onClick={logActivity}
       >
         <LinkOverlay href={`category/${encodeURIComponent(category)}`}>
           <Flex justifyContent="center" direction="column">
