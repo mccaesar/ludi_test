@@ -4,8 +4,21 @@ dotenv.config();
 import express from 'express';
 import db from '../models/index.js';
 
+import logger from '../utils/logger.js';
+
 const router = express.Router();
 const { Comment, Resource, User } = db;
+
+const buildLogContent = (req) => {
+  const logContent = {
+    metadata: {
+      author: req.user._id,
+      resource: req.body.resource,
+      content: req.body.content,
+    }
+  }
+  return logContent
+};
 
 const buildCommentTrees = (comments, rootDepth = 1) => {
   // Sort comments from "leaf" to "root"
@@ -174,9 +187,13 @@ export const createComment = async (req, res, next) => {
     });
     const createdComment = await comment.save();
 
+    const logContent = buildLogContent(req);
+    
     if (createdComment) {
+      logger.info('successfully create comment', { ...logContent, action: 'create comment' })
       res.status(200).send(createdComment);
     } else {
+      logger.error('Some error occurred while creating comment.', { ...logContent, action: 'create comment' })
       res
         .status(404)
         .send({ message: 'Some error occurred while creating comment.' });

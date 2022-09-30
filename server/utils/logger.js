@@ -1,11 +1,9 @@
-//const winston = require('winston');
 import winston from 'winston';
 
-
-export const logger = winston.createLogger({
+const logger = winston.createLogger({
   transports:[
       new winston.transports.File({
-          filename:'logs/activity.log',
+          filename:'../logs/activity.log',
           level:'info',
           format: winston.format.combine(
             winston.format.timestamp(),
@@ -13,9 +11,11 @@ export const logger = winston.createLogger({
             winston.format.metadata({ fillExcept: ['message', 'level', 'timestamp', 'label'] }))
       }),
       new winston.transports.File({
-          filename:'logs/error.log',
+          filename:'../logs/error.log',
           level:'error',
           format: winston.format.combine(winston.format.timestamp(),winston.format.json())
       })
   ]
 })
+
+module.exports = logger;
