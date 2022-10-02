@@ -33,6 +33,9 @@ const config = {
         ? 'https://server.ludiludiludi.web.illinois.edu/api'
         : 'http://localhost:5000/api',
     }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env)
+    })
   ],
   module: {
     rules: [
