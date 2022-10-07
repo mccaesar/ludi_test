@@ -9,13 +9,13 @@ import logger from '../utils/logger.js';
 const router = express.Router();
 const { Comment, Resource, User } = db;
 
-const buildLogContent = (req, commentId) => {
+const buildLogContent = (req) => {
   const logContent = {
     metadata: {
       author: req.user._id,
       resource: req.body.resource,
       content: req.body.content,
-      ip: req.socket.localAddress,
+      ip: req.socket.remoteAddress,
       commentId: req.params.commentId,
     }
   }
@@ -189,7 +189,7 @@ export const createComment = async (req, res, next) => {
     });
     const createdComment = await comment.save();
 
-    const logContent = buildLogContent(req, null);
+    const logContent = buildLogContent(req);
     
     if (createdComment) {
       logger.info('successfully create comment', { ...logContent, action: 'create comment' });
@@ -210,15 +210,16 @@ export const createComment = async (req, res, next) => {
 
 export const editComment = async (req, res, next) => {
   const { commentId } = req.params;
-  const logContent = buildLogContent(req, commentId);
+  const logContent = buildLogContent(req);
   try {
     const toEdit = await Comment.findOne({ _id: commentId });
-    if (toEdit.author != req.user._id) {
+    if (req.user._id.toString() != toEdit.author.toString()) {
       logger.error('not authorized to edit this comment.', { ...logContent, action: 'edit comment'});
       res.status(401).send({
         message: 'You are not authorized to edit this comment.',
       });
     }
+
     const editedComment = await Comment.updateOne(
       {
         _id: commentId,
@@ -238,7 +239,7 @@ export const editComment = async (req, res, next) => {
         .send({ message: `No comment with ID: ${commentId}` });
     }
   } catch (err) {
-    logger.error('Some error occurred while editing comment.', { ...logContent, action: 'edit comment' });
+    logger.error('Some error occurred while editing comment.', { ...logContent, action: 'edit comment'});
     res.status(404).send({
       message: err.message || 'Some error occurred while editing comment.',
     });
@@ -247,7 +248,7 @@ export const editComment = async (req, res, next) => {
 
 export const deleteComment = async (req, res, next) => {
   const { commentId } = req.params;
-  const logContent = buildLogContent(req, commentId);
+  const logContent = buildLogContent(req);
   try {
     const toDelete = await Comment.findOne({ _id: commentId });
     const rootDepth = toDelete.parents.length;
@@ -299,7 +300,7 @@ export const deleteComment = async (req, res, next) => {
 
 export const upvoteComment = async (req, res, next) => {
   const { commentId } = req.params;
-  const logContent = buildLogContent(req, commentId);
+  const logContent = buildLogContent(req);
   if (!req.user) {
     res.status(401).send({
       message: 'You are not authorized to upvote this comment.',
@@ -337,7 +338,7 @@ export const upvoteComment = async (req, res, next) => {
 
 export const unupvoteComment = async (req, res, next) => {
   const { commentId } = req.params;
-  const logContent = buildLogContent(req, commentId);
+  const logContent = buildLogContent(req);
   if (!req.user) {
     res.status(401).send({
       message: 'You are not authorized to un-upvote this comment.',
