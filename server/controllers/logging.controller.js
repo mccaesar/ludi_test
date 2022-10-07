@@ -10,7 +10,7 @@ const urlLogContent = (req) => {
     metadata: {
       user: req.body.author,
       url: req.body.url,
-      ip: req.socket.localAddress,
+      ip: req.socket.remoteAddress,
     }
   }
   return logContent
