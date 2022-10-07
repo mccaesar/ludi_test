@@ -10,7 +10,7 @@ const urlLogContent = (req) => {
     metadata: {
       user: req.body.author,
       url: req.body.url,
-      ip: req.socket.remoteAddress,
+      ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
     }
   }
   return logContent

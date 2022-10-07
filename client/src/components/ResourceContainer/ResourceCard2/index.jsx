@@ -49,18 +49,18 @@ export const ResourceCard2 = ({ resource }) => {
           <chakra.h3
             // fontSize="sm"
             mt={1}
+            mb={1}
             color={useColorModeValue('gray.800', 'gray.300')}
           >
-            {resource.affiliation}
+            {resource.title}
           </chakra.h3>
 
           <chakra.h3
             // fontSize="sm"
             mt={1}
-            mb={1}
             color={useColorModeValue('gray.800', 'gray.300')}
           >
-            {resource.title}
+            {resource.affiliation}
           </chakra.h3>
 
           <Divider />

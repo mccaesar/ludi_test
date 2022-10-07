@@ -15,7 +15,7 @@ const buildLogContent = (req) => {
       author: req.user._id,
       resource: req.body.resource,
       content: req.body.content,
-      ip: req.socket.remoteAddress,
+      ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
       commentId: req.params.commentId,
     }
   }
