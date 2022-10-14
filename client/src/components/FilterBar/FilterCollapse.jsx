@@ -167,6 +167,7 @@ export const FilterCollapse = ({ selectedFilter, handleFilterChange }) => {
             <Button onClick={handleToggleTagOperator}>{tagOperator}</Button>
             <Box w="md">
               <Select
+                styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
                 isMulti
                 name="tagMultiSelect"
                 placeholder="Select some tags..."
