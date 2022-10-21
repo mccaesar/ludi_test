@@ -34,8 +34,7 @@ export const Footer = () => {
         justify={'center'}
         align={'center'}
       >
-        <Logo />
-
+        
       </Container>
     </Box>
   );

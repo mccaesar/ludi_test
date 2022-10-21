@@ -213,7 +213,7 @@ export const ResourceCard = ({ resourceBasic, showLikeButton }) => {
               </chakra.span>
           
                 <chakra.h1
-                  fontSize="lg"
+                  fontSize="xl"
                   fontWeight="bold"
                   mt={2}
                   color={useColorModeValue('black', 'white')}
