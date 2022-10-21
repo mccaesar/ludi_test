@@ -272,7 +272,7 @@ export const ResourcePage = () => {
               icon={!isSaved ? <FaRegBookmark /> : <FaBookmark />}
               onClick={handleSave}
               color={mode('black', 'white')}
-              size="2xl"
+              size="lg"
               _hover={{}}
               _focus={{}}
             />
