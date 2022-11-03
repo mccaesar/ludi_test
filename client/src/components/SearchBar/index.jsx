@@ -42,7 +42,7 @@ export const SearchBar = () => {
   };
 
   const handleEnter = (e) => {
-    if (e.code === 'Enter' || e.code === 'Go' || e.code === 'Next') {
+    if (e.code === 'Enter' || e.code === 'Go' || e.code === 'Next' || e.keyCode === 13) {
       e.preventDefault();
       query.set(URISearchParamOptions.SearchTerm, searchTerm);
       history.push(`/search?${query}`);
@@ -65,7 +65,7 @@ export const SearchBar = () => {
       <InputGroup>
         {/* <InputLeftElement pointerEvents="none" children={<AiOutlineSearch />} > */}
         <InputLeftElement>
-          <IconButton icon={<SearchIcon/>} onClick={handleSearch } variant='link'></IconButton>
+          <IconButton icon={<SearchIcon/>} onClick={handleSearch} variant='link'></IconButton>
         </InputLeftElement>
         <Input
           tabIndex="0"
