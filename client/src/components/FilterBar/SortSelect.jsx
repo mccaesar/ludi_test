@@ -80,6 +80,7 @@ export const SortSelect = () => {
   return (
     <Box w="3xs">
       <Select
+        styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
         name="sortSelect"
         placeholder="Sort by..."
         closeMenuOnSelect={true}
