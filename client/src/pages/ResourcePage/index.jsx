@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import {
   chakra,
@@ -32,6 +32,8 @@ import { useResources } from '../../hooks/useResources';
 import { useUser } from '../../hooks/useUser';
 import axios from 'axios';
 import { API_URI } from '../../config';
+
+//import myFile from "client/src/cachedSites/6166ed8eae555bd4d56fba7c.html";
 
 export const ResourcePage = () => {
   const [isSaved, setSaved] = useState(false);
@@ -216,7 +218,11 @@ export const ResourcePage = () => {
           p={6}
         >
           <Box w="full">
-            <Text fontSize="4xl" color={mode('black', 'white')}>
+            <Text 
+              fontSize="5xl" 
+              fontWeight="bold"
+              color={mode('black', 'white')}
+            >
               {resource.title}
             </Text>
             <Text
@@ -240,6 +246,21 @@ export const ResourcePage = () => {
               >
                 Website
               </Button>
+              {resource.index === 75 || resource.index === 157 ? <>
+              <Button
+                as="a"
+                //href="/6166ed8eae555bd4d56fba7c.html"
+                download
+                target="_blank"
+                color={mode('black', 'gray.300')}
+                bg={mode('gray.400', 'gray.600')}
+                variant="solid"
+                onClick={() => {window.open(`/${resourceIdx}.html`);}}
+              >
+                Cached Website
+              </Button>
+              </>: <>
+              </>}
               {/* <Button color="gray.300" bg="gray.600" variant="solid">
                 Github
               </Button>
@@ -259,7 +280,7 @@ export const ResourcePage = () => {
               _focus={{}}
             />
             <Text textAlign="center" fontSize="s">
-              {resource.upvoteCount}
+              {resource.upvoteCount} likes
             </Text>
           </Box>
           <Box>

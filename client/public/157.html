@@ -1,0 +1,872 @@
+<!Doctype Html>
+<!-- saved from url=(0072)https://datatables.net/examples/advanced_init/html5-data-attributes.html -->
+
+<Html>
+
+  <Head>
+    <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+
+    <title>GENI Exercises</title>
+    <link rel="stylesheet" type="text/css" href="exercises.css">
+    <link rel="stylesheet" type="text/css" href="jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="fixedHeader.dataTables.min.css">
+    <script type="text/javascript" language="javascript" src="jquery-1.12.3.min.js">    </script>
+    <script type="text/javascript" language="javascript" src="jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript" class="init">
+      $(document).ready(function() {
+        var searchHash = location.hash.substr(1),
+          searchString = searchHash.substr(searchHash.indexOf('search='))
+          .split('&')[0]
+          .split('=')[1];
+        var searchStringSpacesReplaced = decodeURIComponent(searchString);
+        if (searchStringSpacesReplaced == "undefined")
+          searchStringSpacesReplaced = "";
+        var table = $('#example').dataTable({
+          "oSearch": {
+            "sSearch": searchStringSpacesReplaced
+          },
+          "columnDefs": [{
+            "visible": false,
+            "targets": 0
+          }],
+          "order": [
+            [0, 'asc']
+          ],
+          "pageLength": 50,
+          "drawCallback": function(settings) {
+            var api = this.api();
+            var rows = api.rows({
+              page: 'current'
+            }).nodes();
+            var last = null;
+
+            api.column(0, {
+              page: 'current'
+            }).data().each(function(group, i) {
+              if (last !== group) {
+                $(rows).eq(i).before(
+                  '<tr class="group"><td colspan="9">' + group + '</td></tr>'
+                );
+
+                last = group;
+              }
+            });
+          },
+          fixedHeader: {
+            header: true,
+            footer: true
+          }
+        });
+        // Order by the grouping
+        $('#example tbody').on('click', 'tr.group', function() {
+          var currentOrder = table.order()[0];
+          if (currentOrder[0] === 0 && currentOrder[1] === 'asc') {
+            table.order([0, 'desc']).draw();
+          } else {
+            table.order([0, 'asc']).draw();
+          }
+        });
+      });
+
+    </script>
+
+  </head>
+
+  <body class="wide comments example">
+    <div class="fw-container">
+      <div class="align-left" style="width: 100%;">
+        <a href="http://www.geni.net/"><img src="header.png" alt="GENI logo" height="100px"> </a>
+      </div>
+      <!--<div class="fw-header fh-fixedHeader">
+			<div class="nav-master">
+				<ul>
+					<li class="active">
+						<a href="http://www.geni.net/"><img src="header.png" alt="GENI logo" height="100px"> </a>
+					</li>-->
+      <!--<li>
+					  <span vertical-align="bottom"><b>Exploring Networks of the Future</b></span>
+					</li>-->
+      <!--</ul>
+			</div>
+		</div>-->
+      <div class="fw-body">
+        <div class="content">
+
+          <p class="path noprint">
+            <a class="pathentry" href="http://groups.geni.net/geni/wiki/GENIEducation" title="View GENIEducation">GENIEducation</a>
+            <span class="pathentry sep">/</span>
+            <a class="pathentry" href="http://www.cs.unc.edu/Research/geni/geniExercises" title="View GENIEducation/SampleAssignments">SampleAssignments</a>
+            <br style="clear: both">
+          </p>
+
+          <h2 style="text-align: left"> GENI-Based Classroom Exercises </h2>
+          <p>
+            <table id="example" class="display dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example_info" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th>Topic</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Format</th>
+                  <th>Level</th>
+                  <th>Nodes</th>
+                  <th>IG</th>
+                  <th>EG</th>
+                  <th>Other</th>
+                  <th>Contact</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Topic</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Format</th>
+                  <th>Level</th>
+                  <th>Nodes</th>
+                  <th>IG</th>
+                  <th>EG</th>
+                  <th>Other</th>
+                  <th>Contact</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr>
+                  <td data-order="1"><b>Getting Started</b></td>
+                  <td><a href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/GettingStarted_PartI/ForInstructors" target="_blank">Lab Zero: My first GENI Experiment</a></td>
+                  <!--<td data>Verify accounts and environment are set up correctly; familiarize students with the process of running an experiment on GENI <i>(highly recommended as a first lab that students do in the class with help of an instructor)</i></td>-->
+                  <td style="text-align: left">Verify accounts and environment are set up correctly; Familiarize students with the process of running an experiment on GENI. <i>(Highly recommended as the first lab students do in the class with instructor help)</i> </td>
+                  <td>Tutorial</td>
+                  <td data-order="0">Newbie</td>
+                  <td>2</td>
+                  <td>&#10004</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:tutorials@geni.net"><span class="icon">&nbsp;</span>GENI Project Office</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="1"><b>Getting Started</b></td>
+                  <td><a href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/GettingStarted_PartII_ccn/ForInstructors" target="_blank">Lab One: Understanding the AM API and Omni</a></td>
+                  <td style="text-align: left">Understand how the GENI reservation process works, get familiar with the GENI Aggregate Manager API (GENI AM API), learn to use Omni.</td>
+                  <td>Tutorial</td>
+                  <td data-order="1">Beginner</td>
+                  <td>4</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td data-search="GPO"><a class="mail-link" href="mailto:tutorials@geni.net"><span class="icon">&nbsp;</span>GENI Project Office</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="1"><b>Getting Started</b></td>
+                  <td><a href="http://www.cs.unc.edu/Research/geni/geniEdu/01-Instrumentation.html" target="_blank">GENI Desktop Basics </a></td>
+                  <td style="text-align: left">Learn the basics of instrumenting a slice and viewing measurement data using the GENI Desktop.</td>
+                  <td>Tutorial</td>
+                  <td data-order="1">Beginner</td>
+                  <td>2</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td data-search="UNC"><a class="mail-link" href="mailto:aikat@cs.unc.edu"><span class="icon">&nbsp;</span>Jay Aikat</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="http://groups.geni.net/geni/wiki/GENIEducation/SampleAssignments/IPRouting/Procedure" target="_blank">IPv4 Routing</a></td>
+                  <td style="text-align: left">Understand how IPv4 forwarding works and how to configure static routes.</td>
+                  <td>Assignment</td>
+                  <td data-order="1">Beginner</td>
+                  <td>3</td>
+                  <td></td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:mzink@cas.umass.edu"><span class="icon">&nbsp;</span>Mike Zink</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/tcp-ip-protocol-stack/" target="_blank">TCP/IP protocol layers</a></td>
+                  <td style="text-align: left">Examine network addresses and connections at the network access (a.k.a. data link) layer, the Internet
+                      layer, the transport layer, and the application layer.</td>
+                  <td>Assignment</td>
+                  <td data-order="1">Beginner</td>
+                  <td>3</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="http://www.cs.unc.edu/Research/geni/geniEdu/03-TcpTraffic.html" target="_blank">TCP Congestion Control</a></td>
+                  <td style="text-align: left">Give students experience generating and analyzing TCP flows. Students will use iperf to create a flow and
+                      view the sawtooth behavior. A second flow will then be introduced to show how TCP flows share a link. Uses the GENI Desktop to
+                    visualize flows.</td>
+                  <td>Assignment</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>2</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:aikat@cs.unc.edu"><span class="icon">&nbsp;</span>Jay Aikat</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="http://www.cs.unc.edu/Research/geni/geniEdu/04-TcpDelayWinSize.html" target="_blank">Effect of RTT and Window Size on TCP Throughput</a></td>
+                  <td style="text-align: left">Experiment with how RTT and TCP window size affect TCP throughput. Learn how to adjust the RTT of a
+                      TCP connection by adding delay, as well as how to adjust the window size of an iperf TCP flow. Uses the GENI Desktop to visualize flows.</td>
+                  <td>Assignment</td>
+                  <td data-order="3">Advanced</td>
+                  <td>2</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:aikat@cs.unc.edu"><span class="icon">&nbsp;</span>Jay Aikat</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="http://www.cs.unc.edu/Research/geni/geniEdu/09-queues.html" target="_blank">Exploring Queues</a></td>
+                  <td style="text-align: left">Explore the effects of queues on packet loss and delay using UDP traffic. Use iperf to send UDP traffic from a
+                      source to a destination through an intermediate bottleneck router which will develop a queue.</td>
+                  <td>Assignment</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>3</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:aikat@cs.unc.edu"><span class="icon">&nbsp;</span>Jay Aikat</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="http://www.cs.unc.edu/Research/geni/geniEdu/06-Ospf.html" target="_blank">OSPF</a></td>
+                  <td style="text-align: left">Experiment with the OSPF routing protcol, observing how it updates it's neighbor table, and how it dynamically routes around downed links.</td>
+                  <td>Assignment</td>
+                  <td data-order="1">Beginner</td>
+                  <td>4</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:aikat@cs.unc.edu"><span class="icon">&nbsp;</span>Jay Aikat</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="http://www.cs.unc.edu/Research/geni/geniEdu/05-TrafficAnalysis.html" target="_blank">Traffic Analysis</a></td>
+                  <td style="text-align: left">Learn to use tcpdump to capture and analyze network traffic. Uses the GENI Desktop to visualize flows.</td>
+                  <td>Assignment</td>
+                  <td data-order="3">Advanced</td>
+                  <td>2</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:aikat@cs.unc.edu"><span class="icon">&nbsp;</span>Jay Aikat</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td>OpenFlow Learning Switch</td>
+                  <td style="text-align: left">Implement the learning switch capability used by Ethernet switches. Develop a five-port learning switch using a software-based <a class="wiki" href="http://groups.geni.net/geni/wiki/OpenFlow" target="_blank">OpenFlow</a> switch. Uses
+                    the LabWiki tool.</td>
+                  <td>Assignment</td>
+                  <td data-order="4">Expert</td>
+                  <td>6</td>
+                  <td>?</td>
+                  <td>?</td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:mzink@cas.umass.edu"><span class="icon">&nbsp;</span>Mike Zink</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/babel-a-loop-avoiding-distance-vector-routing-protocol/" target="_blank"> Babel - a loop-avoiding distance-vector routing protocol</a></td>
+                  <td style="text-align: left">See how routes are added and updated dynamically as new nodes join a network, and as links are broken and recover.</td>
+                  <td>Tutorial</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>7</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/nyquist-formula-relating-data-rate-and-bandwidth/" target="_blank"> Nyquist formula: relating data rate and bandwidth</a></td>
+                  <td style="text-align: left">Verify the relationship between data transmission rate, bandwidth, and modulation scheme, as described by the Nyquist formula.</td>
+                  <td>Tutorial</td>
+                  <td data-order="1">Beginner</td>
+                  <td>2</td>
+                  <td></td>
+                  <td></td>
+                  <td>ORBIT or WITest</td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/basic-ethernet-switch-operation/" target="_blank"> Operation of a basic Ethernet switch or bridge</a></td>
+                  <td style="text-align: left">In this experimental demonstration of the basic operation of a layer 2 switch/bridge, we will see: (1) how to set up a layer 2 bridge on Linux,
+                      (2) how a bridge or switch learns MAC addresses and updates its forwarding table, and how it forwards, filters, or floods a frame depending on the forwarding table,
+                      and (3) how a bridge or switch reduces collisions by separating each port into a separate collision domain.</td>
+                  <td>Assignment</td>
+                  <td data-order="1">Beginner</td>
+                  <td>5</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/dijkstras-shortest-path-algorithm/" target="_blank"> Dijkstra's shortest path algorithm</a></td>
+                  <td style="text-align: left">Use Dijkstra's algorithm to find the shortest path from one node in a six-node topology, to all other nodes. Then,
+                      install routing rules at each node to implement the shortest-path tree produced by Dijkstra's algorithm.</td>
+                  <td>Assignment</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>6</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/" target="_blank"> Basic home gateway services: DHCP, DNS, NAT</a></td>
+                  <td style="text-align: left">Most Internet-connected homes use a home network gateway to connect a local area network (LAN) in the home, to a wide area network
+                      (WAN) such as the Internet. In this experiment, we look at some of the services that are always or often
+                    included on these gateways: DHCP, DNS, and NAT.</td>
+                  <td>Assignment</td>
+                  <td data-order="1">Beginner</td>
+                  <td>4</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/designing-subnets/" target="_blank"> Designing subnets</a></td>
+                  <td style="text-align: left">Set up a few small subnets to meet design requirements. (Identify appropriate subnet
+                      masks and IP address range for each LAN, and set up static routes to move traffic between LANs.)</td>
+                  <td>Assignment</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>9</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/tcp-congestion-control-basics/" target="_blank"> TCP congestion control basics</a></td>
+                  <td style="text-align: left">Record congestion window size and slow start threshold for a set of TCP flows that share a common bottleneck
+                      router. Identify "slow start" and "congestion avoidance" phases, and instances of timeout (where CWND goes to 1 MSS) and 3 duplicate
+                    ACKs (where the slow start threshold is set to half the CWND, and CWND goes down to the slow start threshold).</td>
+                  <td>Assignment</td>
+                  <td data-order="2">Beginner</td>
+                  <td>3</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/the-spanning-tree-protocol/" target="_blank"> Spanning tree protocol</a></td>
+                  <td style="text-align: left">In this experiment, we will see how broadcast storms can occur in a network with bridge loops
+                      (multiple Layer 2 paths between endpoints). Then, we will see how the spanning tree protocol creates a loop-free logical topology in a network
+                    with physical loops, so that a broadcast storm cannot occur. We will also see how the spanning tree protocol reacts when the topology changes.</td>
+                  <td>Assignment</td>
+                  <td data-order="1">Beginner</td>
+                  <td>8</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="2"><b>Networking Basics</b></td>
+                  <td><a href="http://www.cs.unc.edu/Research/geni/geniEdu/10-IPv6.html" target="_blank">Exploring IPv6</a></td>
+                  <td style="text-align: left">Explore the differences between IPv4 and IPv6 and use network tools to work with IPv6 addresses.</td>
+                  <td>Assignment</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>3</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:aikat@cs.unc.edu"><span class="icon">&nbsp;</span>Jay Aikat</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="3" style="text-align: left"><b>Advanced Networking</b></td>
+                  <td><a href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/jacks/GettingStarted_PartII_ccn/Procedure" target="_blank">Content Centric Networking (CCN)</a></td>
+                  <td style="text-align: left">Run an application over a CCN protocol stack and observe how content is fetched. Optional: Use GENI Desktop to view traffic flows in the CCN.</td>
+                  <td>Assignment</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>4</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:tutorials@geni.net"><span class="icon">&nbsp;</span>GENI Project Office</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="3" style="text-align: left"><b>Advanced Networking</b></td>
+                  <td><a href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowNFVFirewall" target="_blank">Network Function Virtualization: OpenFlow based Firewall</a></td>
+                  <td style="text-align: left">Introduce NFV concepts by making an OpenFlow controlled OVS switch function as a network firewall.
+                      Much of the code for the Ryu-based controller is provided. Uses the same topology as the OpenFlow-based NAT exercise.</td>
+                  <td>Assignment</td>
+                  <td data-order="4">Expert</td>
+                  <td>4</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:tutorials@geni.net"><span class="icon">&nbsp;</span>GENI Project Office</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="3" style="text-align: left"><b>Advanced Networking</b></td>
+                  <td><a href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowNFVNAT" target="_blank">Network Function Virtualization: OpenFlow based NAT</a></td>
+                  <td style="text-align: left">Introduce NFV concepts by making an OpenFlow controlled OVS switch function as a network firewall.
+                      Much of the code for the Ryu-based controller is provided. Uses the same topology as the OpenFlow-based Firewall exercise.</td>
+                  <td>Assignment</td>
+                  <td data-order="4">Expert</td>
+                  <td>4</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:tutorials@geni.net"><span class="icon">&nbsp;</span>GENI Project Office</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="3"><b>Advanced Networking</b></td>
+                  <td><a href="http://www.cs.unc.edu/Research/geni/geniEdu/08-TrafficGen.html" target="_blank">Traffic Generation</a></td>
+                  <td style="text-align: left">Learn principles of traffic generation using Tmix, a tool for generating realistic network traffic.</td>
+                  <td>Assignment</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>2</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:aikat@cs.unc.edu"><span class="icon">&nbsp;</span>Jay Aikat</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="3"><b>Advanced Networking</b></td>
+                  <td>OpenFlow based Load Balancing Router</td>
+                  <td style="text-align: left">Implement of a load balancer using OpenFlow switches (OVS switches) and a controller capable of
+                      collecting flow stats. The exercise includes a template for a Treme-Based controller; only a few methods need to implemented to get the required
+                    functionality. Uses the LabWiki tool. The 7 VMs include a VM for the OpenFlow controller.</td>
+                  <td>Assignment</td>
+                  <td data-order="4">Expert</td>
+                  <td>7</td>
+                  <td>?</td>
+                  <td>?</td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:mzink@cas.umass.edu"><span class="icon">&nbsp;</span>Mike Zink</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="3"><b>Advanced Networking</b></td>
+                  <td><a href="http://witestlab.poly.edu/blog/adaptive-video/" target="_blank">Adaptive video policies for DASH video</a></td>
+                  <td style="text-align: left">Explores the tradeoff between different metrics of video quality (average rate, interruptions,
+                      and variability of rate) in an adaptive video delivery system. This exercise is a good starting point for having students design, implement,
+                    and test their own adaptive video policies.</td>
+                  <td>Tutorial</td>
+                  <td data-order="4">Expert</td>
+                  <td>2</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="3"><b>Advanced Networking</b></td>
+                  <td><a href="http://witestlab.poly.edu/blog/two-queues-or-not-two-queues-the-benefit-of-statistical-multiplexing/" target="_blank">
+                      Two queues or not two queues? The benefit of statistical multiplexing</a></td>
+                  <td style="text-align: left">Reproduces a classic result in queueing theory, statistical multiplexing gain in queues. It answers
+                      the basic question: is it faster to serve a set of requests with one fast server, or many slower servers?</td>
+                  <td>Tutorial</td>
+                  <td data-order="1">Beginner</td>
+                  <td>5</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="3"><b>Advanced Networking</b></td>
+                  <td><a href="http://witestlab.poly.edu/blog/average-queue-length-of-an-m-m-1-queue/" target="_blank">Average length of an M/M/1 queue</a></td>
+                  <td style="text-align: left">This experiment reproduces a classic result in queueing theory: the length of the M/M/1 queue as its
+                      utilization approaches 100%. Note this experiment can take a long time, running overnight without user intervention.</td>
+                  <td>Tutorial</td>
+                  <td data-order="1">Beginner</td>
+                  <td>3</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="4"><b>Distributed Systems</b></td>
+                  <td><a href="http://www.cs.unc.edu/Research/geni/geniEdu/02-WebServer.html" target="_blank">Web Server</a></td>
+                  <td style="text-align: left">Get hands-on experience installing and interacting with a web server.</td>
+                  <td>Assignment</td>
+                  <td data-order="1">Beginner</td>
+                  <td>2</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:aikat@cs.unc.edu"><span class="icon">&nbsp;</span>Jay Aikat</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="4"><b>Distributed Systems</b></td>
+                  <td>VLC/Dynamic Adaptive Streaming over HTTP</td>
+                  <td style="text-align: left">Give students a better understanding of how Dynamic Adaptive Streaming over Http (DASH) works.
+                      It builds on the "Load Balancing Router" exercise and uses the same topology. VLC parameters such as VLC decision bit rate (actual measured
+                    bit rate), VLC empirical rate (instant measured throughput) are measured and displayed using GIMI tools. The 7 VMs include an OpenFlow controller.</td>
+                  <td>Assignment</td>
+                  <td data-order="4">Expert</td>
+                  <td>7</td>
+                  <td>?</td>
+                  <td>?</td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:mzink@cas.umass.edu"><span class="icon">&nbsp;</span>Mike Zink</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="4"><b>Distributed Systems</b></td>
+                  <td><a href="http://witestlab.poly.edu/blog/get-rich-on-fake-bitcoins/" target="_blank">Bitcoin: reaching consensus in distributed systems</a></td>
+                  <td style="text-align: left">Explores the problem of consensus in distributed systems in the context of Bitcoin, a distributed currency.</td>
+                  <td>Tutorial</td>
+                  <td data-order="1">Beginner</td>
+                  <td>5</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="5"><b>Wireless Networking</b></td>
+                  <td><a href="http://witestlab.poly.edu/blog/adaptive-modulation-and-coding-in-cellular-networks/" target="_blank">Adaptive modulation and coding in cellular networks</a></td>
+                  <td style="text-align: left">Shows how adaptive modulation and coding profiles are assigned to wireless clients in a (WiMAX) cellular network. </td>
+                  <td>Tutorial</td>
+                  <td data-order="4">Expert</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>WITest</td>
+                  <td>instructors: <a class="mail-link" href="mailto:ffund@nyu.edu">Fraida Fund</a>, students: <a class="mail-link" href="mailto:witest-group@nyu.edu">WITest help</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="5"><b>Wireless Networking</b></td>
+                  <td><a href="http://witestlab.poly.edu/blog/channel-access-delay-of-802-11-network-under-different-loads/" target="_blank">
+                      Channel access delay of wireless networks under different loads</a></td>
+                  <td style="text-align: left">Highlights the difference in channel access delay between a contention-based WiFi network and a scheduled WiMAX network. </td>
+                  <td>Tutorial</td>
+                  <td data-order="4">Expert</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>WITest</td>
+                  <td>instructors: <a class="mail-link" href="mailto:ffund@nyu.edu">Fraida Fund</a>, students: <a class="mail-link" href="mailto:witest-group@nyu.edu">WITest help</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="5"><b>Wireless Networking</b></td>
+                  <td><a href="http://witestlab.poly.edu/blog/tcp-congestion-control-in-lossy-wireless-networks/" target="_blank">
+                      TCP congestion control in lossy wireless networks</a></td>
+                  <td style="text-align: left">Shows some of the basic issues affecting TCP congestion control in lossy wireless networks. </td>
+                  <td>Tutorial</td>
+                  <td data-order="4">Expert</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>WITest</td>
+                  <td>instructors: <a class="mail-link" href="mailto:ffund@nyu.edu">Fraida Fund</a>, students: <a class="mail-link" href="mailto:witest-group@nyu.edu">WITest help</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="5"><b>Wireless Networking</b></td>
+                  <td><a href="http://witestlab.poly.edu/blog/capture-and-decode-fm-radio/" target="_blank">Capture and decode FM radio</a></td>
+                  <td style="text-align: left">Teaches the basics of FM signal processing using software-defined radio.</td>
+                  <td>Tutorial</td>
+                  <td data-order="2">Intermediate</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>ORBIT</td>
+                  <td>instructors: <a class="mail-link" href="mailto:ffund@nyu.edu">Fraida Fund</a>, students: <a class="mail-link" href="mailto:orbit-user@orbit-lab.org">ORBIT help</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="5"><b>Wireless Networking</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/spectrum-challenge/" target="_blank">Open-ended cognitive radio design challenge</a></td>
+                  <td style="text-align: left"> Students learn about wireless communications and software radio in the context of a Spectrum Challenge-like cognitive radio competition. </td>
+                  <td>Advanced project</td>
+                  <td data-order="4">Expert</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>WITest</td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="5"><b>Wireless Networking</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/frequency-hopping-spread-spectrum/" target="_blank">Frequency hopping spread spectrum</a></td>
+                  <td style="text-align: left"> Learn how a frequency hopping transmitter works and observe at FHSS signal transmitted over the air using software defined radio devices.</td>
+                  <td>Tutorial</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>2</td>
+                  <td></td>
+                  <td></td>
+                  <td>ORBIT</td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="5"><b>Wireless Networking</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/channel-planning-in-802-11-understanding-the-effect-of-nearby-networks/" target="_blank">
+                      Channel planning in 802.11: understanding the effect of nearby networks</a></td>
+                  <td style="text-align: left">When neighboring 802.11 networks operate on the same channel, they compete with one another to use the
+                      shared medium. In this experiment, you will observe the effect on throughput when neighboring cells operate on the same channel vs.
+                      on non-interfering channels.</td>
+                  <td>Assignment</td>
+                  <td data-order="1">Beginner</td>
+                  <td>6</td>
+                  <td></td>
+                  <td></td>
+                  <td>ORBIT or WITest</td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="5"><b>Wireless Networking</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/802-11-wireless-lan-2/" target="_blank">Understanding the 802.11 Wireless LAN MAC frame format</a></td>
+                  <td style="text-align: left">In this experiment, we will capture traffic on an 802.11 network and observe the 802.11 MAC frame fields using Wireshark.</td>
+                  <td>Assignment</td>
+                  <td data-order="1">Beginner</td>
+                  <td>3</td>
+                  <td></td>
+                  <td></td>
+                  <td>ORBIT or WITest</td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="7"><b>Security</b></td>
+                  <td><a href="http://witestlab.poly.edu/blog/conduct-a-simple-man-in-the-middle-attack-on-a-wifi-hotspot/" target="_blank">
+                      Run a Man-in-the-Middle attack on a WiFi hotspot</a></td>
+                  <td style="text-align: left">Shows how an attacker can capture traffic on a WiFi hotspot with a simple man-in-the-middle attack.</td>
+                  <td>Tutorial</td>
+                  <td data-order="3">Advanced</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>ORBIT or WITest</td>
+                  <td>instructors: <a class="mail-link" href="mailto:ffund@nyu.edu">Fraida Fund</a>, students: <a class="mail-link" href="mailto:orbit-user@orbit-lab.org">ORBIT help</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="7"><b>Security</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/passive-sniffing-in-802-11-networks/" target="_blank">Passive Sniffing in 802.11 Networks</a></td>
+                  <td style="text-align: left">Observe the level of confidentiality provided by three kinds of WiFi networks -
+                      an open WiFi network, a WEP network, and a WPA network.</td>
+                  <td>Tutorial</td>
+                  <td data-order="2">Intermediate</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>ORBIT or WITest</td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="7"><b>Security</b></td>
+                  <td><a href="http://witestlab.poly.edu/blog/slowloris/" target="_blank"><span class="icon">Layer 7 DoS attack with slowloris</span></a></td>
+                  <td style="text-align: left">This experiment explores slowloris, a Layer 7 denial of service attack that requires very little bandwidth and causes vulnerable web servers to stop accepting connections to other users.</td>
+                  <td>Tutorial</td>
+                  <td data-order="2">Intermediate</td>
+                  <td><center>2</center></td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="7"><b>Security</b></td>
+                  <td><a href="https://witestlab.poly.edu/blog/redirect-traffic-to-a-wrong-or-fake-site-with-dns-spoofing-on-a-lan/" target="_blank">
+                      Redirect traffic to a wrong or fake site with DNS spoofing on a LAN</a></td>
+                  <td style="text-align: left">Experimental demonstration of two ways a malicious attacker might use DNS spoofing to redirect traffic
+                      for a website to its own "fake" version of a website.</td>
+                  <td>Tutorial</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>3</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon">&nbsp;</span>Fraida Fund</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="7"><b>Security</b></td>
+                  <td><a href="http://mountrouidoux.people.cofc.edu/CyberPaths/networktrafficandddos.html" target="_blank">
+                      Network Traffic and Denial of Service Lab</a></td>
+                  <td style="text-align: left">Students will obtain an experiential perspective of a DDoS attack, save network traffic logs,
+                      and use Wireshark to generate graphs from the network traffic logs.</td>
+                  <td>Tutorial</td>
+                  <td data-order="1">Beginner</td>
+                  <td>4</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:mountrouidoux@cofc.edu">Xenia Mountrouidou</a>, <a class="mail-link" href="mailto:xyli@jhu.edu">Xiangyang Li</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="7"><b>Security</b></td>
+                  <td><a href="http://mountrouidoux.people.cofc.edu/CyberPaths/intrusiondetectionsystem_v2.html" target="_blank">Intrusion Detection Systems Lab</a></td>
+                  <td style="text-align: left">Students will use Snort to install an IDS on a real machine, use the IDS to detect DDoS attacks,
+                      create and study IDS rules, and study and understand IDS logs.</td>
+                  <td>Assignment</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>6</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:mountrouidoux@cofc.edu">Xenia Mountrouidou</a>, <a class="mail-link" href="mailto:xyli@jhu.edu">Xiangyang Li</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="7"><b>Security</b></td>
+                  <td><a href="http://mountrouidoux.people.cofc.edu/CyberPaths/correlation.html" target="_blank">Correlation and Mitigation Using SDN Lab</a></td>
+                  <td style="text-align: left">Students will work with Software Defined Networking (SDN) concepts, analyze Snort alerts in real time, and study traffic flow rules.</td>
+                  <td>Assignment</td>
+                  <td data-order="4">Expert</td>
+                  <td>6</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:mountrouidoux@cofc.edu">Xenia Mountrouidou</a>, <a class="mail-link" href="mailto:xyli@jhu.edu">Xiangyang Li</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="7"><b>Security</b></td>
+                  <td><a href="http://mountrouidoux.people.cofc.edu/CyberPaths/csc_lab.html" target="_blank">Covert Storage Channel Communcation with TCP Flags</a></td>
+                  <td style="text-align: left">Students will generate regular network traffic, generate covert storage traffic channel traffic with TCP flag
+                      manipulation, and detect the presence of covert storage traffic in a network.</td>
+                  <td>Assignment</td>
+                  <td data-order="3">Advanced</td>
+                  <td>7</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:mountrouidoux@cofc.edu">Xenia Mountrouidou</a>, <a class="mail-link" href="mailto:xyli@jhu.edu">Xiangyang Li</a></td>
+                </tr>
+
+                <tr>
+                  <td data-order="7"><b>Security</b></td>
+                  <td><a href="http://mountrouidoux.people.cofc.edu/CyberPaths/digital_certificate.html" target="_blank">Certificate Authority</a></td>
+                  <td style="text-align: left">Students will learn about the functions of a certificate authority, understand how a certificate request
+                      is generated and signed, and understand how a web server works and interacts with a certificate authority.</td>
+                  <td>Tutorial</td>
+                  <td data-order="2">Intermediate</td>
+                  <td>4</td>
+                  <td>&#10004</td>
+                  <td></td>
+                  <td></td>
+                  <td><a class="mail-link" href="mailto:mountrouidoux@cofc.edu">Xenia Mountrouidou</a>, <a class="mail-link" href="mailto:xyli@jhu.edu">Xiangyang Li</a></td>
+                </tr>
+
+              </tbody>
+            </table>
+            <p>
+        </div>
+      </div>
+    </div>
+
+    <!--
+<div class="legend">
+<h2 style="text-align: left">Levels Legend</h2>
+<table>
+    <tr>
+      <th><b></b></th>
+      <th><b>Level</b></th>
+      <th><b>Description</b></th>
+    </tr>
+    <tr>
+      <td> 0 </td>
+      <td> Newbie </td>
+      <td> Introductory exercises for students with no GENI experience </td>
+    </tr>
+    <tr>
+      <td> 1 </td>
+      <td> Beginner </td>
+      <td> Easy exercises for students with very little GENI experience </td>
+    </tr>
+    <tr>
+      <td> 2 </td>
+      <td> Intermediate </td>
+      <td> Moderately difficult exercises which assume a student is comfortable with GENI and GENI concepts</td>
+    </tr>
+    <tr>
+      <td> 3 </td>
+      <td> Advanced </td>
+      <td> Exercises with a higher degree of complexity, which may require extended time, resources, or thought to complete</td>
+    </tr>
+    <tr>
+      <td> 4 </td>
+      <td> Expert </td>
+      <td> Difficult exercises or projects which may require a high level of GENI proficiency as well as large numbers of resources and/or long durations </td>
+    </tr>
+  </table
+</div>-->
+
+
+    <div class="added">
+      <p>
+        <p>
+          <h2 style="text-align: left">Cloud Computing</h2>
+          <p style="text-align: left">
+            Prasad Calyam of the University of Missouri has used GENI for his Cloud Computing classes and will be happy to share his ideas for labs on GENI. Information regarding the class exercises utilizing GENI can be found <a class="ext-link" href="http://faculty.missouri.edu/calyamp/publications/geni-cclabs-gree14.pdf"
+              target="_blank"><span class="icon"> </span>here</a>. Please feel free to <a class="mail-link" href="mailto:CalyamP@missouri.edu"><span class="icon"> </span>email</a> him for further information.
+          </p>
+          <h2 style="text-align: left">Lab sequence for a bottom-up course in computer networks</h2>
+          <p style="text-align: left">
+            This is a complete bottom-to-top lab sequence for an undergrad course in computer networks, following William Stallings' "Data and Computer Communications" textbook. The main sequence includes 9 lab assignments (approximately one per week during the semester,
+            not including the standard GENI "Lab 0"). There are also 5 "extra" lab exercises for students interested in engaging further with the material. Each lab exercise in the main sequence includes background information, step-by-step instructions
+            for running the experiment, and an "Exercise" section with questions that students may answer.
+          </p>
+          <p style="text-align: left">
+            Website: <a class="ext-link" href="https://witestlab.poly.edu/site/page/experiments-for-classroom"><span class="icon"> </span>https://witestlab.poly.edu/site/page/experiments-for-classroom</a>
+          </p>
+          <p style="text-align: left">
+            Contact: <a class="mail-link" href="mailto:ffund@nyu.edu"><span class="icon"> </span>Fraida Fund</a>.
+          </p>
+          <p style="text-align: left">
+            If changes need to be made to this list, please contact <a class="mail-link" href="mailto:aldenc@live.unc.edu"><span class="icon"> </span>Alden Caron-O'Neill</a> or <a class="mail-link" href="mailto:aikat@cs.unc.edu"><span class="icon"> </span>Jay Aikat</a>.
+            <p>
+    </div>
+  </body>
+
+</html>

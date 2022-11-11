@@ -71,7 +71,7 @@ export let Reply = (props) => {
     <Box
       borderRadius="8px"
       border="2px"
-      borderColor="#3d4953"
+      borderColor={props.colorMode === "dark"? "#3d4953" : "gray.500"}
       overflow="hidden"
       mb={4}
       {...props}
@@ -89,7 +89,7 @@ export let Reply = (props) => {
         alignItems="center"
         justifyContent="space-between"
         padding="8px"
-        bg="#3d4953"
+        bg={mode('gray.400', "#3d4953")}
       >
         <Text fontWeight="semibold">
           Comment as{' '}
@@ -126,9 +126,9 @@ Reply = styled(Reply)`
 
     resize: none;
 
-    background: #13181d;
+    background: ${(props) => (props.colorMode === "dark" ? '#161C21' : '#FFFFFF')};
     padding: 12px;
-    color: #cccccc;
+    color: ${(props) => (props.colorMode === "dark" ? '#cccccc' : '#000000')};
     border: none;
     max-width: 100%;
     min-width: 100%;
