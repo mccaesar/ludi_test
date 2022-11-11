@@ -5,6 +5,7 @@ import {
   Box,
   Text,
   useColorModeValue as mode,
+  useColorMode,
 } from '@chakra-ui/react';
 
 import { Comment } from './Comment';
@@ -16,13 +17,14 @@ export const CommentContainer = ({ resourceId }) => {
   const [selectedPath, setSelectedPath] = useState([]);
   const [isEdit, setEdit] = useState(false);
   const { commentsByResourceId } = useComments(resourceId);
+  const { colorMode } = useColorMode();
 
-  const displayComments = (comments, colorIdx, path) => {
+  const displayComments = (comments, path) => {
     return comments.map((comment, i) => {
       return (
         <Comment
           comment={comment}
-          colorIdx={colorIdx}
+          colorMode={colorMode}
           key={i}
           path={[...path, i]}
           displayComments={displayComments}
@@ -41,8 +43,8 @@ export const CommentContainer = ({ resourceId }) => {
           <CommentContext.Provider
             value={{ path: [selectedPath, setSelectedPath], edit: [isEdit, setEdit] }}
           >
-            <Reply resource={resourceId} />
-            {displayComments(commentsByResourceId, 0, [])}
+            <Reply colorMode={colorMode} resource={resourceId} />
+            {displayComments(commentsByResourceId, [])}
           </CommentContext.Provider>
         </>
       ) : (

@@ -218,7 +218,11 @@ export const ResourcePage = () => {
           p={6}
         >
           <Box w="full">
-            <Text fontSize="4xl" color={mode('black', 'white')}>
+            <Text 
+              fontSize="5xl" 
+              fontWeight="bold"
+              color={mode('black', 'white')}
+            >
               {resource.title}
             </Text>
             <Text
@@ -276,7 +280,7 @@ export const ResourcePage = () => {
               _focus={{}}
             />
             <Text textAlign="center" fontSize="s">
-              {resource.upvoteCount}
+              {resource.upvoteCount} likes
             </Text>
           </Box>
           <Box>

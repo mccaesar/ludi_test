@@ -79,12 +79,12 @@ export const ProfilePage = () => {
           ) : null}
         </>
       ) : (
-        <>
+        <div style={{display: "flex"}}>
           <Text py={10} mx="auto" fontSize="2xl">
             {' '}
             Log in to view your profile.{' '}
           </Text>
-        </>
+        </div>
       )}
     </WithFooter>
   );

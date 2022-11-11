@@ -54,6 +54,7 @@ export const CategoryCard = ({ category }) => {
           <Flex justifyContent="center" direction="column">
             <chakra.h1
               fontSize="lg"
+              fontWeight={"bold"}
               color={useColorModeValue('black', 'white')}
             >
               {category}
