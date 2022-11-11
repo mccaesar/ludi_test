@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CS 144: Introduction to Computer Networking">
+    <title>CS 144: Introduction to Computer Networking</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="stanford.png">
+  </head>
+  <body>
+    <div class="container" role="main">
+    <h2><span class="text-muted">CS 144:</span> <wbr><span class="text-primary">Introduction to Computer Networking</span><span class="text-muted">,<wbr> Fall 2021</span></h2>
+    <div class="progress">
+      <div id="classprogress" class="progress-bar progress-bar-striped" role="progressbar"></div>
+    </div>
+    <div class="row">
+      <div class="page-header">
+        <h3>Course info</h3>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Course basics</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-md-12">
+            <table class="table">
+              <tr><td style="border:none;"><span class="label label-default">Lectures</span></td><td style="border:none;">Mondays & Wednesday, 1:30 p.m.&ndash;3 p.m. in <a href="http://campus-map.stanford.edu/?srch=Hewlett+Teaching+Center+201">Hewlett Teaching Center 201</a></td></tr>
+              <tr><td><span class="label label-default">Lab sessions</span></td><td>Tuesday, 5:30 p.m.&ndash;8:30 p.m. in <a href="http://campus-map.stanford.edu/?srch=320-105">320-105</a></td></tr>
+              <tr>
+                <td><span class="label label-default">Exams</span></td>
+                <td><b>Midterm:</b> Wednesday, Nov. 3 (in class, 1:30-3:30
+                    p.m.). &nbsp; <b>Final:</b> Thursday, Dec. 9 (12:15 - 1:45
+                    p.m., Knight Management Center Auditorium/CEMEX)</td>
+              </tr>
+              <tr>
+                <td><span class="label label-default">Contact</span></td>
+                <td>To contact the course staff, please feel free to use Ed, the lab sessions, or office hours. For private matters or accommodation letters, please email the instructors (cs144-staff@cs.stanford.edu).</td>
+              </tr>
+              <tr><td><span class="label label-default">Syllabus/logistics</span></td><td> <a href="logistics.pdf"><img src="images/pdf.png"> Syllabus/logistics handout</a></td></tr>
+              <tr>
+                <td><span class="label label-default">Ed</span></td>
+                <td><a href="https://edstem.org/us/join/WwbmEy">CS144 on Ed</a></td>
+              </tr>
+              <tr><td><span class="label label-default">Lecture videos (2020)</span></td><td><a href="https://canvas.stanford.edu/courses/143347/external_tools/3367">Canvas Ponopto Course Videos (Fall 2020)</a></td></tr>
+
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">Lecturer</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-md-6">
+            <p>Keith Winstein</p>
+            <p>
+              <span class="text-muted">Email:</span> <img alt="Winstein email address" src="images/keithw-email.svg"><br>
+              <span class="text-muted">Office hours:</span>
+              <ul>
+                <li><i>in person:</i> lab session, Tuesdays 5:30-8:30 p.m.</li>
+                <li><i>Zoom:</i> Wednesdays, 4-5 p.m. (<a href="https://stanford.zoom.us/j/97828236149?pwd=MUU5bTVkV0NwcHBOQmpCZnBFQUFQQT09">Zoom link</a>)</li>
+              </ul>
+            </p>
+          </div>
+        </div>
+      </div>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">Course Assistants</h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-md-4">
+          <p>Jiazheng Zhao<br><span class="text-muted">Email: zodzhao <i>at</i> stanford </span></p>
+        </div>
+        <div class="col-md-4">
+          <p>Deepti Raghavan<br><span class="text-muted">Email: deeptir <i>at</i> cs.stanford </span></p>
+        </div>
+        <div class="col-md-4">
+          <p>Toby Bell<br><span class="text-muted">Email: tbell <i>at</i> stanford </span></p>
+        </div>
+        <div class="col-md-4">
+          <p>Thea Rossman<br><span class="text-muted">Email: tcr6 <i>at</i> stanford </span></p>
+        </div>
+        <div class="col-md-4">
+          <p>Preey Shah<br><span class="text-muted">Email: preey <i>at</i> stanford </span></p>
+        </div>
+      </div>
+    </div>
+<!--
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Video Weeks and Online Quizzes</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <ul>
+            <li><b>Week 1, due Sept. 14 before class</b>
+              <ul>
+                <li><a href="https://canvas.stanford.edu/courses/125023/files/6485979?module_item_id=727528">Video 0: Introduction to the class</a>
+                <li><a href="https://canvas.stanford.edu/courses/125023/quizzes/82732?module_item_id=723301">Honor Code video & quiz</a>
+              </ul>
+            <li><b>Week 2, due Monday Sept. 21 11:59am PDT</b>
+              <ul>
+                <li><a href="https://canvas.stanford.edu/courses/125023">Videos for Unit1: The Internet and IP</a>
+                <li><a href="https://canvas.stanford.edu/courses/125023/quizzes/82679?module_item_id=723338">Unit 1 Completion Quiz</a>
+              </ul>
+            <li><b>Week 3, due Monday Oct. 5 11:59am PDT</b>
+              <ul>
+                <li><a href="https://canvas.stanford.edu/courses/125023">Videos for Unit3: Packet Switching</a>
+                <li><a href="https://canvas.stanford.edu/courses/125023/quizzes/82735">Unit 3 Completion Quiz</a>
+              </ul>
+            <li><b>Week 5, due Monday Oct. 19 11:59am PDT</b>
+              <ul>
+                <li><a href="https://canvas.stanford.edu/courses/125023">Videos for Unit5: Routing</a>
+                <li><a href="https://canvas.stanford.edu/courses/125023/quizzes/82741">Unit 5 Completion Quiz</a>
+              </ul>
+            <li><b>Week 6, due Monday Oct. 26 11:59am PDT</b>
+              <ul>
+                <li><a href="https://canvas.stanford.edu/courses/125023">Videos for Unit6: Lower Layers</a>
+                <li><a href="https://canvas.stanford.edu/courses/125023/quizzes/82713">Unit 6 Completion Quiz</a>
+              </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+-->
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <h3 class="panel-title">Lab Assignment</h3>
+      </div>
+      <div class="panel-body">
+        <span class="label label-default">FAQ</span> <a href="lab_faq.html">Answers to common questions about lab assignment.</a>
+        <p>
+        <div class="row mx-auto" style="height: 32px;"></div>
+        <div class="row">
+          <div class="col-md-5"><a href="https://stanford.edu/class/cs144/vm_howto/">Virtual machine setup instructions</a></div>
+          <div class="col-md-4"><b>Due</b>: best before the 9/21 lab session</div>
+        </div>
+        <div class="row mx-auto" style="height: 32px;"></div>
+        <div class="row">
+          <div class="col-md-5"><a href="assignments/lab0.pdf"><img src="images/pdf.png"> Checkpoint 0: networking warmup</a></div>
+          <div class="col-md-4">Out: Sept. 21, due <b>Sept. 28, 8:30 p.m.</b></div>
+          <div class="col-md-3"><a href="https://github.com/cs144/sponge">Code</a> | <a href="doc/lab0/index.html">Documentation</a></div>
+        </div>
+        <div class="row mx-auto" style="height: 32px;"></div>
+        <div class="row">
+          <div class="col-md-5"><a href="assignments/lab1.pdf"><img src="images/pdf.png"> Checkpoint 1: stitching substrings into a byte stream</a></div>
+          <div class="col-md-4">Out: Sept. 28, due <b>Oct. 8, 5 p.m.</b></div>
+          <div class="col-md-3"><a href="https://github.com/CS144/sponge/tree/lab1-startercode">Code</a> | <a href="doc/lab1/index.html">Documentation</a></div>
+        </div>
+        <div class="row mx-auto" style="height: 32px;"></div>
+        <div class="row">
+          <div class="col-md-5"><a href="assignments/lab2.pdf"><img src="images/pdf.png"> Checkpoint 2: the TCP receiver</a></div>
+          <div class="col-md-4">Out: Sept. 28, due <b>Oct. 15, 5 p.m.</b></div>
+          <div class="col-md-3"><a href="https://github.com/CS144/sponge/tree/lab2-startercode">Code</a> | <a href="doc/lab2/index.html">Documentation</a></div>
+        </div>
+        <div class="row mx-auto" style="height: 32px;"></div>
+        <div class="row">
+          <div class="col-md-5"><a href="assignments/lab3.pdf"><img src="images/pdf.png"> Checkpoint 3: the TCP sender</a></div>
+          <div class="col-md-4">Out: Sept. 28, due <b>Oct. 22, 5 p.m.</b></div>
+          <div class="col-md-3"><a href="https://github.com/CS144/sponge/tree/lab3-startercode">Code</a> | <a href="doc/lab3/index.html">Documentation</a></div>
+        </div>
+        <div class="row mx-auto" style="height: 32px;"></div>
+        <div class="row">
+          <div class="col-md-5"><a href="assignments/lab4.pdf"><img src="images/pdf.png"> Checkpoint 4: the TCP connection</a></div>
+          <div class="col-md-4">Out: Oct. 19, due <b>Nov. 12, 5 p.m.</b></div>
+          <div class="col-md-3"><a href="https://github.com/CS144/sponge/tree/lab4-startercode">Code</a> | <a href="doc/lab4/index.html">Documentation</a></div>
+        </div>
+        <div class="row mx-auto" style="height: 32px;"></div>
+        <div class="row">
+          <div class="col-md-5"><a href="assignments/lab5.pdf"><img src="images/pdf.png"> Checkpoint 5: the network interface</a></div>
+          <div class="col-md-4">Out: Oct. 19, due Nov. 19, 5 p.m.</div>
+          <div class="col-md-3"><a href="https://github.com/CS144/sponge/tree/lab5-startercode">Code</a> | <a href="doc/lab5/index.html">Documentation</a></div>
+        </div>
+
+        <div class="row mx-auto" style="height: 32px;"></div>
+        <div class="row">
+          <div class="col-md-5"><a href="assignments/lab6.pdf"><img src="images/pdf.png"> Checkpoint 6: the IP router</a></div>
+          <div class="col-md-4">Out: Nov. 16, due Dec. 3, 5 p.m.</div>
+          <div class="col-md-3"><a href="https://github.com/CS144/sponge/tree/lab6-startercode">Code</a> | <a href="doc/lab6/index.html">Documentation</a></div>
+        </div>
+        <div class="row mx-auto" style="height: 32px;"></div>
+        <div class="row">
+          <div class="col-md-5"><a href="assignments/lab7.pdf"><img src="images/pdf.png"> Checkpoint 7: putting it all together</a></div>
+          <div class="col-md-4">Out: Nov. 16, due Dec. 3, 5 p.m.</div>
+          <div class="col-md-3"><a href="https://github.com/CS144/sponge/tree/lab7-startercode">Code</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title">Lecture Notes</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-1"><span class="label label-default">Week 1</span></div>
+          <div class="col-md-3">Monday, Sept. 20</div>
+          <div class="col-md-8"><a href="handouts/week-1-logistics.pptx"><img src="images/ppt.png"></a> <a href="handouts/week-1-logistics.pdf"><img src="images/pdf.png"> Stuff you should know about CS144</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-3">Wednesday, Sept. 22</div>
+          <div class="col-md-8"><a href="handouts/week-1-how-the-internet-works.pptx"><img src="images/ppt.png"></a> <a href="handouts/week-1-how-the-internet-works.pdf"><img src="images/pdf.png"> How the Internet works</a></div>
+          <div class="col-md-1"></div>
+          <div class="col-md-3"></div>
+          <div class="col-md-8"><a href="handouts/week-1-reliability.pptx"><img src="images/ppt.png"></a> <a href="handouts/week-1-reliability.pdf"><img src="images/pdf.png"> Reliability (from unreliability)</a></div>
+          <div class="col-md-1"></div>
+          <div class="col-md-3"></div>  
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/14nUBglxBUHn4KkT7ojoC1_9srYAW93sZ7YDN2fCEyiI/">Sep 22 Lecture Notes</a></div>
+          <div class="col-md-1"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"><span class="label label-default">Week 2</span></div>
+          <div class="col-md-3">Monday, Sept. 27</div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/18cJ_R8rmFD8atpDBOXexWd_Rfwqfi8JD7oL4BsnDC6M/">Sep 27 Lecture Notes</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-3">Wednesday, Sept. 29th</div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/1GDm7mflK4RNy1A_4qHMs6TNckh32dMN9boEZxCwf-5Q/">Sep 29 Lecture Notes</a></div>
+          <div class="col-md-1"></div>
+          <div class="col-md-3"></div>
+          <div class="col-md-8"><a href="https://drive.google.com/drive/folders/141fsM7VqaY9B_8FOM7EX_PwPEopzFzfH">Wireshark Exercise (due on Canvas Oct 3rd)</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"><span class="label label-default">Week 3</span></div>
+          <div class="col-md-3">Monday, Oct. 4</div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/1_XSqzSki7gBDi3MYsNARBKjF16lw0GUbw_OPuADLx90/">Oct 4 Lecture Notes</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-8"><a href="handouts/week-3-packet-switching-1.pdf"><img src="images/pdf.png"> Packet switching I</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-8"><a href="handouts/week-3-packet-switching-a.pdf"><img src="images/pdf.png"> More on Packet Switching</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-3">Wednesday, Oct. 6</div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/1HoOO2I3UODN3aaf2wXfpN-tBYl5EPVDaYI7B0I2NZjc/edit?usp=sharing">Oct 6 Lecture Notes</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-8"><a href="handouts/week-3-packet-switching-b.pdf"><img src="images/pdf.png"> Packet switching II</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"><span class="label label-default">Week 4</span></div>
+          <div class="col-md-3">Monday, Oct. 11</div>
+          <div class="col-md-8"><a href="handouts/Why congestion control (2021).pdf"><img src="images/pdf.png">Congestion Control I (Why)</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-3"></div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/1fu19hFXHRb0BShsYPPrORXve37VHKul50kUl7uMK0-Y/edit?usp=sharing">Oct 11 Lecture Notes</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-3">Wednesday, Oct. 13</div>
+          <div class="col-md-8"><a href="handouts/Routing Lecture 1.pptx"><img src="images/ppt.png"></a> <a href="handouts/Routing Lecture 1.pdf"><img src="images/pdf.png">Routing I</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"><span class="label label-default"></span></div>
+          <div class="col-md-3"></div>
+          <div class="col-md-8"><a href="handouts/Routing Lecture 2.pptx"><img src="images/ppt.png"></a> <a href="handouts/Routing Lecture 2.pdf"><img src="images/pdf.png">Routing II</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"><span class="label label-default">Week 5</span></div>
+          <div class="col-md-3">Monday, Oct. 18</div>
+          <div class="col-md-8"><a href="handouts/What congestion control.pdf"><img src="images/pdf.png">Congestion Control II (What)</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-3"></div>
+          <div class="col-md-8"><a href="handouts/How congestion control.pdf"><img src="images/pdf.png">Congestion Control III (How)</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-3"></div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/1q-P-mHoDa5eDJDC4TcaEFEPvSjd3gkcCR0-fDoKaGfM/edit?usp=sharing">Oct 18 Lecture Notes</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"><span class="label label-default">Week 6</span></div>
+          <div class="col-md-3">Monday, Oct. 25</div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/10u1V4QSCsCAZJ7030jCBCcy9eBJ2WCcyb_XACV-Ya8U/edit?usp=sharing">Oct 25 Lecture Notes</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-3">Wednesday, Oct. 27</div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/1si5O6YMoe5juqsGAtKle54WceZzWvKz_Mdygfwlj0s0/">Oct 27 Lecture Notes</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"><span class="label label-default">Week 7</span></div>
+          <div class="col-md-3">Monday, Nov. 1</div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/1XCpINomuByeIkSILaAiA6spzmP0D_wHBHYxkyuVw8Vo/">Nov 1 Lecture Notes</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-3">Wednesday, Nov. 3</div>
+          <div class="col-md-8">Midterm!</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"><span class="label label-default">Week 8</span></div>
+          <div class="col-md-3">Monday, Nov. 8</div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/1GoNLeYbRfw9wwZwDKhOz_JP_S5KOiLJvploe2BQR2cc">Nov 8 Lecture Notes</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-3">Wednesday, Nov. 10</div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/1-h0VWAPUTMI13UAVqq1jY_NNryb5QBw0mEW85LCszdk/">Nov 10 Lecture Notes</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-1"><span class="label label-default">Week 9</span></div>
+          <div class="col-md-3">Monday, Nov. 15</div>
+          <div class="col-md-8"><a href="https://docs.google.com/document/d/1uELIDviPu5qBEJEOmcgpbgQW-SMP2Lr7wkquParGxkk/edit?usp=sharing">Nov 15 Lecture Notes</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="page-header">
+        <h3>Schedule</h3>
+      </div>
+      <div class="col-md-12">
+        <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FLos_Angeles&amp;src=czNxM2IyNm44bGliYjJsaGdlNjFoZnZwYzBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%233F51B5&amp;showTitle=1&amp;showNav=1&amp;showDate=1&amp;showPrint=0&amp;showTabs=1&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+      </div>
+    </div>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/smartquotes.js"></script>
+    <script>smartquotes()</script>
+    <script>document.getElementById("classprogress").style.width = 100 * ((new Date().getTime() - 1632169800000) / 6229800000) + "%";</script>
+  </body>
+</html>
