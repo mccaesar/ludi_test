@@ -62,8 +62,7 @@ export const HomePage = () => {
       {/* Tagline */}
       <Center pt={4}>
         <Text fontSize="md" as="i" textAlign="center">
-          Search hundreds of resources for teaching and learning computer
-          science
+        Search hundreds of resources for teaching, researching, and learning computer systems and networking
         </Text>
       </Center>
 
