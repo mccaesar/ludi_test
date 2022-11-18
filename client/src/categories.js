@@ -25,5 +25,5 @@ export const CATEGORIES = {
     "Mailing Lists and News Feeds": "places you can get up to date news and updates on computer networking",
     "Infrastructures": "software and cloud-based databases",
     "Simulators": "platforms to help you simulate networks [please change the name to “Simulators” and also add AirSim and Gazebo",
-    "Syllabuses": "outline of subjects to be covered in networking courses"
+    "Syllabuses": "syllabuses from networking courses at different universities"
 }
