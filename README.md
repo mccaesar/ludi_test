@@ -30,9 +30,7 @@ Now you are all set to edit the project on our local device.
 
 If you are on Window and `'rm' is not recognized as an internal or external command, operable program or batch file.`
 
-this showed up when trying to run `yarn start`
-
-on server. Type `npm config set script-shell bash`
+this showed up when trying to run `yarn start` on server. Type `npm config set script-shell bash`
 
 in the terminal to solve the problem.
 
