@@ -1,16 +1,54 @@
+Open Library For Computer Networking
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+If you did not install Create React in your local device yet, please follow the instruction on this website and install Create React: WEBSITE
 
-In the project directory, you can run:
+## Necassary Steps
+
+In the project directory, you need to go to ludi_test folder, server folder, and client folder and run
+
+### `yarn install`
+
+This ensures that your device is ready to use Create React in your local environment.
+
+Next, go to the server folder and run
 
 ### `yarn start`
 
-Runs the app in the development mode.<br />
+This will start the server and make your local device as a host.
+
+Then, open another terminal and do not close the previous one.
+
+Go to the client folder and run
+
+### `yarn start`
+
+This will run the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
+
+Now you are all set to edit the project on our local device.
+
+## Common Questions
+
+If you are on Window and 
+
+### 'rm' is not recognized as an internal or external command, operable program or batch file.
+
+this showed up when trying to run
+
+### `yarn start`
+
+on server. Type 
+
+### npm config set script-shell bash
+
+in the terminal to solve the problem.
+
+## Other Avaliable Script
 
 ### `yarn test`
 

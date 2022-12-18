@@ -6,6 +6,9 @@ import { CategoryCard } from '../../components/CategoryCard';
 import { Heading } from '@chakra-ui/react';
 import { CATEGORIES } from '../../categories';
 
+import { Text, Center, Stack} from '@chakra-ui/react';
+import { chakra, useColorModeValue} from '@chakra-ui/react';
+
 export const CategoryPage = () => {
 
     const categoriesList = Object.keys(CATEGORIES).map(function(key, index) 
@@ -15,10 +18,15 @@ export const CategoryPage = () => {
         <WithFooter>
             <Navbar />
     
-            <Heading pt={10} pb={5} textAlign="center" mx="auto" fontSize="3xl"> Categories </Heading>
+            <Heading pt={10} pb={2} textAlign="center" mx="auto" fontSize="3xl"> Categories </Heading>
+            <center pt={4}>
+                <chakra.h2> 
+                Explore different categories of resources
+                </chakra.h2>
+            </center>
             <Box
                 as="section"
-                bg={mode('white', 'gray.800')}
+                bg={mode('white', 'grey.800')}
                 px={{ base: '6', md: '8' }}
                 // py={{ base: '10', sm: '24' }}
                 maxW={{ base: 'xl', md: '7xl' }}

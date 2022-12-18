@@ -1,6 +1,6 @@
 // import { useHistory } from 'react-router-dom';
 import { Center, Text, SimpleGrid, Box } from '@chakra-ui/react';
-import { Logo } from './Logo';
+import { Logo2, Logo1 } from './Logo';
 import { CannedSearch } from './CannedSearch';
 import { LinkArea } from './LinkArea';
 import { CannedProfilePage } from './CannedProfilePage';
@@ -56,7 +56,11 @@ export const HomePage = () => {
 
       {/* LUDI logo */}
       <Center pt={20}>
-        <Logo />
+        <Logo1 />
+      </Center>
+
+      <Center pt={2}>
+        <Logo2 />
       </Center>
 
       {/* Tagline */}
