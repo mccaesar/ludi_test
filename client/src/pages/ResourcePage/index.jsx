@@ -200,7 +200,7 @@ export const ResourcePage = () => {
         bg={mode('white', 'gray.800')}
         overflow="hidden"
         rounded="md"
-        maxW={{ base: '2xl', md: '6xl' }}
+        maxW={{ base: '3xl', md: '6xl' }}
         justifyContent="center"
         h="full"
         mx="auto"

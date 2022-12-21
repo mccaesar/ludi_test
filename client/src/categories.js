@@ -1,9 +1,10 @@
 export const CATEGORIES = {
+    "Syllabuses": "outline of subjects to be covered in networking courses",
+    "Videos and Online Courses": "courses and videos that can teach you more about networking", 
     "Learning Management Systems": "systems to manage course functions online",
     "SDN Controllers": "server software for the “brains” of a software-defined network",
     "Videocasting Platforms": "software to help you record and broadcast videos",
     "Testbeds": "resources to help you build physical or virtual testbeds",
-    "Videos and Online Courses": "courses and videos that can teach you more about networking", 
     "Videos": "videos that can teach you more about networking", 
     "Examination Platforms": "platforms to help you host exams/quizzes online",
     "Professional Societies": "groups you can join to meet other people interested in computer networking",
@@ -24,6 +25,5 @@ export const CATEGORIES = {
     "Network Emulators": "platforms that help you set up testbeds of emulated networks",
     "Mailing Lists and News Feeds": "places you can get up to date news and updates on computer networking",
     "Infrastructures": "software and cloud-based databases",
-    "Simulators": "platforms to help you simulate networks [please change the name to “Simulators” and also add AirSim and Gazebo",
-    "Syllabuses": "outline of subjects to be covered in networking courses"
+    "Simulators": "platforms to help you simulate networks [please change the name to “Simulators” and also add AirSim and Gazebo"
 }
