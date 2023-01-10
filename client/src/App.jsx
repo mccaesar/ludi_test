@@ -17,6 +17,8 @@ import { UploadPage } from './pages/UploadPage';
 import { AboutPage } from './pages/AboutPage';
 import { ActiveUserPage } from './pages/ActiveUserPage';
 import { ViewProfilePage } from './pages/ViewProfilePage';
+import { PasswordRequestPage } from './pages/PasswordRequestPage';
+import { PasswordResetPage } from './pages/PasswordResetPage';
 import { CategoryPage } from './pages/CategoryPage';
 import { AdminPage } from './pages/AdminPage';
 import { EditPage } from './pages/EditPage';
@@ -47,6 +49,8 @@ const App = () => (
             <Route path="/login" exact component={LoginPage} />
             <Route path="/upload" exact component={UploadPage} />
             <Route path="/about" exact component={AboutPage} />
+            <Route path="/password/reset" exact component={PasswordRequestPage} />
+            <Route path="/password/reset/:index" component={PasswordResetPage} />
             <Route path="/peer-favorites" exact component={ActiveUserPage} />
             <Route path="/category/:category" component={CategoryResultPage} />
             <Route path="/category" component={CategoryPage} />

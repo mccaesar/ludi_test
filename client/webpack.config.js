@@ -23,7 +23,7 @@ const config = {
   plugins: [
     // new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin({ 
-      title: 'Ludi', 
+      title: 'OLCN', 
       template: 'public/index.html'
     }),
     new webpack.EnvironmentPlugin({

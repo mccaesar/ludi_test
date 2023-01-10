@@ -38,3 +38,19 @@ export const validateLogin = (data) => {
   const isValid = validate(data);
   return { isValid, error: ajv.errors };
 };
+
+
+
+export const validateEmail = (data) => {
+  const schema = {
+    type: 'object',
+    properties: {
+      email: { type: 'string', format: 'email', maxLength: 255 }
+    },
+    required: ['email'],
+    additionalProperties: false,
+  };
+  const validate = ajv.compile(schema);
+  const isValid = validate(data);
+  return { isValid, error: ajv.errors };
+};
