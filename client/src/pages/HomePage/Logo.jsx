@@ -7,7 +7,7 @@ export const Logo1 = () => {
       aria-hidden
       viewBox="0 0 397.97 400"
       fill="none"
-      h="50"
+      h="62.5"
       flexShrink={0}
     >
       <path d={NEW_LOGO} fill={useColorModeValue('#0474dc', 'white')} />
@@ -21,7 +21,7 @@ export const Logo2 = () => {
       aria-hidden
       viewBox="0 0 400 30"
       fill="none"
-      h="30"
+      h="37.5"
       flexShrink={0}
     >
       <path d={WORD_LOGO} fill={useColorModeValue('#72737d', 'white')} />
