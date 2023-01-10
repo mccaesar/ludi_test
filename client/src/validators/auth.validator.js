@@ -13,6 +13,7 @@ export const RegistrationSchema = yup.object().shape({
     .max(50, 'Too Long!'),
   email: yup.string().email('Invalid email').required('No email provided'),
   affiliation: yup.string().required('No affiliation provided'),
+  title: yup.string().required('No title provided'),
   password: yup
     .string()
     .required('No password provided.')

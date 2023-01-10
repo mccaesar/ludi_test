@@ -11,7 +11,7 @@ import { FilterType } from '../../constants/commonVariable';
 import { userApi } from '../../services';
 import { useQuery } from 'react-query';
 
-export const DisplayPage = () => {
+export const ActiveUserPage = () => {
   const {
     isLoading, error, data, isFetching 
   } = useQuery('activeUser', userApi.getActiveUser);
@@ -34,7 +34,7 @@ export const DisplayPage = () => {
       
       <center pt={4}>
         <chakra.h2> 
-              Nothing is pleasanter than exploring a library.
+        Lists of what other people favorited on this site
         </chakra.h2>
       </center>
 

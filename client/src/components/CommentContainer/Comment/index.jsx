@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { useColorModeValue as mode } from '@chakra-ui/react';
+import { useColorMode } from '@chakra-ui/react';
 import styled from 'styled-components';
 
 import Markdown from '../Markdown';
@@ -148,7 +148,7 @@ export let Comment = (props) => {
 Comment = styled(Comment)`
   display: flex;
   text-align: left;
-  background: ${(props) => (props.colorIdx % 2 === 0 ? '#161C21' : '#13181D')};
+  background: ${(props) => (props.colorMode === "dark" ? '#161C21' : '#a0aec0')};
   padding: 16px 16px 16px 12px;
   //   border: 0.1px solid #3d4953;
   border-radius: 8px;
@@ -207,7 +207,7 @@ Comment = styled(Comment)`
       }
 
       #username {
-        color: #4f9eed;
+        color: ${(props) => (props.colorMode === "dark" ? '#4f9eed' : '#1b7ced')};
       }
 
       #date {
@@ -221,7 +221,7 @@ Comment = styled(Comment)`
     }
 
     #content {
-      color: #cccccc;
+      color: ${(props) => (props.colorMode === "dark" ? '#cccccc' : '#000000')};
 
       &.hidden {
         display: none;

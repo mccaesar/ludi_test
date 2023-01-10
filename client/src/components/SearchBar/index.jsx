@@ -3,6 +3,8 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import {
   Box,
+  Button,
+  IconButton,
   CloseButton,
   Input,
   InputGroup,
@@ -12,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffectOnce } from '../../hooks/useEffectOnce';
 import { URISearchParamOptions } from '../../constants/filter.constant';
+import { SearchIcon } from '@chakra-ui/icons';
 
 export const SearchBar = () => {
   const history = useHistory();
@@ -28,7 +31,18 @@ export const SearchBar = () => {
   });
 
   const handleSearch = (e) => {
-    if (e.code === 'Enter') {
+    // if (e.code === 'Enter') {
+    //   e.preventDefault();
+    //   query.set(URISearchParamOptions.SearchTerm, searchTerm);
+    //   history.push(`/search?${query}`);
+    // }
+    e.preventDefault();
+    query.set(URISearchParamOptions.SearchTerm, searchTerm);
+    history.push(`/search?${query}`);
+  };
+
+  const handleEnter = (e) => {
+    if (e.code === 'Enter' || e.code === 'Go' || e.code === 'Next' || e.keyCode === 13) {
       e.preventDefault();
       query.set(URISearchParamOptions.SearchTerm, searchTerm);
       history.push(`/search?${query}`);
@@ -49,19 +63,25 @@ export const SearchBar = () => {
       mx="auto"
     >
       <InputGroup>
-        <InputLeftElement pointerEvents="none" children={<AiOutlineSearch />} />
+        {/* <InputLeftElement pointerEvents="none" children={<AiOutlineSearch />} > */}
+        <InputLeftElement>
+          <IconButton icon={<SearchIcon/>} onClick={handleSearch} variant='link'></IconButton>
+        </InputLeftElement>
         <Input
+          tabIndex="0"
           bg={useColorModeValue('gray.100', 'gray.800')}
           placeholder="Search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={handleSearch}
+          onKeyDown={handleEnter}
           rounded="full"
         />
+        
         <InputRightElement>
           <CloseButton size="sm" onClick={clearSearch} />
         </InputRightElement>
       </InputGroup>
+      
     </Box>
   );
 };

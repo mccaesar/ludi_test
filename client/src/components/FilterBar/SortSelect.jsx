@@ -6,6 +6,10 @@ import Select from '../Select';
 import { useEffectOnce } from '../../hooks/useEffectOnce';
 import { URISearchParamOptions } from '../../constants/filter.constant';
 
+import axios from 'axios';
+import { API_URI } from '../../config';
+import { useUser } from '../../hooks/useUser';
+
 export const SortSelect = () => {
   const history = useHistory();
   const url = useLocation();
@@ -23,6 +27,23 @@ export const SortSelect = () => {
     { value: 'old', label: 'Oldest' },
   ];
 
+  const { user } = useUser();
+
+  const logActivity = (url) => {
+    const metadata = {
+      author: user ? user._id : null,
+      url: url,
+      ip: '',
+    };
+    axios.put(`${API_URI}/logging/loggingUrl`, metadata)
+    .catch(function(error) {
+      if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+      }
+    });
+  }
+
   useEffectOnce(() => {
     const initialSortOption = query.get(URISearchParamOptions.Sort);
     if (initialSortOption) {
@@ -31,6 +52,7 @@ export const SortSelect = () => {
     if (isSearching && !initialSortOption) {
       setSelectedSort('relevance');
       query.set(URISearchParamOptions.Sort, 'relevance');
+      logActivity(`/search?${query}`);
       history.replace(`/search?${query}`);
     }
   });
@@ -39,6 +61,7 @@ export const SortSelect = () => {
     if (!isSearching && selectedSort === 'relevance') {
       setSelectedSort(null);
       query.delete(URISearchParamOptions.Sort);
+      logActivity(`/search?${query}`);
       history.replace(`/search?${query}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,6 +72,7 @@ export const SortSelect = () => {
     if (currentSort) {
       setSelectedSort(currentSort);
       query.set(URISearchParamOptions.Sort, currentSort);
+      logActivity(`/search?${query}`);
       history.replace(`/search?${query}`);
     }
   };
@@ -56,6 +80,7 @@ export const SortSelect = () => {
   return (
     <Box w="3xs">
       <Select
+        styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
         name="sortSelect"
         placeholder="Sort by..."
         closeMenuOnSelect={true}

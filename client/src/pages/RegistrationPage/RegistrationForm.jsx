@@ -48,6 +48,7 @@ export const RegistrationForm = () => {
           lastName: values.lastName,
           email: values.email,
           affiliation: values.affiliation,
+          title: values.title,
           password: values.password,
         };
         try {
@@ -133,6 +134,23 @@ export const RegistrationForm = () => {
           />
           <FormErrorMessage>
             {errors?.affiliation?.message || responseError}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          isInvalid={!!errors?.title || responseError}
+          errortext={errors?.title?.message || responseError}
+        >
+          <FormLabel mb={1}>Title</FormLabel>
+          <Input
+            borderColor={mode('gray.400', 'gray.600')}
+            id="title"
+            type="text"
+            onChange={() => setResponseError(null)}
+            {...register('title')}
+          />
+          <FormErrorMessage>
+            {errors?.title?.message || responseError}
           </FormErrorMessage>
         </FormControl>
 

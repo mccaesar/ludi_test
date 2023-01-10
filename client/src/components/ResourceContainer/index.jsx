@@ -4,7 +4,7 @@ import { ResourceCard2 } from './ResourceCard2';
 import { FilterType } from '../../constants/commonVariable';
 
 
-export const ResourceContainer = ({ resources, type }) => {
+export const ResourceContainer = ({ resources, type, showLikeButton }) => {
   if(type === FilterType.SHOW_RESOURCES){
     return (
       <>
@@ -19,7 +19,7 @@ export const ResourceContainer = ({ resources, type }) => {
           >
             <SimpleGrid columns={{ base: 1, lg: 2 }} spacing="12" mb="10">
               {resources.map((resource) => (
-                <ResourceCard resource={resource} key={resource._id} />
+                <ResourceCard resourceBasic={resource} showLikeButton = {showLikeButton} key={resource._id} />
               ))}
             </SimpleGrid>
           </Box>

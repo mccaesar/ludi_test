@@ -1,6 +1,6 @@
 // import { useHistory } from 'react-router-dom';
 import { Center, Text, SimpleGrid, Box } from '@chakra-ui/react';
-import { Logo } from './Logo';
+import { Logo2, Logo1 } from './Logo';
 import { CannedSearch } from './CannedSearch';
 import { LinkArea } from './LinkArea';
 import { CannedProfilePage } from './CannedProfilePage';
@@ -40,10 +40,15 @@ export const HomePage = () => {
   //"Help my students break the ice" --> should search for category:"Interaction Platforms" OR tag:social (can you handle ORs?)
   const cannedSearch4 = 'Help my students break the ice';
   const cannedParams4 = new URLSearchParams();
-  cannedParams4.set('field', '');
-  cannedParams4.append('tag', 'interaction platforms');
-  cannedParams4.append('tag', 'social');
+  cannedParams4.set('q', 'Interaction Platforms');
+  cannedParams4.set('field', 'category');
+  //cannedParams4.append('tag', 'social');
 
+  //""
+  const cannedSearch5 = 'Create my own mini internet';
+  const cannedParams5 = new URLSearchParams();
+  cannedParams5.set('q', 'Emulator');
+  cannedParams5.set('field', 'category');
 
   return (
     <WithFooter>
@@ -51,14 +56,17 @@ export const HomePage = () => {
 
       {/* LUDI logo */}
       <Center pt={20}>
-        <Logo />
+        <Logo1 />
+      </Center>
+
+      <Center pt={2}>
+        <Logo2 />
       </Center>
 
       {/* Tagline */}
       <Center pt={4}>
         <Text fontSize="md" as="i" textAlign="center">
-          Search hundreds of resources for teaching and learning computer
-          science
+        Search hundreds of resources for teaching, researching, and learning computer systems and networking
         </Text>
       </Center>
 
@@ -67,7 +75,7 @@ export const HomePage = () => {
       <Box p={10}></Box>
 
       {/* Canned Search Options */}
-      <Center pt={10}>
+      <Center pt={8}>
         <Text fontSize="lg">I want to...</Text>
       </Center>
 
@@ -76,6 +84,8 @@ export const HomePage = () => {
           <LinkArea text={cannedSearch1}/>
           <CannedSearch searchParams={cannedParams2} text={cannedSearch2}/>
           <CannedSearch searchParams={cannedParams3} text={cannedSearch3}/>
+          <CannedSearch searchParams={cannedParams4} text={cannedSearch4}/>
+          <CannedSearch searchParams={cannedParams5} text={cannedSearch5}/>
           <CannedProfilePage/>
         </SimpleGrid>
       </Center>

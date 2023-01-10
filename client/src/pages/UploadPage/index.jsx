@@ -19,7 +19,7 @@ export const UploadPage = () => {
         <Center py={2}>
           <iframe
             title="Upload Form"
-            src="https://docs.google.com/forms/d/e/1FAIpQLScDnl0EqT7Kb_tsGRcqGHFEVZjN8DqKSpwql7CUwsmw_Qs9Iw/viewform?embedded=true"
+            src="https://docs.google.com/forms/d/e/1FAIpQLScrDrIYUhktT6fgkVsPn_AVl3pAWj5JEwoUmbDCEpZ_39qMpw/viewform?embedded=true"
             width="700"
             height="700"
             frameborder="0"

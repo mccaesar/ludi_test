@@ -4,8 +4,23 @@ dotenv.config();
 import express from 'express';
 import db from '../models/index.js';
 
+import logger from '../utils/logger.js';
+
 const router = express.Router();
 const { Comment, Resource, User } = db;
+
+const buildLogContent = (req) => {
+  const logContent = {
+    metadata: {
+      author: req.user._id,
+      resource: req.body.resource,
+      content: req.body.content,
+      ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+      commentId: req.params.commentId,
+    }
+  }
+  return logContent
+};
 
 const buildCommentTrees = (comments, rootDepth = 1) => {
   // Sort comments from "leaf" to "root"
@@ -174,14 +189,19 @@ export const createComment = async (req, res, next) => {
     });
     const createdComment = await comment.save();
 
+    const logContent = buildLogContent(req);
+    
     if (createdComment) {
+      logger.info('successfully create comment', { ...logContent, action: 'create comment' });
       res.status(200).send(createdComment);
     } else {
+      logger.error('Some error occurred while creating comment.', { ...logContent, action: 'create comment' });
       res
         .status(404)
         .send({ message: 'Some error occurred while creating comment.' });
     }
   } catch (err) {
+    logger.error('Some error occurred while creating comment.', { ...logContent, action: 'create comment' });
     res.status(404).send({
       message: err.message || 'Some error occurred while creating comment.',
     });
@@ -190,13 +210,16 @@ export const createComment = async (req, res, next) => {
 
 export const editComment = async (req, res, next) => {
   const { commentId } = req.params;
+  const logContent = buildLogContent(req);
   try {
     const toEdit = await Comment.findOne({ _id: commentId });
-    if (toEdit.author != req.user._id) {
+    if (req.user._id.toString() != toEdit.author.toString()) {
+      logger.error('not authorized to edit this comment.', { ...logContent, action: 'edit comment'});
       res.status(401).send({
         message: 'You are not authorized to edit this comment.',
       });
     }
+
     const editedComment = await Comment.updateOne(
       {
         _id: commentId,
@@ -207,13 +230,16 @@ export const editComment = async (req, res, next) => {
     );
 
     if (editedComment.nModified > 0) {
+      logger.info('successfully edit comment', { ...logContent, action: 'edit comment' });
       res.status(200).send(editedComment);
     } else if (editedComment.n == 0) {
+      logger.error('No comment with ID', { ...logContent, action: 'edit comment'});
       return res
         .status(404)
         .send({ message: `No comment with ID: ${commentId}` });
     }
   } catch (err) {
+    logger.error('Some error occurred while editing comment.', { ...logContent, action: 'edit comment'});
     res.status(404).send({
       message: err.message || 'Some error occurred while editing comment.',
     });
@@ -222,6 +248,7 @@ export const editComment = async (req, res, next) => {
 
 export const deleteComment = async (req, res, next) => {
   const { commentId } = req.params;
+  const logContent = buildLogContent(req);
   try {
     const toDelete = await Comment.findOne({ _id: commentId });
     const rootDepth = toDelete.parents.length;
@@ -242,6 +269,7 @@ export const deleteComment = async (req, res, next) => {
         }
       );
       if (erasedComment.nModified > 0) {
+        logger.info('successfully delete root comment', { ...logContent, action: 'delete comment' });
         res.status(200).send(erasedComment);
         return;
       }
@@ -252,15 +280,18 @@ export const deleteComment = async (req, res, next) => {
         _id: commentId,
       });
       if (deletedComment.deletedCount > 0) {
+        logger.info('successfully delete leaf comment', { ...logContent, action: 'delete comment' });
         res.status(200).send(deletedComment);
         return;
       }
     }
     // If the function has not returned then comment not found
+    logger.error('No comment with ID', { ...logContent, action: 'delete comment'});
     return res
       .status(404)
       .send({ message: `No comment with ID: ${commentId}` });
   } catch (err) {
+    logger.error('Some error occurred while deleting comment.', { ...logContent, action: 'delete comment' });
     res.status(404).send({
       message: err.message || 'Some error occurred while deleting comment.',
     });
@@ -269,6 +300,7 @@ export const deleteComment = async (req, res, next) => {
 
 export const upvoteComment = async (req, res, next) => {
   const { commentId } = req.params;
+  const logContent = buildLogContent(req);
   if (!req.user) {
     res.status(401).send({
       message: 'You are not authorized to upvote this comment.',
@@ -286,8 +318,10 @@ export const upvoteComment = async (req, res, next) => {
     );
 
     if (upvotedComment.nModified > 0) {
+      logger.info('successfully upvote comment', { ...logContent, action: 'upvote comment' });
       await Comment.updateOne({ _id: commentId }, { $inc: { upvoteCount: 1 } });
     } else if (upvotedComment.n == 0) {
+      logger.error('No comment with ID', { ...logContent, action: 'upvote comment'});
       return res
         .status(404)
         .send({ message: `No resource with ID: ${commentId}` });
@@ -295,6 +329,7 @@ export const upvoteComment = async (req, res, next) => {
 
     res.status(201).send(upvotedComment);
   } catch (err) {
+    logger.error('Some error occurred while upvoting comment.', { ...logContent, action: 'upvote comment' });
     res.status(404).send({
       message: err.message || 'Some error occurred while upvoting comment.',
     });
@@ -303,6 +338,7 @@ export const upvoteComment = async (req, res, next) => {
 
 export const unupvoteComment = async (req, res, next) => {
   const { commentId } = req.params;
+  const logContent = buildLogContent(req);
   if (!req.user) {
     res.status(401).send({
       message: 'You are not authorized to un-upvote this comment.',
@@ -320,11 +356,13 @@ export const unupvoteComment = async (req, res, next) => {
     );
 
     if (unupvotedComment.nModified > 0) {
+      logger.info('successfully un-upvote comment', { ...logContent, action: 'un-upvote comment' });
       await Comment.updateOne(
         { _id: commentId },
         { $inc: { upvoteCount: -1 } }
       );
     } else if (unupvotedComment.n == 0) {
+      logger.error('No comment with ID', { ...logContent, action: 'un-upvote comment'});
       return res
         .status(404)
         .send({ message: `No resource with ID: ${commentId}` });
@@ -332,6 +370,7 @@ export const unupvoteComment = async (req, res, next) => {
 
     res.status(201).send(unupvotedComment);
   } catch (err) {
+    logger.error('Some error occurred while un-upvoting a comment.', { ...logContent, action: 'un-upvote comment' });
     res.status(404).send({
       message: err.message || 'Some error occurred while un-upvoting comment.',
     });

@@ -26,14 +26,32 @@ import { useUser } from '../../hooks/useUser';
 import { useQuery } from 'react-query';
 import { userApi } from '../../services';
 
+import axios from 'axios';
+import { API_URI } from '../../config';
+
 
 export const Navbar = () => {
-    const bg = useColorModeValue('gray.50', 'gray.900');
-    const mobileNav = useDisclosure();
-    const searchModal = useDisclosure();
-    const { toggleColorMode } = useColorMode();
+  const bg = useColorModeValue('gray.50', 'gray.900');
+  const mobileNav = useDisclosure();
+  const searchModal = useDisclosure();
+  const { toggleColorMode } = useColorMode();
     
   const { user } = useUser();
+
+  const logActivity = (url) => {
+    const metadata = {
+      author: user ? user._id : null,
+      url: url,
+      ip: '',
+    };
+    axios.put(`${API_URI}/logging/loggingUrl`, metadata)
+    .catch(function(error) {
+      if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+      }
+    });
+  }
 
   return (
     <>
@@ -68,10 +86,13 @@ export const Navbar = () => {
           >
 
               <Stack direction={'row'} spacing={6} mr={4}>
-                  <Link href={'/'}>Home</Link>
-                  <Link href={'/about'}>About</Link>
-                  <Link href={'/upload'}>Submission</Link>
-                  <Link href="mailto:ludi@illinois.edu">Contact</Link>
+                  <Link href={'/'} onClick={() => logActivity('/')}>Home</Link>
+                  <Link href={'/about'} onClick={() => logActivity('/about')}>About</Link>
+                  <Link href={'/category'} onClick={() => logActivity('/catgory')}>Categories</Link>
+                  <Link href={'/peer-favorites'} onClick={() => logActivity('/peer-favorites')}>Favorites</Link>
+                  <Link href={'/upload'} onClick={() => logActivity('/upload')}>Submission</Link>
+                  <Link href="mailto:ludi-help@illinois.edu">Contact</Link>
+                  {user && user.role == "ADMIN" ? <Link href={'/admin'}>Admin</Link> : <></>}
               </Stack>
 
 

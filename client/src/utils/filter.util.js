@@ -116,11 +116,11 @@ function sortResults({ results, sortOption }) {
       );
     case 'old':
       return results.sort((a, b) =>
-        a.dateAdded.substring(0, 10) > b.dateAdded.substring(0, 10) ? 1 : -1
+        a.dateSubmitted.substring(0, 10) > b.dateSubmitted.substring(0, 10) ? 1 : -1
       );
     case 'new':
       return results.sort((a, b) =>
-        a.dateAdded.substring(0, 10) < b.dateAdded.substring(0, 10) ? 1 : -1
+        a.dateSubmitted.substring(0, 10) < b.dateSubmitted.substring(0, 10) ? 1 : -1
       );
     default:
       return results;
