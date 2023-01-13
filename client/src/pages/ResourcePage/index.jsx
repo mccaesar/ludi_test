@@ -280,7 +280,7 @@ export const ResourcePage = () => {
               _focus={{}}
             />
             <Text textAlign="center" fontSize="s">
-              {resource.upvoteCount} likes
+              {resource.upvoteCount} {resource.upvoteCount < 2 ? (<text>like</text>) : (<text>likes</text>)}
             </Text>
           </Box>
           <Box>
