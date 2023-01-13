@@ -19,6 +19,13 @@ export const getActiveUser = async () => {
     .catch((err) => console.error(err));
 };
 
+export const getProfessionalUsers = async () => {
+  return await axios
+    .get(`${API_URI}/professional-users`)
+    .then(({ data }) => data)
+    .catch((err) => console.error(err));
+};
+
 export const getUserById = async (id) => {
   return await axios
     .get(`${API_URI}/user/${id}`)

@@ -14,7 +14,7 @@ import { useQuery } from 'react-query';
 export const ActiveUserPage = () => {
   const {
     isLoading, error, data, isFetching 
-  } = useQuery('activeUser', userApi.getActiveUser);
+  } = useQuery('activeUser', userApi.getProfessionalUsers);
 
 
   return (
