@@ -45,7 +45,6 @@ export const getAllUsers = async (req, res, next) => {
 
 export const getAllActiveUsers = async (req, res, next) => {
   try {
-    // const users = await User.find({'savedResources.2': {$exists: true}});
     const users = await User.aggregate(
       [
         {
@@ -69,7 +68,30 @@ export const getAllActiveUsers = async (req, res, next) => {
   }
 };
 
-
+export const getProfessionalUsers = async (req, res, next) => {
+  try {
+    const users = await User.aggregate(
+      [
+        {
+          $match: {'title': "Professor"}
+        },
+        {$lookup:
+          {
+            from: 'resources',
+            localField: 'upvotedResources',
+            foreignField: '_id',
+            as: 'upvotedResourcesPopulated'
+          }
+        }
+      ]  
+    );
+    res.status(200).send(users);
+  } catch (err) {
+    res.status(404).send({
+      message: err.message || 'Some error occurred while getting all active users.',
+    });
+  }
+};
 
 
 
