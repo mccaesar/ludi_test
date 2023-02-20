@@ -32,6 +32,32 @@ export const getUserById = async (req, res, next) => {
   }
 };
 
+export const getProfessionalUsers = async (req, res, next) => {
+  try {
+    // const users = await User.find({'savedResources.2': {$exists: true}});
+    const users = await User.aggregate(
+      [
+        {
+          $match : { firstName : "Matthew" } 
+        },
+        {$lookup:
+          {
+            from: 'resources',
+            localField: 'upvotedResources',
+            foreignField: '_id',
+            as: 'upvotedResourcesPopulated'
+          }
+        }
+      ]  
+    );
+    res.status(200).send(users);
+  } catch (err) {
+    res.status(404).send({
+      message: err.message || 'Some error occurred while getting all professional users.',
+    });
+  }
+};
+
 export const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find();
