@@ -72,15 +72,15 @@ export const ResourceCard2 = ({ resource }) => {
             color={useColorModeValue('gray.800', 'gray.300')}
           >
 
-        {/* <List spacing={3}>
-          {resource.upvotedResourcesPopulated.map((link) => (
+        <List spacing={3}>
+          {resource.favouriteResourcesPopulated.map((link) => (
           <ListItem key={link}>
             <ListIcon as={MdCheckCircle} color='green.500' /> 
             <Link href={`/resource/${link.index}`}  > {link.title} </Link> 
           </ListItem>    
           ))}
 
-        </List> */}
+        </List>
             
           </chakra.p>
         </Box>

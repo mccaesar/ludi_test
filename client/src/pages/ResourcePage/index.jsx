@@ -246,16 +246,16 @@ export const ResourcePage = () => {
               >
                 Website
               </Button>
-              {resource.index === 75 || resource.tags.includes("syllabus") || resource.index === 157 ? <>
+              {resource.category == "Syllabuses" || resource.index === 157 ? <>
               <Button
                 as="a"
-                //href="/6166ed8eae555bd4d56fba7c.html"
                 download
                 target="_blank"
                 color={mode('black', 'gray.300')}
                 bg={mode('gray.400', 'gray.600')}
+
                 variant="solid"
-                onClick={() => {window.open(`/${resourceIdx}.html`);}}
+                onClick={() => {window.open(`/cached/${resource.index}/${resource.url.replace(/^https?\:\/\//i, "")}`);}}
               >
                 Cached Website
               </Button>

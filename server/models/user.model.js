@@ -29,12 +29,20 @@ const UserSchema = mongoose.Schema(
       enum: ['ADMIN', 'EDUCATOR', 'STUDENT', 'GUEST'],
       default: 'GUEST',
     },
+    isFamousPeople: {
+      type: Boolean,
+      default: false,
+    },
     passwordHash: String,
     savedResources: [{
       type: mongoose.Types.ObjectId,
       ref: 'Resource',
     }],
     upvotedResources: [{
+      type: mongoose.Types.ObjectId,
+      ref: 'Resource',
+    }],
+    favouriteResources: [{
       type: mongoose.Types.ObjectId,
       ref: 'Resource',
     }],
