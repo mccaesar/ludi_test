@@ -8,10 +8,10 @@ export const AboutPage = () => {
     <WithFooter>
       <Navbar />
 
-      <Heading pt={10} pb={5} textAlign="center" mx="auto" fontSize="3xl"> About LUDI </Heading>
+      <Heading pt={10} pb={5} textAlign="center" mx="auto" fontSize="3xl"> About Open Library </Heading>
 
       <Text pb={10} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
-        LUDI aims to create a public web service consisting of a user-friendly database of open computer networking educational sources to provide an organized space for university educators to discover and share relevant software tools.
+        Open Library aims to create a public web service consisting of a user-friendly database of open computer networking educational sources to provide an organized space for university educators to discover and share relevant software tools.
       </Text>
 
       <Heading pt={1} pb={3} textAlign="center" mx="auto" fontSize="3xl"> Curation Committee </Heading>
@@ -54,7 +54,7 @@ export const AboutPage = () => {
       </Text>
 
 
-      <Heading pt={10} pb={3} textAlign="center" mx="auto" fontSize="3xl"> How to use LUDI </Heading>
+      <Heading pt={10} pb={3} textAlign="center" mx="auto" fontSize="3xl"> How to use Open Library </Heading>
 
       {/*  */}
       <Heading pt={5} pb={2} textAlign="center"  mx="auto" textDecoration="underline" fontSize="xl"> Searching: </Heading>

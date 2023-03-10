@@ -38,14 +38,14 @@ export const getProfessionalUsers = async (req, res, next) => {
     const users = await User.aggregate(
       [
         {
-          $match : { firstName : "Matthew" } 
+          $match : { isFamousPeople : true } 
         },
         {$lookup:
           {
             from: 'resources',
-            localField: 'upvotedResources',
+            localField: 'favouriteResources',
             foreignField: '_id',
-            as: 'upvotedResourcesPopulated'
+            as: 'favouriteResourcesPopulated'
           }
         }
       ]  

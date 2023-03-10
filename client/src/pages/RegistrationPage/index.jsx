@@ -40,7 +40,7 @@ export const RegistrationPage = () => {
               /> */}
           <Box mb="8" textAlign={{ base: 'center', md: 'start' }}>
             <Heading size="lg" mb="2" fontWeight="extrabold">
-              Welcome to Ludi
+              Welcome to Open Library
             </Heading>
             <Text
               fontSize="lg"
@@ -84,7 +84,7 @@ export const RegistrationPage = () => {
             color={mode('blue.600', 'blue.200')}
             display={{ base: 'block', md: 'inline-block' }}
           >
-            Log in to Ludi
+            Log in to Open Library
           </Box>
         </Text>
       </Box>

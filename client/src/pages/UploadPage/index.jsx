@@ -12,7 +12,7 @@ export const UploadPage = () => {
         <Text fontSize="lg" textAlign="center">
           We welcome feedback and suggestions for content to be included on this
           site.
-          Please email us at ludi@illinois.edu.
+          Please email us at caesar@illinois.edu.
           Additional resources can be submitted through the form below.
         </Text>
         {/* </Center> */}
