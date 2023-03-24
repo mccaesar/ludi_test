@@ -110,7 +110,7 @@ export const AboutPage = () => {
       <Heading pt={1} pb={3} textAlign="center" mx="auto" fontSize="3xl"> Getting help </Heading>
 
       <Text pb={5} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
-        If you have comments, suggestions, or need help, please email us at ludi-help@illinois.edu 
+        If you have comments, suggestions, or need help, please email us at caesar@illinois.edu  
       </Text>
 
     </WithFooter>
