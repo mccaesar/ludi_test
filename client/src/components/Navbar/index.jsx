@@ -91,7 +91,7 @@ export const Navbar = () => {
                   <Link href={'/category'} onClick={() => logActivity('/catgory')}>Categories</Link>
                   <Link href={'/peer-favorites'} onClick={() => logActivity('/peer-favorites')}>Favorites</Link>
                   <Link href={'/upload'} onClick={() => logActivity('/upload')}>Submission</Link>
-                  <Link href="mailto:ludi-help@illinois.edu">Contact</Link>
+                  <Link href="mailto:caesar@illinois.edu ">Contact</Link>
                   {user && user.role == "ADMIN" ? <Link href={'/admin'}>Admin</Link> : <></>}
               </Stack>
 

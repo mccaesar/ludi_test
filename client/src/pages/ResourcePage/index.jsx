@@ -233,7 +233,7 @@ export const ResourcePage = () => {
               {resource.category}
             </Text>
             <Text fontSize="2xl" color={mode('gray.600', 'gray.300')}>
-              {resource.author}
+              Creator: {resource.author}
             </Text>
             <HStack spacing={4} mt={8}>
               <Button
@@ -350,7 +350,7 @@ export const ResourcePage = () => {
         <CommentContainer resourceId={resource._id} />
 
         <Text pb={5}  textAlign='center' mx="auto" fontSize="lg">
-          Do you have feedback or an improved description? Please email to ludi-help@illinois.edu.
+          Do you have feedback or an improved description? Please email to caesar@illinois.edu .
         </Text>
       </Stack>
     </WithFooter>

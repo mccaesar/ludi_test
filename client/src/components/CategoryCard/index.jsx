@@ -16,7 +16,7 @@ export const CategoryCard = ({ category }) => {
   const { user } = useUser();
 
   const logActivity = () => {
-    const url = `category/${encodeURIComponent(category)}`;
+    const url = `/category/${(category)}`;
     const metadata = {
       author: user ? user._id : null,
       url: url,

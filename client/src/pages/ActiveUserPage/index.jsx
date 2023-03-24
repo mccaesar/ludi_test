@@ -34,7 +34,7 @@ export const ActiveUserPage = () => {
       
       <center pt={4}>
         <chakra.h2> 
-        Lists of what other people favorited on this site
+        Unsure which resources to use? Here is a list of favorite resources from different top researchers in your community. (want to be included in this list or see someone we missed? Please email caesar@illinois.edu)
         </chakra.h2>
       </center>
 
