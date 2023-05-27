@@ -230,7 +230,7 @@ export const ResourcePage = () => {
               fontStyle="italic"
               color={mode('gray.600', 'gray.300')}
             >
-              {resource.category}
+              Category: {resource.category}
             </Text>
             <Text fontSize="2xl" color={mode('gray.600', 'gray.300')}>
               Creator: {resource.author}

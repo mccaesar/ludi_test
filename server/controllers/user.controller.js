@@ -13,8 +13,6 @@ export const getCurrentUser = async (req, res, next) => {
       });
     } else {
       User.findOne({ _id: user._id })
-        // .populate('savedResources', '_id index title category description')
-        // .populate('upvotedResources', '_id index title category description')
         .then((populatedUser) => res.status(200).send(populatedUser));
     }
   })(req, res, next);
@@ -50,6 +48,7 @@ export const getProfessionalUsers = async (req, res, next) => {
         }
       ]  
     );
+    users.sort((a, b) => a.firstName.localeCompare(b.firstName));
     res.status(200).send(users);
   } catch (err) {
     res.status(404).send({
