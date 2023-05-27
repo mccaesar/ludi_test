@@ -8,7 +8,7 @@ export const AboutPage = () => {
     <WithFooter>
       <Navbar />
 
-      <Heading pt={10} pb={5} textAlign="center" mx="auto" fontSize="3xl"> About Open Library </Heading>
+      <Heading pt={10} pb={5} textAlign="center" mx="auto" fontSize="3xl"> About OLCN </Heading>
 
       <Text pb={10} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
         Open Library aims to create a public web service consisting of a user-friendly database of open computer networking educational sources to provide an organized space for university educators to discover and share relevant software tools.
@@ -39,10 +39,12 @@ export const AboutPage = () => {
       <Text pb={1} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
       Jennifer Rexford, Princeton, USA
       </Text>
-      <Text pb={10} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
+      <Text pb={1} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
       Aditya Akella, University of Texas at Austin, USA
       </Text>
-
+      <Text pb={10} justifyContent="center" textAlign='center' maxWidth='3xl' mx="auto" fontSize="lg">
+      Edmundo de Souza e Silva, Federal University of Rio de Janeiro, Brazil
+      </Text>
 
       <Heading pt={1} pb={3} textAlign="center" mx="auto" fontSize="3xl"> Student Developers </Heading>
 
