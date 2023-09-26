@@ -1,3 +1,146 @@
+// import {
+//   Box,
+//   Button,
+//   Heading,
+//   Stack,
+//   Text,
+//   useColorModeValue as mode,
+// } from '@chakra-ui/react';
+// import { FaGithub, FaGoogle } from 'react-icons/fa';
+// import { WithFooter } from '../../components/Footer';
+// import { Navbar } from '../../components/Navbar';
+// import { DividerWithText } from './DividerWithText';
+// import { LoginForm } from './LoginForm';
+// import { GoogleLogin} from '@react-oauth/google';
+// import { useState } from 'react';
+
+// export const LoginPage = () => {
+//   const [loginData, setLoginData] = useState(
+//     localStorage.getItem('loginData')
+//       ? JSON.parse(localStorage.getItem('loginData'))
+//       : null
+//   );
+
+//   const onSuccess = async (googleData) => {
+//     console.log("log in success")
+//     const res = await fetch('/api/google-login', {
+//       method: 'POST',
+//       body: JSON.stringify({
+//         token: googleData.tokenId,
+//       }),
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+
+//     const data = await res.json();
+//     setLoginData(data);
+//     localStorage.setItem('loginData', JSON.stringify(data));
+//   };
+
+//   const handleLogout = () => {
+//     localStorage.removeItem('loginData');
+//     setLoginData(null);
+//   };
+
+//   const onFailure = (res) => {
+//       console.log('Login failed: res:', res);
+//   };
+//   const clientId = "981534830591-ujguqrjh04d8ei6ita1m2kema9jpiea5.apps.googleusercontent.com"
+
+
+//   return (
+//     <WithFooter>
+//       <Navbar />
+//       <Box
+//         w="full"
+//         maxW="xl"
+//         justifyContent="center"
+//         mx="auto"
+//         py={{ base: '10', md: '20' }}
+//         px={{ base: '4', md: '10' }}
+//       >
+//         <Box
+//           bg={{ md: mode('gray.200', 'gray.700') }}
+//           rounded={{ md: '2xl' }}
+//           p={{ base: '4', md: '12' }}
+//           borderWidth={{ md: '1px' }}
+//           borderColor={mode('transparent', 'transparent')}
+//           shadow={{ md: 'lg' }}
+//         >
+//           <Box mb="8" textAlign={{ base: 'center', md: 'start' }}>
+//             <Heading size="lg" mb="2" fontWeight="extrabold">
+//               Welcome back
+//             </Heading>
+//             <Text
+//               fontSize="lg"
+//               color={mode('gray.500', 'gray.400')}
+//               fontWeight="medium"
+//             >
+//               Enter your info to log in
+//             </Text>
+//           </Box>
+//           <Stack spacing="4">
+//           {loginData ? (
+//             <div>
+//               <h3>You logged in as {loginData.email}</h3>
+//               <button onClick={handleLogout}>Logout</button>
+//             </div>
+//           ) : (
+//             <GoogleLogin
+//               clientId={clientId}
+//               buttonText="Log in with Google"
+//               onSuccess={onSuccess}
+//               onFailure={onFailure}
+//               cookiePolicy={'single_host_origin'}
+//               isSignedIn={true}
+//               render={renderProps => (
+//                 <Button
+//                   onClick={renderProps.onClick}
+//                   disabled={renderProps.disabled}
+//                   borderColor={'gray.400'}
+//                   variant="outline"
+//                   leftIcon={<Box as={FaGoogle} color="red.500" />}
+//                 >
+//                   Log in with Google
+//                 </Button>
+//               )}>
+//             </GoogleLogin>
+//             )}
+//             <Button
+//               borderColor={mode('gray.400', 'gray.600')}
+//               variant="outline"
+//               leftIcon={
+//                 <Box
+//                   as={FaGithub}
+//                   // color={mode('github.500', 'github.300')}
+//                 />
+//               }
+//             >
+//               Log in with Github
+//             </Button>
+//           </Stack>
+
+//           <DividerWithText>or</DividerWithText>
+//           <LoginForm />
+//         </Box>
+
+//         <Text mt="8" align="center" fontWeight="medium">
+//           Don't have an account?{' '}
+//           <Box
+//             as="a"
+//             href="/register"
+//             color={mode('blue.600', 'blue.200')}
+//             display={{ base: 'block', md: 'inline-block' }}
+//           >
+//             Sign up for free
+//           </Box>
+//         </Text>
+//       </Box>
+//     </WithFooter>
+//   );
+// };
+
 import {
   Box,
   Button,
@@ -11,8 +154,112 @@ import { WithFooter } from '../../components/Footer';
 import { Navbar } from '../../components/Navbar';
 import { DividerWithText } from './DividerWithText';
 import { LoginForm } from './LoginForm';
-
+import {useEffect, useState} from 'react';
+import jwt_decode from "jwt-decode";
+import {useHistory, useLocation} from "react-router-dom";
+import moment from "moment";
 export const LoginPage = () => {
+  const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    const search = location.search;
+    if (search) {
+      const match = search.match(/code=(.*?)&/);
+      if (match && match[1]) {
+        const auth_code = decodeURIComponent(match[1]);
+        fetch(`${process.env.REACT_APP_API_URI}/get-google-info`, {
+          method: 'POST',
+          body: JSON.stringify({
+            auth_code
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(res => res.json())
+            .then(async googleData => {
+              const userData = jwt_decode(googleData.id_token);
+              const result = await fetch(`${process.env.REACT_APP_API_URI}/google-login`, {
+                method: 'POST',
+                body: JSON.stringify(userData),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              });
+
+              if (result.status === 400) {
+                history.push(`/register?email=${userData.email}`);
+                return;
+              }
+
+              const data = await result.json();
+              setLoginData(data);
+              const expiresIn = data.expiresIn;
+              const expiresInAmount = Number(expiresIn.match(/\d+/)[0]);
+              const expiresInUnit = expiresIn.match(/[a-zA-Z]+/)[0];
+              localStorage.setItem('loginData', JSON.stringify(data));
+              localStorage.setItem('id_token', data.token);
+              localStorage.setItem('expires_at', moment().add(expiresInAmount, expiresInUnit).toDate().toString());
+
+              window.location.href = '/';
+            })
+            .catch(err => {
+              console.log(err);
+            })
+      }
+    }
+  }, [location]);
+
+  const [loginData, setLoginData] = useState(
+    localStorage.getItem('loginData')
+      ? JSON.parse(localStorage.getItem('loginData'))
+      : null
+  );
+
+  const handleClickGoogleLogin = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URI}/google-login`);
+      const data = await res.json();
+      if (data && data.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+
+    }
+  }
+
+  const onSuccess = async (googleData) => {
+    const userData = jwt_decode(googleData.credential);
+
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/google-login`, {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (res.status === 400) {
+      history.push(`/register?email=${userData.email}`);
+      return;
+    }
+
+    const data = await res.json();
+    console.log(data)
+    setLoginData(data);
+    localStorage.setItem('loginData', JSON.stringify(data));
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('loginData');
+    setLoginData(null);
+  };
+
+  const onFailure = (res) => {
+      console.log('Login failed: res:', res);
+  };
+  const clientId = "981534830591-ujguqrjh04d8ei6ita1m2kema9jpiea5.apps.googleusercontent.com"
+
   return (
     <WithFooter>
       <Navbar />
@@ -32,12 +279,6 @@ export const LoginPage = () => {
           borderColor={mode('transparent', 'transparent')}
           shadow={{ md: 'lg' }}
         >
-          {/* <Logo
-                h="6"
-                mb={{ base: '16', md: '10' }}
-                iconColor="blue.600"
-                mx={{ base: 'auto', md: 'unset' }}
-              /> */}
           <Box mb="8" textAlign={{ base: 'center', md: 'start' }}>
             <Heading size="lg" mb="2" fontWeight="extrabold">
               Welcome back
@@ -50,11 +291,12 @@ export const LoginPage = () => {
               Enter your info to log in
             </Text>
           </Box>
-          {/* <Stack spacing="4">
+          <Stack spacing="4">
             <Button
-              borderColor={mode('gray.400', 'gray.600')}
-              variant="outline"
-              leftIcon={<Box as={FaGoogle} color="red.500" />}
+                onClick={handleClickGoogleLogin}
+                borderColor={'gray.400'}
+                variant="outline"
+                leftIcon={<Box as={FaGoogle} color="red.500" />}
             >
               Log in with Google
             </Button>
@@ -72,7 +314,7 @@ export const LoginPage = () => {
             </Button>
           </Stack>
 
-          <DividerWithText>or</DividerWithText> */}
+          <DividerWithText>or</DividerWithText>
           <LoginForm />
         </Box>
 

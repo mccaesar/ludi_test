@@ -7,13 +7,17 @@ import App from './App';
 import store from './store.js';
 import { customTheme } from './theme';
 import * as serviceWorker from './serviceWorker';
+import { GoogleOAuthProvider} from '@react-oauth/google';
+
 
 window.React = React;
 
 ReactDOM.render(
   <Provider store={store}>
     <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
-    <App />
+    <GoogleOAuthProvider clientId="981534830591-ujguqrjh04d8ei6ita1m2kema9jpiea5.apps.googleusercontent.com">
+      <App />
+    </GoogleOAuthProvider>
   </Provider>,
   // document.getElementById('root')
   document.body.appendChild(document.createElement('div'))
