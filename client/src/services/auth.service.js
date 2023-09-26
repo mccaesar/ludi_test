@@ -2,6 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { addDays, isBefore } from 'date-fns';
 import { API_URI } from '../config';
+import moment from "moment/moment";
 
 (function authInterceptor() {
   const token = localStorage.getItem('id_token');
@@ -20,7 +21,8 @@ const setLocalStorage = (responseObj) => {
 };
 
 const getExpiration = () => {
-  const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+  //const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+  const expiresAt = localStorage.getItem('expires_at');
   return new Date(expiresAt);
 };
 
@@ -39,6 +41,13 @@ export const registerUser = async (data) => {
     .post(`${API_URI}/register`, qs.stringify(data))
     .then(({ data }) => {
       setLocalStorage(data);
+        const expiresIn = data.expiresIn;
+        const expiresInAmount = Number(expiresIn.match(/\d+/)[0]);
+        const expiresInUnit = expiresIn.match(/[a-zA-Z]+/)[0];
+        localStorage.setItem('loginData', JSON.stringify(data));
+        localStorage.setItem('id_token', data.token);
+        localStorage.setItem('expires_at', moment().add(expiresInAmount, expiresInUnit).toDate().toString());
+
     })
     .catch((err) => {
       throw err;
@@ -50,6 +59,13 @@ export const loginUser = async (data) => {
     .post(`${API_URI}/login`, qs.stringify(data))
     .then(({ data }) => {
       setLocalStorage(data);
+      const expiresIn = data.expiresIn;
+      const expiresInAmount = Number(expiresIn.match(/\d+/)[0]);
+      const expiresInUnit = expiresIn.match(/[a-zA-Z]+/)[0];
+      localStorage.setItem('loginData', JSON.stringify(data));
+      localStorage.setItem('id_token', data.token);
+      localStorage.setItem('expires_at', moment().add(expiresInAmount, expiresInUnit).toDate().toString());
+
     })
     .catch((err) => {
       throw err;

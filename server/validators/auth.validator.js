@@ -3,6 +3,28 @@ import addFormats from 'ajv-formats';
 
 const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);
+export const validateGetGoogleUserInfo = (data) => {
+  const schema = {
+    type: 'object',
+    properties: {
+      auth_code: {type: 'string'},
+    }
+  };
+  const validate = ajv.compile(schema);
+  const isValid = validate(data);
+  return { isValid, error: ajv.errors };
+}
+export const validateLoginByGoogle = (data) => {
+  const schema = {
+    type: 'object',
+    properties: {
+      email: {type: 'string', format: 'email', maxLength: 255},
+    }
+  };
+  const validate = ajv.compile(schema);
+  const isValid = validate(data);
+  return { isValid, error: ajv.errors };
+};
 
 export const validateRegistration = (data) => {
   const schema = {

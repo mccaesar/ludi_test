@@ -32,12 +32,6 @@ export const RegistrationPage = () => {
           borderColor={mode('transparent', 'transparent')}
           shadow={{ md: 'lg' }}
         >
-          {/* <Logo
-                h="6"
-                mb={{ base: '16', md: '10' }}
-                iconColor="blue.600"
-                mx={{ base: 'auto', md: 'unset' }}
-              /> */}
           <Box mb="8" textAlign={{ base: 'center', md: 'start' }}>
             <Heading size="lg" mb="2" fontWeight="extrabold">
               Welcome to Open Library

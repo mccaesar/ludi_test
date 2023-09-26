@@ -1,22 +1,22 @@
-import {
-  Divider,
-  HStack,
-  Text,
-  useColorModeValue as mode,
-} from '@chakra-ui/react';
+// import {
+//   Divider,
+//   HStack,
+//   Text,
+//   useColorModeValue as mode,
+// } from '@chakra-ui/react';
 
-export const DividerWithText = (props) => (
-  <HStack my="8" {...props}>
-    <Divider />
-    <Text
-      px="3"
-      textTransform="uppercase"
-      fontSize="sm"
-      fontWeight="semibold"
-      color={mode('gray.600', 'gray.200')}
-    >
-      {props.children}
-    </Text>
-    <Divider />
-  </HStack>
-);
+// export const DividerWithText = (props) => (
+//   <HStack my="8" {...props}>
+//     <Divider />
+//     <Text
+//       px="3"
+//       textTransform="uppercase"
+//       fontSize="sm"
+//       fontWeight="semibold"
+//       color={mode('gray.600', 'gray.200')}
+//     >
+//       {props.children}
+//     </Text>
+//     <Divider />
+//   </HStack>
+// );

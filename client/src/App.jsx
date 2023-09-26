@@ -25,7 +25,6 @@ import { EditPage } from './pages/EditPage';
 import { CategoryResultPage } from './pages/CategoryResultPage';
 // import { CachedWebsitePage } from './pages/CachedWebsitePage';
 
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

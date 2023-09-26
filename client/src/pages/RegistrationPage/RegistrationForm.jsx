@@ -20,10 +20,12 @@ export const RegistrationForm = () => {
 
   const [responseError, setResponseError] = useState(null);
 
+  const url = window.location.href;
+  const email = url.split('=')[1];
   const initialValues = {
     firstName: '',
     lastName: '',
-    email: '',
+    email: email || '',
     affiliation: '',
     password: '',
     passwordConfirmation: '',
@@ -198,3 +200,4 @@ export const RegistrationForm = () => {
     </form>
   );
 };
+
