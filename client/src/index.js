@@ -11,11 +11,12 @@ import { GoogleOAuthProvider} from '@react-oauth/google';
 
 
 window.React = React;
+const clientId = process.env.GOOGLE_CLIENT_ID
 
 ReactDOM.render(
   <Provider store={store}>
     <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
-    <GoogleOAuthProvider clientId="981534830591-ujguqrjh04d8ei6ita1m2kema9jpiea5.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={clientId}>
       <App />
     </GoogleOAuthProvider>
   </Provider>,
