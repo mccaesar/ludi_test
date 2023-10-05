@@ -115,7 +115,6 @@ export const LoginPage = () => {
   const onFailure = (res) => {
       console.log('Login failed: res:', res);
   };
-  const clientId = "981534830591-ujguqrjh04d8ei6ita1m2kema9jpiea5.apps.googleusercontent.com"
 
   return (
     <WithFooter>
